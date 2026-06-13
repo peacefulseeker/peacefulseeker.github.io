@@ -1,0 +1,76 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.download-pdf {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #333;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.download-pdf:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* margin: 0 removes the browser-rendered header/footer area (URL, date, page count) */
+@page {
+  margin: 0;
+}
+
+@media print {
+  .download-pdf {
+    display: none;
+  }
+
+  body {
+    color: #000;
+    font-size: 11pt;
+    line-height: 1.4;
+    padding: 12mm 15mm;
+  }
+
+  main {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    box-shadow: none;
+  }
+
+  h2 {
+    margin: 1rem 0 0.5rem;
+  }
+
+  h3 {
+    margin: 0.75rem 0 0.1rem;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  li {
+    break-inside: avoid;
+  }
+
+  /* main a bumps specificity above template's screen-mode `a` rule */
+  main a {
+    color: #000;
+    text-decoration: underline;
+  }
+}

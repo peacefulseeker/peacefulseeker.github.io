@@ -1,0 +1,30 @@
+---
+import ResumeHeader from "../components/ResumeHeader.astro";
+
+interface Props {
+  name: string;
+  role: string;
+  contact: Array<{ value: string }>;
+  stylesheet: string;
+}
+
+const { name, role, contact, stylesheet } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{name} — Resume</title>
+    <style set:html={stylesheet}></style>
+  </head>
+  <body>
+    <main>
+      <ResumeHeader name={name} role={role} contact={contact} />
+      <slot />
+    </main>
+    <button class="download-pdf" type="button" onclick="window.print()">
+      Download PDF
+    </button>
+  </body>
+</html>

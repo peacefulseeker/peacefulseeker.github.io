@@ -1,0 +1,190 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - heading "Alexey Vorobyov" [level=1] [ref=e5]
+      - paragraph [ref=e6]: Senior Software Engineer
+      - paragraph [ref=e7]: Remote / Latvia
+    - button "PDF" [ref=e8] [cursor=pointer]:
+      - img [ref=e9]
+      - text: PDF
+  - generic [ref=e11]:
+    - complementary [ref=e12]:
+      - img "Alexey Vorobyov" [ref=e14]
+      - generic [ref=e16]:
+        - link "LinkedIn" [ref=e17] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/vorobyovalexey/
+          - text: LinkedIn
+          - img [ref=e18]
+        - link "GitHub" [ref=e21] [cursor=pointer]:
+          - /url: https://github.com/peacefulseeker
+          - text: GitHub
+          - img [ref=e22]
+      - generic [ref=e26]:
+        - heading "Technologies" [level=3] [ref=e27]
+        - list [ref=e28]:
+          - listitem [ref=e29]: Python, FastAPI, SQLAlchemy
+          - listitem [ref=e30]: JS/TS, React, Node.js
+          - listitem [ref=e31]: AWS, Azure, Terraform
+          - listitem [ref=e32]: Sentry, Grafana, OpenTelemetry
+      - generic [ref=e34]:
+        - heading "Languages" [level=3] [ref=e35]
+        - list [ref=e36]:
+          - listitem [ref=e37]: English (C1)
+          - listitem [ref=e38]: Latvian (C1)
+          - listitem [ref=e39]: Russian (Native)
+      - generic [ref=e41]:
+        - heading "Hobbies" [level=3] [ref=e42]
+        - list [ref=e43]:
+          - listitem [ref=e44]: Hiking / Trekking
+          - listitem [ref=e45]: Functional workouts & running
+          - listitem [ref=e46]: Playing Piano
+          - listitem [ref=e47]: Landscape photography
+          - listitem [ref=e48]: Reading books
+    - main [ref=e49]:
+      - generic [ref=e50]:
+        - heading "Summary" [level=2] [ref=e51]
+        - paragraph
+        - heading "Summary" [level=2] [ref=e52]
+        - paragraph [ref=e53]: A strategic senior software engineer with over 7 years of experience in software engineering, specializing in building and maintaining robust SaaS applications across both monolithic and microservices architectures. My technical expertise spans the full stack, with a proficiency in Python (FastAPI, Pydantic, SQLAlchemy), modern TypeScript/JavaScript ecosystems (React, Node.js/Fastify, TanStack Query), and AWS infrastructure. I have decent experience with PostgreSQL, Docker, microservices architectures, and monorepo development patterns. I also bring experience from working with Ruby, PHP, and Azure Cloud in earlier roles.
+        - paragraph [ref=e54]: Known for delivering resilient, customer-centric solutions within agile environments, I excel at translating complex business requirements into scalable technical implementations. I am seeking B2B opportunities where I can contribute to impactful projects, leverage my experience to drive innovation, collaborate with talented professionals, and mentor developing engineers while continuing to expand my own technical capabilities.
+        - paragraph
+      - generic [ref=e55]:
+        - heading "Experience" [level=2] [ref=e56]
+        - generic [ref=e57]:
+          - generic [ref=e60]:
+            - heading "Senior Software Engineer (B2B)" [level=3] [ref=e61]
+            - paragraph [ref=e62]: Healthtech Startup · Remote
+            - paragraph [ref=e63]: October 2025 – Present
+            - list [ref=e64]:
+              - listitem [ref=e65]: Contributed to a FastAPI-based payment calculation service that automates monthly capitation payment processing for healthcare organizations, improving payment accuracy and reducing manual reconciliation time.
+              - listitem [ref=e66]: Collaborated with client engineers in migrating from legacy systems to modern service-based architecture, ensuring seamless transition and data integrity throughout the modernization process.
+              - listitem [ref=e67]: Contributed as a full-stack engineer, delivering end-to-end features from API development to client-facing views, including both internal admin interfaces and public-facing portals.
+              - listitem [ref=e68]: Designed and implemented RESTful API endpoints for generating detailed service statements and payment reports, enabling transparent financial tracking for healthcare providers.
+            - generic [ref=e69]:
+              - generic [ref=e70]: Python
+              - generic [ref=e71]: FastAPI
+              - generic [ref=e72]: Pydantic
+              - generic [ref=e73]: SQLAlchemy
+              - generic [ref=e74]: React
+              - generic [ref=e75]: TypeScript
+              - generic [ref=e76]: Node.js/Fastify
+              - generic [ref=e77]: TanStack
+              - generic [ref=e78]: Turborepo
+              - generic [ref=e79]: PostgreSQL
+              - generic [ref=e80]: AWS
+              - generic [ref=e81]: Terraform
+              - generic [ref=e82]: Docker
+              - generic [ref=e83]: OpenTelemetry
+          - generic [ref=e86]:
+            - heading "Senior Software Engineer" [level=3] [ref=e87]
+            - paragraph [ref=e88]: Arvato Systems · Latvia / Hybrid
+            - paragraph [ref=e89]: December 2024 – October 2025
+            - list [ref=e90]:
+              - listitem [ref=e91]: Developed a ChatGPT-like RAG application for enterprise customers, enabling AI-powered applications over proprietary data (knowledge bases, documents, databases) with focus on performance, security, and cost-efficiency.
+              - listitem [ref=e92]: Developed a performant and scalable PDF parsing solution as an Azure durable function for locating page numbers for specific text chunks.
+              - listitem [ref=e93]: Maintained and developed new features for an API-as-a-service for building RAG-based flows.
+            - generic [ref=e94]:
+              - generic [ref=e95]: Python
+              - generic [ref=e96]: FastAPI
+              - generic [ref=e97]: Pydantic
+              - generic [ref=e98]: Azure Cloud
+              - generic [ref=e99]: AI / LLM tools
+          - generic [ref=e102]:
+            - heading "Software Engineer" [level=3] [ref=e103]
+            - paragraph [ref=e104]: FinTech Startup · Latvia / Hybrid
+            - paragraph [ref=e105]: April 2024 – July 2024
+            - list [ref=e106]:
+              - listitem [ref=e107]: Contributed to a project for merchant risk score estimation based on factors such as payments from high-risk countries and multi-currency cross-border payments.
+              - listitem [ref=e108]: Identified and advocated for SQL query optimization early before feature release while processing large volumes of payment rows.
+            - generic [ref=e109]:
+              - generic [ref=e110]: Ruby
+              - generic [ref=e111]: Ruby on Rails
+              - generic [ref=e112]: Google Cloud
+              - generic [ref=e113]: Kibana
+              - generic [ref=e114]: Grafana
+          - generic [ref=e117]:
+            - heading "Software Engineer" [level=3] [ref=e118]
+            - paragraph [ref=e119]: Prezi · Latvia / Remote
+            - paragraph [ref=e120]: June 2020 – March 2024
+            - list [ref=e121]:
+              - listitem [ref=e122]: Supported A/B tests on main traffic-receiving pages (prezi.com, /design, /product, /video) to identify layout and copy variants that improved business metrics.
+              - listitem [ref=e123]: Developed and maintained payment and subscription flows, including transforming user subscription accounts based on license type.
+              - listitem [ref=e124]: Improved fraud prevention logic in trial payment flows and extended it to upgrade/renewal flows, reducing fraudulent chargebacks.
+              - listitem [ref=e125]: Integrated Invisible reCAPTCHA on sign-up pages; an experiment showed a 17% increase in registrations compared to visible reCAPTCHA.
+              - listitem [ref=e126]: Shipped backend logic for downloading business invoices via authentication-less links in email campaigns.
+              - listitem [ref=e127]: Implemented cookie consent for EU visitors via third-party integration on top-funnel pages.
+              - listitem [ref=e128]: Introduced Facebook Conversions API tracking from the backend, improving conversion data accuracy in analytics dashboards.
+              - listitem [ref=e129]: Maintained internal CMS and CRM; supported micro-services modernization (Python 2.7 upgrades, CI/CD migrations to GitHub Actions from Jenkins).
+            - generic [ref=e130]:
+              - generic [ref=e131]: Python / Django
+              - generic [ref=e132]: React / TypeScript
+              - generic [ref=e133]: AWS S3
+              - generic [ref=e134]: RDS PostgreSQL
+              - generic [ref=e135]: Java / Gherkin
+              - generic [ref=e136]: Grafana
+          - generic [ref=e139]:
+            - heading "Software Engineer" [level=3] [ref=e140]
+            - paragraph [ref=e141]: Infogram · Riga
+            - paragraph [ref=e142]: 2018 – June 2020
+            - list [ref=e143]:
+              - listitem [ref=e144]: Led development of the infogram.com homepage and /templates pages built with Next.js.
+              - listitem [ref=e145]: Led UI modernization of the Prezi Design editor, which became part of the Prezi product suite.
+              - listitem [ref=e146]: Introduced an integrations panel in the Infogram editor, allowing users to connect to database sources such as MySQL and PostgreSQL.
+              - listitem [ref=e147]: Migrated support.infogram.com to the Zendesk Help Center platform.
+            - generic [ref=e148]:
+              - generic [ref=e149]: React
+              - generic [ref=e150]: Node.js
+              - generic [ref=e151]: Next.js
+          - generic [ref=e154]:
+            - heading "Web Developer" [level=3] [ref=e155]
+            - paragraph [ref=e156]: Sehner International · Riga / Hamburg
+            - paragraph [ref=e157]: August 2016 – December 2017
+            - list [ref=e158]:
+              - listitem [ref=e159]: Developed and maintained pflegegrad-berechnen.de, a tool for calculating healthcare degrees for seniors in Germany — it reached the top SERP position for "pflegegrad berechnen".
+              - listitem [ref=e160]: Maintained sehner.international and pflegemarkt.com business websites.
+              - listitem [ref=e161]: Developed customized WordPress theme websites for clients.
+            - generic [ref=e162]:
+              - generic [ref=e163]: PHP
+              - generic [ref=e164]: WordPress
+      - generic [ref=e165]:
+        - heading "Education" [level=2] [ref=e166]
+        - generic [ref=e168]:
+          - heading "Bachelor — Riga Technical University , Riga" [level=3] [ref=e169]
+          - paragraph [ref=e170]: 2013 – 2016
+          - paragraph [ref=e171]:
+            - text: "Graduate paper:"
+            - link "link" [ref=e172] [cursor=pointer]:
+              - /url: https://nda.rtu.lv/en/view/16218
+      - generic [ref=e173]:
+        - heading "Certifications & Extra-curricular" [level=2] [ref=e174]
+        - generic [ref=e175]:
+          - generic [ref=e176]:
+            - heading "AWS Certified Cloud Practitioner" [level=3] [ref=e177]:
+              - link "AWS Certified Cloud Practitioner" [ref=e178] [cursor=pointer]:
+                - /url: https://cp.certmetrics.com/amazon/en/public/verify/credential/K2EV8P3CS2B410WR
+            - paragraph [ref=e179]: AWS Training & Certification
+            - paragraph [ref=e180]: December 2022 – December 2028
+            - paragraph [ref=e181]: "ID: K2EV8P3CS2B410WR"
+          - generic [ref=e182]:
+            - 'heading "Microsoft Certified: Azure Fundamentals" [level=3] [ref=e183]':
+              - 'link "Microsoft Certified: Azure Fundamentals" [ref=e184] [cursor=pointer]':
+                - /url: https://learn.microsoft.com/api/credentials/share/en-gb/alebyov/19158BE66DF6497F?sharingId=AFEDF744F9C79C11
+            - paragraph [ref=e185]: May 2025
+          - generic [ref=e186]:
+            - heading "Various Tech Courses" [level=3] [ref=e187]:
+              - link "Various Tech Courses" [ref=e188] [cursor=pointer]:
+                - /url: https://www.udemy.com/user/alexeyvorobyov/
+            - paragraph [ref=e189]: Udemy
+            - paragraph [ref=e190]: 2015 – present
+          - generic [ref=e191]:
+            - heading "Various Tech Courses" [level=3] [ref=e192]:
+              - link "Various Tech Courses" [ref=e193] [cursor=pointer]:
+                - /url: https://www.coursera.org/user/24d401e1022bf7551a05a07cefa7c4ed
+            - paragraph [ref=e194]: Coursera
+            - paragraph [ref=e195]: 2015 – present
+          - generic [ref=e196]:
+            - heading "Python Skills" [level=3] [ref=e197]:
+              - link "Python Skills" [ref=e198] [cursor=pointer]:
+                - /url: https://codechalleng.es/profiles/peacefulseeker
+            - paragraph [ref=e199]: PyBites
+            - paragraph [ref=e200]: January 2021 – November 2021

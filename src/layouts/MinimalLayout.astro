@@ -1,0 +1,21 @@
+---
+import minimalStyles from "../styles/minimal.css?inline";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  name: string;
+  role: string;
+  contact: Array<{ value: string }>;
+}
+
+const { name, role, contact } = Astro.props;
+---
+
+<BaseLayout
+  name={name}
+  role={role}
+  contact={contact}
+  stylesheet={minimalStyles}
+>
+  <slot />
+</BaseLayout>
