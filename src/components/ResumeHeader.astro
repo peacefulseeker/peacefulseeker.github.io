@@ -1,0 +1,24 @@
+---
+import { contactHref } from "../utils/contactHref";
+
+interface Props {
+  name: string;
+  role: string;
+  contact: Array<{ value: string }>;
+}
+
+const { name, role, contact } = Astro.props;
+---
+
+<header>
+  <h1 class="resume-name">{name}</h1>
+  <p class="subtitle">{role}</p>
+  <div class="contact">
+    {
+      contact.map((c) => {
+        const href = contactHref(c.value);
+        return href ? <a href={href}>{c.value}</a> : <span>{c.value}</span>;
+      })
+    }
+  </div>
+</header>

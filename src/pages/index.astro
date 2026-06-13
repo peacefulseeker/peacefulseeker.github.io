@@ -1,0 +1,26 @@
+---
+import { getResumeEntry } from "../utils/getResumeEntry";
+import { TEMPLATE_NAMES } from "../content.config";
+import type { TemplateName } from "../content.config";
+import MinimalLayout from "../layouts/MinimalLayout.astro";
+import ClassicLayout from "../layouts/ClassicLayout.astro";
+
+const { name, role, contact, template, Content } = await getResumeEntry();
+
+const layouts = {
+  minimal: MinimalLayout,
+  classic: ClassicLayout,
+} satisfies Record<TemplateName, unknown>;
+
+if (!(template in layouts)) {
+  throw new Error(
+    `Unknown template "${template}". Valid templates: ${TEMPLATE_NAMES.join(", ")}`,
+  );
+}
+
+const Layout = layouts[template];
+---
+
+<Layout name={name} role={role} contact={contact}>
+  <Content />
+</Layout>
