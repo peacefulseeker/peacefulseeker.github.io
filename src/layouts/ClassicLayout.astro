@@ -1,21 +1,60 @@
 ---
-import classicStyles from "../styles/classic.css?inline";
-import BaseLayout from "./BaseLayout.astro";
+import "../styles/classic.css";
+import ResumeHeader from "../components/ResumeHeader.astro";
+import Timeline from "../components/Timeline.astro";
+import EducationList from "../components/EducationList.astro";
+import Certifications from "../components/Certifications.astro";
+import type { ResumeData } from "../utils/resumeSchema";
 
-interface Props {
-  name: string;
-  role: string;
-  contact: Array<{ value: string }>;
-}
+type Props = Omit<ResumeData, "template">;
 
-const { name, role, contact } = Astro.props;
+const props = Astro.props;
 ---
 
-<BaseLayout
-  name={name}
-  role={role}
-  contact={contact}
-  stylesheet={classicStyles}
->
-  <slot />
-</BaseLayout>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{props.name} — Resume</title>
+    <meta name="description" content={`${props.name} — ${props.role}`} />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <main>
+      <ResumeHeader
+        name={props.name}
+        role={props.role}
+        contact={props.contact ?? []}
+      />
+
+      <slot />
+
+      {
+        props.experience && props.experience.length > 0 && (
+          <section>
+            <h2>Experience</h2>
+            <Timeline experience={props.experience} />
+          </section>
+        )
+      }
+
+      {
+        props.education && props.education.length > 0 && (
+          <section>
+            <h2>Education</h2>
+            <EducationList education={props.education} />
+          </section>
+        )
+      }
+
+      {
+        props.certifications && props.certifications.length > 0 && (
+          <section>
+            <h2>Certifications &amp; Extra-curricular</h2>
+            <Certifications certifications={props.certifications} />
+          </section>
+        )
+      }
+    </main>
+  </body>
+</html>

@@ -8,7 +8,7 @@ Live: [peacefulseeker.github.io](https://peacefulseeker.github.io)
 
 - **Astro** — static site generator with content collections
 - **TypeScript** — strict mode throughout
-- **Plain CSS** — two interchangeable templates (`classic` / `minimal`)
+- **Plain CSS** — two interchangeable templates (`classic` / `timeline`)
 - **GitHub Actions** — builds and deploys on push to `main`
 
 ## Local dev
@@ -23,10 +23,13 @@ pnpm dev           # http://localhost:4321
 
 ## Templates
 
-Switch template by changing `template:` in the frontmatter of `src/content/resumes/alexey-vorobyov.md`:
+Two templates are available: `classic` (single-column) and `timeline` (two-column with sidebar).
+
+Switch by changing `template.name` in the frontmatter of `src/content/resumes/alexey-vorobyov.md`:
 
 ```yaml
-template: classic # or: minimal
+template:
+  name: classic # or: timeline
 ```
 
 ## Commands

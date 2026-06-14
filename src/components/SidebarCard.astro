@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  items: string[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<div class="sidebar-card">
+  <h3>{title}</h3>
+  <ul>
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+</div>
+
+<style>
+  .sidebar-card {
+    padding: 1rem 1.25rem;
+  }
+
+  h3 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6b7280;
+    margin-bottom: 0.6rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    font-size: 0.82rem;
+    color: #374151;
+    padding: 0.15rem 0;
+    line-height: 1.4;
+  }
+</style>

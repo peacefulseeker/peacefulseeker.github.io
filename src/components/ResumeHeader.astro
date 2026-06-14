@@ -1,5 +1,6 @@
 ---
 import { contactHref } from "../utils/contactHref";
+import PdfButton from "./PdfButton.astro";
 
 interface Props {
   name: string;
@@ -10,15 +11,31 @@ interface Props {
 const { name, role, contact } = Astro.props;
 ---
 
-<header>
-  <h1 class="resume-name">{name}</h1>
-  <p class="subtitle">{role}</p>
-  <div class="contact">
+<header class="resume-header-bar">
+  <div class="header-identity">
+    <h1 class="resume-name">{name}</h1>
+    <p class="subtitle">{role}</p>
     {
-      contact.map((c) => {
-        const href = contactHref(c.value);
-        return href ? <a href={href}>{c.value}</a> : <span>{c.value}</span>;
-      })
+      contact.length > 0 && (
+        <div class="contact">
+          {contact.map((c) => {
+            const href = contactHref(c.value);
+            return href ? <a href={href}>{c.value}</a> : <span>{c.value}</span>;
+          })}
+        </div>
+      )
     }
   </div>
+  <PdfButton />
 </header>
+
+<style>
+  .resume-header-bar {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+</style>

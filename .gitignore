@@ -13,3 +13,4 @@ CLAUDE.local.md
 !.vscode/extensions.json
 test-results/
 playwright-report/
+.playwright-mcp

@@ -38,7 +38,7 @@ for (const vp of VIEWPORTS) {
     });
 
     test("contact items do not overlap", async ({ page }) => {
-      const items = page.locator(".contact > *");
+      const items = page.locator(".contact-links > *");
       const count = await items.count();
       const boxes = await Promise.all(
         Array.from({ length: count }, (_, i) => items.nth(i).boundingBox()),

@@ -4,45 +4,155 @@ import { resumeSchema, TEMPLATE_NAMES } from "./utils/resumeSchema";
 const validBase = {
   name: "Jane Doe",
   role: "Software Engineer",
-  contact: [{ value: "jane@example.com" }],
 };
 
 describe("TEMPLATE_NAMES", () => {
-  test("contains minimal and classic", () => {
-    expect(TEMPLATE_NAMES).toEqual(["minimal", "classic"]);
+  test("contains classic and timeline", () => {
+    expect(TEMPLATE_NAMES).toEqual(["classic", "timeline"]);
   });
 });
 
 describe("resumeSchema — template field", () => {
-  test('accepts "minimal"', () => {
+  test('accepts { name: "classic" }', () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      template: "minimal",
+      template: { name: "classic" },
     });
     expect(result.success).toBe(true);
   });
 
-  test('accepts "classic"', () => {
+  test('accepts { name: "timeline", sidebarPosition: "right" }', () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline", sidebarPosition: "right" },
+    });
+    expect(result.success).toBe(true);
+  });
+
+  test("rejects bare string template (old format)", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
       template: "classic",
     });
+    expect(result.success).toBe(false);
+  });
+
+  test("rejects unknown template name", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "bogus" },
+    });
+    expect(result.success).toBe(false);
+  });
+
+  test("rejects invalid sidebarPosition value", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline", sidebarPosition: "center" },
+    });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("resumeSchema — contact field", () => {
+  test("contact is optional", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "classic" },
+    });
     expect(result.success).toBe(true);
   });
 
-  test('rejects "default" (old value)', () => {
+  test("accepts contact array when provided", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      template: "default",
+      template: { name: "classic" },
+      contact: [{ value: "jane@example.com" }],
+    });
+    expect(result.success).toBe(true);
+  });
+});
+
+describe("resumeSchema — profile field", () => {
+  test("accepts profile with links", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline" },
+      profile: {
+        photo: "/profile.jpg",
+        location: "Remote",
+        links: [{ label: "LinkedIn", url: "https://linkedin.com/in/janedoe" }],
+      },
+    });
+    expect(result.success).toBe(true);
+  });
+
+  test("rejects profile link with invalid URL", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline" },
+      profile: {
+        links: [{ label: "LinkedIn", url: "not-a-url" }],
+      },
+    });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("resumeSchema — structured sections", () => {
+  test("accepts experience array", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline" },
+      experience: [
+        {
+          role: "Engineer",
+          company: "Acme",
+          start: "2020",
+          end: "Present",
+          highlights: ["Built things"],
+          tech: ["TypeScript"],
+        },
+      ],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  test("accepts certifications with optional fields", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline" },
+      certifications: [
+        {
+          name: "AWS CCP",
+          issuer: "AWS",
+          start: "2022",
+          end: "2028",
+          credentialId: "ABC123",
+          url: "https://example.com/verify/ABC123",
+        },
+      ],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  test("rejects certification with invalid URL", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline" },
+      certifications: [{ name: "AWS CCP", url: "not-a-url" }],
     });
     expect(result.success).toBe(false);
   });
 
-  test("rejects unknown template value", () => {
+  test("accepts skills, languages, hobbies arrays", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      template: "bogus",
+      template: { name: "timeline" },
+      skills: ["Python", "TypeScript"],
+      languages: ["English (C1)"],
+      hobbies: ["Hiking"],
     });
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 });

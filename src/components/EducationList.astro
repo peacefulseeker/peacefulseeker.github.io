@@ -1,0 +1,87 @@
+---
+import type { EducationEntry } from "../utils/resumeSchema";
+
+interface Props {
+  education: EducationEntry[];
+}
+
+const { education } = Astro.props;
+---
+
+<div class="education-list">
+  {
+    education.map((entry) => (
+      <div class="edu-item">
+        <h3>
+          {entry.degree} — {entry.institution}
+          {entry.location ? `, ${entry.location}` : ""}
+        </h3>
+        <p class="edu-dates">
+          {entry.start} – {entry.end}
+        </p>
+        {entry.note && entry.url && (
+          <p class="edu-note">
+            {entry.note}:{" "}
+            <a href={entry.url} target="_blank" rel="noopener noreferrer">
+              link
+            </a>
+          </p>
+        )}
+        {entry.note && !entry.url && <p class="edu-note">{entry.note}</p>}
+        {!entry.note && entry.url && (
+          <p class="edu-note">
+            <a href={entry.url} target="_blank" rel="noopener noreferrer">
+              {entry.url}
+            </a>
+          </p>
+        )}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.15rem;
+  }
+
+  .edu-dates {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.25rem;
+  }
+
+  .edu-note {
+    font-size: 0.82rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  .edu-note a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  .edu-note a:hover {
+    text-decoration: underline;
+  }
+
+  @media print {
+    .edu-note a {
+      color: #111827;
+      text-decoration: underline;
+    }
+  }
+</style>
