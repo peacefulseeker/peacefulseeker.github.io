@@ -1,0 +1,149 @@
+---
+import "../styles/timeline.css";
+import type {
+  ProfileData,
+  ExperienceEntry,
+  EducationEntry,
+  CertificationEntry,
+  LinkEntry,
+} from "../utils/resumeSchema";
+import PdfButton from "../components/PdfButton.astro";
+import ProfilePhoto from "../components/ProfilePhoto.astro";
+import SidebarCard from "../components/SidebarCard.astro";
+import ContactLinks from "../components/ContactLinks.astro";
+import Timeline from "../components/Timeline.astro";
+import EducationList from "../components/EducationList.astro";
+import Certifications from "../components/Certifications.astro";
+
+interface Props {
+  name: string;
+  role: string;
+  profile?: ProfileData;
+  skills?: string[];
+  languages?: string[];
+  hobbies?: string[];
+  experience?: ExperienceEntry[];
+  education?: EducationEntry[];
+  certifications?: CertificationEntry[];
+  sidebarPosition?: "left" | "right";
+}
+
+const {
+  name,
+  role,
+  profile,
+  skills,
+  languages,
+  hobbies,
+  experience,
+  education,
+  certifications,
+  sidebarPosition = "left",
+} = Astro.props;
+
+const links: LinkEntry[] = profile?.links ?? [];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{name} — Resume</title>
+    <meta name="description" content={`${name} — ${role}`} />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <div class="resume-paper">
+      <!-- Header -->
+      <header class="resume-header">
+        <div class="header-text">
+          <h1 class="name">{name}</h1>
+          <p class="role">{role}</p>
+          {profile?.location && <p class="location">{profile.location}</p>}
+        </div>
+        <PdfButton />
+      </header>
+
+      <!-- Body -->
+      <div
+        class:list={[
+          "resume-body",
+          { "sidebar-right": sidebarPosition === "right" },
+        ]}
+      >
+        <!-- Sidebar -->
+        <aside class="resume-sidebar">
+          {
+            profile?.photo && (
+              <>
+                <ProfilePhoto src={profile.photo} name={name} />
+                <div class="sidebar-divider" />
+              </>
+            )
+          }
+          {links.length > 0 && <ContactLinks links={links} />}
+          {
+            links.length > 0 && (skills || languages || hobbies) && (
+              <div class="sidebar-divider" />
+            )
+          }
+          {
+            skills && skills.length > 0 && (
+              <SidebarCard title="Technologies" items={skills} />
+            )
+          }
+          {skills && (languages || hobbies) && <div class="sidebar-divider" />}
+          {
+            languages && languages.length > 0 && (
+              <SidebarCard title="Languages" items={languages} />
+            )
+          }
+          {languages && hobbies && <div class="sidebar-divider" />}
+          {
+            hobbies && hobbies.length > 0 && (
+              <SidebarCard title="Hobbies" items={hobbies} />
+            )
+          }
+        </aside>
+
+        <!-- Main -->
+        <main class="resume-main">
+          <!-- Summary — h2 and prose come from the markdown body via <slot /> -->
+          <section class="section summary-section">
+            <slot />
+          </section>
+
+          <!-- Experience -->
+          {
+            experience && experience.length > 0 && (
+              <section class="section">
+                <h2>Experience</h2>
+                <Timeline experience={experience} />
+              </section>
+            )
+          }
+
+          <!-- Education -->
+          {
+            education && education.length > 0 && (
+              <section class="section">
+                <h2>Education</h2>
+                <EducationList education={education} />
+              </section>
+            )
+          }
+
+          <!-- Certifications -->
+          {
+            certifications && certifications.length > 0 && (
+              <section class="section">
+                <h2>Certifications &amp; Extra-curricular</h2>
+                <Certifications certifications={certifications} />
+              </section>
+            )
+          }
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

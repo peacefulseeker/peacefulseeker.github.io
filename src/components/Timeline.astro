@@ -1,0 +1,155 @@
+---
+import type { ExperienceEntry } from "../utils/resumeSchema";
+
+interface Props {
+  experience: ExperienceEntry[];
+}
+
+const { experience } = Astro.props;
+---
+
+<div class="timeline">
+  {
+    experience.map((job) => (
+      <div class="timeline-item">
+        <div class="timeline-dot" />
+        <div class="timeline-content">
+          <h3 class="job-role">{job.role}</h3>
+          <p class="job-meta">
+            {job.company}
+            {job.location ? ` · ${job.location}` : ""}
+          </p>
+          <p class="job-dates">
+            {job.start} – {job.end}
+          </p>
+          <ul class="highlights">
+            {job.highlights.map((h) => (
+              <li>{h}</li>
+            ))}
+          </ul>
+          {job.tech && job.tech.length > 0 && (
+            <div class="tech-chips">
+              {job.tech.map((t) => (
+                <span class="chip">{t}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 0.4rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(to bottom, #2563eb, #93c5fd, #e5e7eb);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -1.5rem;
+    top: 0.35rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #2563eb;
+    z-index: 1;
+  }
+
+  .job-role {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.1rem;
+  }
+
+  .job-meta {
+    font-size: 0.82rem;
+    color: #374151;
+    margin: 0 0 0.1rem;
+  }
+
+  .job-dates {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.6rem;
+  }
+
+  .highlights {
+    list-style: disc;
+    padding-left: 1.1rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .highlights li {
+    font-size: 0.82rem;
+    color: #374151;
+    line-height: 1.6;
+    margin-bottom: 0.3rem;
+  }
+
+  .tech-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+  }
+
+  .chip {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #1d4ed8;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 4px;
+    padding: 0.1rem 0.45rem;
+  }
+
+  @media print {
+    .timeline::before,
+    .timeline-dot {
+      display: none;
+    }
+
+    .timeline {
+      padding-left: 0;
+    }
+
+    .timeline-item {
+      padding-bottom: 1rem;
+      break-inside: avoid;
+    }
+
+    .chip {
+      background: transparent;
+      border-color: #9ca3af;
+      color: #374151;
+    }
+  }
+</style>

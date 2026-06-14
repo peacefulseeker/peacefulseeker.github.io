@@ -29,7 +29,7 @@ Examples:
 
 ## Project
 
-A personal resume site — Alexey Vorobyov's resume rendered from markdown via Astro. The site ships two interchangeable templates (classic and minimal), a PDF download via the browser print dialog, and full mobile responsiveness. Deployed to GitHub Pages via GitHub Actions.
+A personal resume site — Alexey Vorobyov's resume rendered from markdown via Astro. The site ships two interchangeable templates (classic and timeline), a PDF download via the browser print dialog, and full mobile responsiveness. Deployed to GitHub Pages via GitHub Actions.
 
 ## Stack
 

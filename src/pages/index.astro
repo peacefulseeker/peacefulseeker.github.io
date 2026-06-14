@@ -2,25 +2,38 @@
 import { getResumeEntry } from "../utils/getResumeEntry";
 import { TEMPLATE_NAMES } from "../content.config";
 import type { TemplateName } from "../content.config";
-import MinimalLayout from "../layouts/MinimalLayout.astro";
 import ClassicLayout from "../layouts/ClassicLayout.astro";
+import TimelineLayout from "../layouts/TimelineLayout.astro";
 
-const { name, role, contact, template, Content } = await getResumeEntry();
+const resume = await getResumeEntry();
+const { name: templateName, ...templateOptions } = resume.template;
 
 const layouts = {
-  minimal: MinimalLayout,
   classic: ClassicLayout,
+  timeline: TimelineLayout,
 } satisfies Record<TemplateName, unknown>;
 
-if (!(template in layouts)) {
+if (!(templateName in layouts)) {
   throw new Error(
-    `Unknown template "${template}". Valid templates: ${TEMPLATE_NAMES.join(", ")}`,
+    `Unknown template "${templateName}". Valid templates: ${TEMPLATE_NAMES.join(", ")}`,
   );
 }
 
-const Layout = layouts[template];
+const Layout = layouts[templateName];
 ---
 
-<Layout name={name} role={role} contact={contact}>
-  <Content />
+<Layout
+  name={resume.name}
+  role={resume.role}
+  contact={resume.contact}
+  profile={resume.profile}
+  skills={resume.skills}
+  languages={resume.languages}
+  hobbies={resume.hobbies}
+  experience={resume.experience}
+  education={resume.education}
+  certifications={resume.certifications}
+  {...templateOptions}
+>
+  <resume.Content />
 </Layout>

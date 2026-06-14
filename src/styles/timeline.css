@@ -1,0 +1,204 @@
+@import "./base.css";
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #111827;
+  background: #f3f4f6;
+  /* Horizontal padding ensures the box-shadow on .resume-paper is never
+     clipped by the viewport edge when the paper fills most of the screen. */
+  padding: 0 1.5rem;
+}
+
+.resume-paper {
+  max-width: 960px;
+  margin: 2rem auto;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.resume-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem 2rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.header-text .name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.1rem;
+}
+
+.header-text .role {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0 0 0.4rem;
+}
+
+.header-text .location {
+  font-size: 0.82rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ── Two-column body ── */
+.resume-body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  min-height: 0;
+}
+
+/* ── Sidebar ── */
+.resume-sidebar {
+  background: #f9fafb;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 1.25rem 0;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 0.75rem 1.25rem;
+}
+
+/* ── Main content ── */
+.resume-main {
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section h2 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.35rem;
+  margin: 0 0 1rem;
+}
+
+.summary-section p {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.7;
+  margin: 0 0 0.6rem;
+}
+
+.summary-section p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Sidebar right variant ── */
+.resume-body.sidebar-right {
+  grid-template-columns: minmax(0, 1fr) 220px;
+}
+
+.resume-body.sidebar-right .resume-sidebar {
+  order: 2;
+  border-right: none;
+  border-left: 1px solid #e5e7eb;
+}
+
+.resume-body.sidebar-right .resume-main {
+  order: 1;
+}
+
+/* ── Mobile reflow ── */
+@media (max-width: 640px) {
+  .resume-paper {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .resume-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .resume-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
+  }
+}
+
+/* ── Print ── */
+
+/*
+ * Override base.css's @page { margin: 0 } so every printed page gets a
+ * proper margin — not just the body element's top/bottom which only pads
+ * the document start and end, not each page boundary after a break.
+ * 14mm top/bottom gives breathing room; 12mm left/right keeps columns wide.
+ */
+@page {
+  margin: 14mm 12mm;
+}
+
+@media print {
+  body {
+    background: #fff;
+    font-size: 10pt;
+    /* Zero out the base.css body padding — @page margins handle all spacing now */
+    padding: 0;
+  }
+
+  .resume-paper {
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    max-width: none;
+  }
+
+  .resume-header {
+    padding: 0.5rem 0.75rem 0.5rem;
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  .resume-body {
+    grid-template-columns: 170px minmax(0, 1fr);
+  }
+
+  .resume-body.sidebar-right {
+    grid-template-columns: minmax(0, 1fr) 170px;
+  }
+
+  .resume-sidebar {
+    padding: 0.5rem 0;
+  }
+
+  .resume-main {
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+
+  .section h2 {
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .sidebar-divider {
+    margin: 0.5rem 1rem;
+  }
+}

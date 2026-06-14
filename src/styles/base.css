@@ -6,42 +6,23 @@
   padding: 0;
 }
 
-.download-pdf {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 100;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-family: inherit;
-  color: #333;
-  background: #fff;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-.download-pdf:hover {
-  background: #f9fafb;
-  border-color: #9ca3af;
-}
-
-/* margin: 0 removes the browser-rendered header/footer area (URL, date, page count) */
+/*
+ * 15mm page margins apply on every printed page (including after breaks).
+ * This replaces the old @page { margin: 0 } + body { padding } trick, which
+ * only padded the document start/end and left content flush with the edge
+ * on pages 2+. Trade-off: the browser may render its URL/date text inside
+ * the margin area; users can disable that in the print dialog if needed.
+ */
 @page {
-  margin: 0;
+  margin: 15mm;
 }
 
 @media print {
-  .download-pdf {
-    display: none;
-  }
-
   body {
     color: #000;
     font-size: 11pt;
     line-height: 1.4;
-    padding: 12mm 15mm;
+    padding: 0;
   }
 
   main {
