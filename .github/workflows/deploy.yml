@@ -3,7 +3,27 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'scripts/**'
+      - 'astro.config.*'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'tsconfig.json'
+      - 'mise.toml'
+      - '.github/workflows/deploy.yml'
   pull_request:
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'scripts/**'
+      - 'astro.config.*'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'tsconfig.json'
+      - 'mise.toml'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -35,7 +55,8 @@ jobs:
   deploy:
     needs: build
     # Only the default branch deploys; PR runs stop after build validation.
-    if: github.ref == 'refs/heads/main'
+    # Owner check guards against unexpected deploys if a collaborator is ever added.
+    if: github.ref == 'refs/heads/main' && github.repository_owner == 'peacefulseeker'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
