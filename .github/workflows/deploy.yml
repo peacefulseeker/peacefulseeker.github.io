@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -10,8 +11,9 @@ permissions:
   pages: write
   id-token: write
 
+# Serialize per-ref: main deploys never race each other, PR validations stay independent.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -20,6 +22,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
+        with:
+          # Pin mise: installing "latest" intermittently 404s when mise's
+          # VERSION endpoint advertises a release before its binaries publish.
+          version: 2026.6.10
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v3
@@ -28,6 +34,8 @@ jobs:
 
   deploy:
     needs: build
+    # Only the default branch deploys; PR runs stop after build validation.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
