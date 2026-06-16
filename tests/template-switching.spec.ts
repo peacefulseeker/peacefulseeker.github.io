@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Template switching — active template renders all fields", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/full");
   });
 
   test("renders name in h1", async ({ page }) => {
@@ -25,7 +25,9 @@ test.describe("Template switching — active template renders all fields", () =>
   });
 
   test("body content appears after header", async ({ page }) => {
-    const headerBox = await page.locator("header.resume-header-bar").boundingBox();
+    const headerBox = await page
+      .locator("header.resume-header-bar")
+      .boundingBox();
     const bodyBox = await page.locator("main h2").first().boundingBox();
 
     expect(headerBox).not.toBeNull();

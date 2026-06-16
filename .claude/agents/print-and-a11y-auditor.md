@@ -34,24 +34,32 @@ review what the user actually sees and what a screen reader actually reads.
    heading? Use `break-inside: avoid` patterns where appropriate.
 3. **Print: chrome hidden.** Is the "Download PDF" button hidden in
    print? Any nav, footer, or screen-only elements?
-4. **Print: link affordance.** Links lose hover/cursor cues on paper.
+4. **Print: color preservation.** Screen colors (blues, accent bars,
+   link colors) should print as-is — the user can choose B&W in the OS
+   print dialog. Do NOT recommend stripping colors or overriding them to
+   dark gray in `@media print`. Do check that `print-color-adjust: exact`
+   (plus `-webkit-print-color-adjust: exact` for Safari) is set on `body`
+   so browsers render `background:` properties on pseudo-elements and
+   decorative elements. A missing `print-color-adjust` is a blocker when
+   any `background:` is used for visible decoration (e.g. accent tick-bars).
+5. **Print: link affordance.** Links lose hover/cursor cues on paper.
    Are URLs visible somehow (printed inline, or contact links rendered
    as text)? Email and phone should be readable as plain text in print.
-5. **Mobile: reflow, not shrink.** At 375px, does the layout reflow
+6. **Mobile: reflow, not shrink.** At 375px, does the layout reflow
    (columns stack, type stays readable), or does it just scale down so
    text gets tiny? Body type should stay ≥ 16px on mobile.
-6. **Mobile: no horizontal scroll.** Any element wider than the viewport?
+7. **Mobile: no horizontal scroll.** Any element wider than the viewport?
    Long URLs, wide tables, fixed-width containers?
-7. **Accessibility: semantic structure.** One `<h1>` per page. Heading
+8. **Accessibility: semantic structure.** One `<h1>` per page. Heading
    levels in order (no skipping h2 → h4). Section landmarks used where
    appropriate (`<main>`, `<header>`, `<section>` with labels).
-8. **Accessibility: contrast.** Body text and link contrast meet WCAG AA
+9. **Accessibility: contrast.** Body text and link contrast meet WCAG AA
    (4.5:1 normal text, 3:1 large). Run the check on screen colors and
    on the print colour set if it differs.
-9. **Accessibility: links and labels.** Link text is meaningful out of
-   context ("LinkedIn profile", not "click here"). Email/phone links
-   have the right `href` schemes. Icon-only links have accessible names.
-10. **Accessibility: tab order.** The keyboard tab order matches the
+10. **Accessibility: links and labels.** Link text is meaningful out of
+    context ("LinkedIn profile", not "click here"). Email/phone links
+    have the right `href` schemes. Icon-only links have accessible names.
+11. **Accessibility: tab order.** The keyboard tab order matches the
     visual order on screen.
 
 ## Hard Rules

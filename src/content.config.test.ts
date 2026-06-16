@@ -7,8 +7,8 @@ const validBase = {
 };
 
 describe("TEMPLATE_NAMES", () => {
-  test("contains classic and timeline", () => {
-    expect(TEMPLATE_NAMES).toEqual(["classic", "timeline"]);
+  test("contains classic, timeline and onepage", () => {
+    expect(TEMPLATE_NAMES).toEqual(["classic", "timeline", "onepage"]);
   });
 });
 
@@ -25,6 +25,14 @@ describe("resumeSchema — template field", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
       template: { name: "timeline", sidebarPosition: "right" },
+    });
+    expect(result.success).toBe(true);
+  });
+
+  test('accepts { name: "onepage" }', () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "onepage" },
     });
     expect(result.success).toBe(true);
   });
