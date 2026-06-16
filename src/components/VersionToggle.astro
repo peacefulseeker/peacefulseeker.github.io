@@ -7,7 +7,11 @@ interface Props {
 const { href, label } = Astro.props;
 ---
 
-<a class="version-toggle" href={href}>
+<a
+  class="version-toggle"
+  href={href}
+  aria-label={`Switch to ${label.toLowerCase()}`}
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -31,7 +35,7 @@ const { href, label } = Astro.props;
     gap: 0.35rem;
     font-size: 0.75rem;
     font-family: inherit;
-    color: #9ca3af;
+    color: #6b7280;
     background: transparent;
     border: 1px solid #e5e7eb;
     border-radius: 6px;

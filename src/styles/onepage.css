@@ -213,6 +213,7 @@ body {
 @media (max-width: 640px) {
   body {
     padding: 0;
+    font-size: 16px;
   }
 
   .op-paper {
@@ -262,6 +263,9 @@ body {
     background: #fff;
     font-size: 9.5pt;
     padding: 0;
+    /* Force all colors and backgrounds to render — user can choose B&W in the OS print dialog. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .op-paper {
@@ -274,11 +278,6 @@ body {
 
   .op-name {
     font-size: 1.6rem;
-    color: #111827;
-  }
-
-  .op-contact a {
-    color: #111827;
   }
 
   .op-summary :global(p) {
@@ -291,13 +290,17 @@ body {
     padding-top: 0.75rem;
   }
 
-  .op-section h2::before,
-  .op-block h2::before {
-    background: #111827;
+  .op-cert-name a {
+    border-bottom: none;
   }
 
-  .op-cert-name a {
-    color: #111827;
-    border-bottom: none;
+  /* Counter base.css @media print h2/h3 margin rules that bleed into op-main. */
+  .op-section h2,
+  .op-block h2 {
+    margin: 0 0 0.6rem;
+  }
+
+  .op-main h3 {
+    margin: 0;
   }
 }

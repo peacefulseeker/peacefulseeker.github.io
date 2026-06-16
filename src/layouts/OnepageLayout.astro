@@ -80,7 +80,7 @@ const links: LinkEntry[] = profile?.links ?? [];
         </div>
       </header>
 
-      <section class="op-summary">
+      <section class="op-summary" aria-label="Summary">
         <slot />
       </section>
 
@@ -101,7 +101,11 @@ const links: LinkEntry[] = profile?.links ?? [];
           }
         </main>
 
-        <aside class="op-sidebar">
+        <aside class="op-sidebar" aria-label="Skills and information">
+          {
+            /* TODO: Inline markup to avoid Astro scoped-style specificity conflicts (ADR 0005).
+              If educationSchema or certificationSchema gains new fields, update this block too. */
+          }
           {
             skills && skills.length > 0 && (
               <section class="op-block">

@@ -12,13 +12,13 @@ export type TemplateConfig = z.infer<typeof templateConfigSchema>;
 
 const linkSchema = z.object({
   label: z.string(),
-  url: z.string().url(),
+  url: z.url(),
 });
 
 const profileSchema = z.object({
   photo: z.string().optional(),
   location: z.string().optional(),
-  email: z.string().email().optional(),
+  email: z.email().optional(),
   links: z.array(linkSchema).optional(),
 });
 
@@ -39,7 +39,7 @@ export const educationSchema = z.object({
   start: z.string(),
   end: z.string(),
   note: z.string().optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
 });
 
 export const certificationSchema = z.object({
@@ -48,7 +48,7 @@ export const certificationSchema = z.object({
   start: z.string().optional(),
   end: z.string().optional(),
   credentialId: z.string().optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
 });
 
 export const resumeSchema = z

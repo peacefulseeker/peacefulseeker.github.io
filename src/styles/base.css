@@ -51,7 +51,7 @@
 
   /* main a bumps specificity above template's screen-mode `a` rule */
   main a {
-    color: #000;
+    /* color: #000; */
     text-decoration: underline;
   }
 }

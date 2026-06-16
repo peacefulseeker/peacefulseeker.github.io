@@ -40,7 +40,7 @@ export async function getResumeEntry(variant: Variant = "full") {
     throw new Error(
       `No "${variant}" resume found in src/content/resumes/. ` +
         (variant === "onepage"
-          ? "Add a .md file with `template.name: onepage` to build the /onepage view."
+          ? "Add a .md file with `template.name: onepage` to build the default view at /."
           : "Add a .md file with a classic or timeline template to build the site."),
     );
   }
