@@ -1,6 +1,6 @@
 import { z } from "astro/zod";
 
-export const TEMPLATE_NAMES = ["classic", "timeline"] as const;
+export const TEMPLATE_NAMES = ["classic", "timeline", "onepage"] as const;
 export type TemplateName = (typeof TEMPLATE_NAMES)[number];
 
 export const templateConfigSchema = z.object({

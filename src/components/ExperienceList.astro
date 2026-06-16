@@ -1,0 +1,101 @@
+---
+import type { ExperienceEntry } from "../utils/resumeSchema";
+
+interface Props {
+  experience: ExperienceEntry[];
+}
+
+const { experience } = Astro.props;
+---
+
+<div class="xp-list">
+  {
+    experience.map((job) => (
+      <div class="xp-item">
+        <div class="xp-head">
+          <h3 class="xp-role">{job.role}</h3>
+          <span class="xp-meta">
+            {job.company}
+            {job.location ? ` · ${job.location}` : ""}
+            {" | "}
+            {job.start} – {job.end}
+          </span>
+        </div>
+        <ul class="xp-highlights">
+          {job.highlights.map((h) => (
+            <li>{h}</li>
+          ))}
+        </ul>
+        {job.tech && job.tech.length > 0 && (
+          <p class="xp-tech">{job.tech.join(" · ")}</p>
+        )}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .xp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .xp-item {
+    break-inside: avoid;
+  }
+
+  .xp-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.05rem;
+  }
+
+  .xp-role {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+  }
+
+  .xp-meta {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #2563eb;
+  }
+
+  .xp-highlights {
+    list-style: disc;
+    padding-left: 1.05rem;
+    margin: 0.2rem 0 0;
+  }
+
+  .xp-highlights li {
+    font-size: 0.8rem;
+    color: #374151;
+    line-height: 1.45;
+    margin-bottom: 0.15rem;
+  }
+
+  .xp-tech {
+    font-size: 0.72rem;
+    color: #6b7280;
+    margin: 0.25rem 0 0;
+  }
+
+  @media print {
+    .xp-list {
+      gap: 0.5rem;
+    }
+
+    .xp-meta {
+      color: #1f2937;
+    }
+
+    .xp-highlights li {
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+  }
+</style>

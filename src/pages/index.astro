@@ -1,39 +1,28 @@
 ---
-import { getResumeEntry } from "../utils/getResumeEntry";
-import { TEMPLATE_NAMES } from "../content.config";
-import type { TemplateName } from "../content.config";
-import ClassicLayout from "../layouts/ClassicLayout.astro";
-import TimelineLayout from "../layouts/TimelineLayout.astro";
+import { getResumeEntry, resumeVariantExists } from "../utils/getResumeEntry";
+import OnepageLayout from "../layouts/OnepageLayout.astro";
 
-const resume = await getResumeEntry();
-const { name: templateName, ...templateOptions } = resume.template;
+// The one-page resume is the default landing view (see ADR 0005).
+const resume = await getResumeEntry("onepage");
+const { sidebarPosition } = resume.template;
 
-const layouts = {
-  classic: ClassicLayout,
-  timeline: TimelineLayout,
-} satisfies Record<TemplateName, unknown>;
-
-if (!(templateName in layouts)) {
-  throw new Error(
-    `Unknown template "${templateName}". Valid templates: ${TEMPLATE_NAMES.join(", ")}`,
-  );
-}
-
-const Layout = layouts[templateName];
+const base = import.meta.env.BASE_URL;
+const otherVersion = (await resumeVariantExists("full"))
+  ? { href: `${base}full`, label: "Full version" }
+  : undefined;
 ---
 
-<Layout
+<OnepageLayout
   name={resume.name}
   role={resume.role}
-  contact={resume.contact}
   profile={resume.profile}
   skills={resume.skills}
   languages={resume.languages}
-  hobbies={resume.hobbies}
   experience={resume.experience}
   education={resume.education}
   certifications={resume.certifications}
-  {...templateOptions}
+  sidebarPosition={sidebarPosition}
+  otherVersion={otherVersion}
 >
   <resume.Content />
-</Layout>
+</OnepageLayout>

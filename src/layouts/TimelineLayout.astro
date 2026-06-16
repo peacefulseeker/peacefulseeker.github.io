@@ -8,6 +8,7 @@ import type {
   LinkEntry,
 } from "../utils/resumeSchema";
 import PdfButton from "../components/PdfButton.astro";
+import VersionToggle from "../components/VersionToggle.astro";
 import ProfilePhoto from "../components/ProfilePhoto.astro";
 import SidebarCard from "../components/SidebarCard.astro";
 import ContactLinks from "../components/ContactLinks.astro";
@@ -26,6 +27,7 @@ interface Props {
   education?: EducationEntry[];
   certifications?: CertificationEntry[];
   sidebarPosition?: "left" | "right";
+  otherVersion?: { href: string; label: string };
 }
 
 const {
@@ -39,6 +41,7 @@ const {
   education,
   certifications,
   sidebarPosition = "left",
+  otherVersion,
 } = Astro.props;
 
 const links: LinkEntry[] = profile?.links ?? [];
@@ -61,7 +64,17 @@ const links: LinkEntry[] = profile?.links ?? [];
           <p class="role">{role}</p>
           {profile?.location && <p class="location">{profile.location}</p>}
         </div>
-        <PdfButton />
+        <div class="header-actions">
+          {
+            otherVersion && (
+              <VersionToggle
+                href={otherVersion.href}
+                label={otherVersion.label}
+              />
+            )
+          }
+          <PdfButton />
+        </div>
       </header>
 
       <!-- Body -->

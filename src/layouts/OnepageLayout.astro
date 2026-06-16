@@ -1,0 +1,179 @@
+---
+import "../styles/onepage.css";
+import type {
+  ProfileData,
+  ExperienceEntry,
+  EducationEntry,
+  CertificationEntry,
+  LinkEntry,
+} from "../utils/resumeSchema";
+import PdfButton from "../components/PdfButton.astro";
+import VersionToggle from "../components/VersionToggle.astro";
+import ExperienceList from "../components/ExperienceList.astro";
+
+interface Props {
+  name: string;
+  role: string;
+  profile?: ProfileData;
+  skills?: string[];
+  languages?: string[];
+  experience?: ExperienceEntry[];
+  education?: EducationEntry[];
+  certifications?: CertificationEntry[];
+  sidebarPosition?: "left" | "right";
+  otherVersion?: { href: string; label: string };
+}
+
+const {
+  name,
+  role,
+  profile,
+  skills,
+  languages,
+  experience,
+  education,
+  certifications,
+  sidebarPosition = "right",
+  otherVersion,
+} = Astro.props;
+
+const links: LinkEntry[] = profile?.links ?? [];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{name} — Resume</title>
+    <meta name="description" content={`${name} — ${role}`} />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <div class="op-paper">
+      <header class="op-header">
+        <div class="op-identity">
+          <h1 class="op-name">{name}</h1>
+          <p class="op-role">{role}</p>
+        </div>
+        <div class="op-header-right">
+          <div class="op-actions">
+            {
+              otherVersion && (
+                <VersionToggle
+                  href={otherVersion.href}
+                  label={otherVersion.label}
+                />
+              )
+            }
+            <PdfButton />
+          </div>
+          <div class="op-contact">
+            {profile?.location && <span>{profile.location}</span>}
+            {
+              links.map((link) => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </header>
+
+      <section class="op-summary">
+        <slot />
+      </section>
+
+      <div
+        class:list={[
+          "op-body",
+          { "op-sidebar-right": sidebarPosition === "right" },
+        ]}
+      >
+        <main class="op-main">
+          {
+            experience && experience.length > 0 && (
+              <section class="op-section">
+                <h2>Experience</h2>
+                <ExperienceList experience={experience} />
+              </section>
+            )
+          }
+        </main>
+
+        <aside class="op-sidebar">
+          {
+            skills && skills.length > 0 && (
+              <section class="op-block">
+                <h2>Technologies</h2>
+                <ul class="op-skills">
+                  {skills.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+          {
+            languages && languages.length > 0 && (
+              <section class="op-block">
+                <h2>Languages</h2>
+                <p class="op-langs">{languages.join(" · ")}</p>
+              </section>
+            )
+          }
+          {
+            education && education.length > 0 && (
+              <section class="op-block">
+                <h2>Education</h2>
+                {education.map((edu) => (
+                  <div class="op-edu">
+                    <p class="op-edu-degree">
+                      {edu.degree} — {edu.institution}
+                    </p>
+                    <p class="op-edu-meta">
+                      {edu.location ? `${edu.location} · ` : ""}
+                      {edu.start} – {edu.end}
+                    </p>
+                  </div>
+                ))}
+              </section>
+            )
+          }
+          {
+            certifications && certifications.length > 0 && (
+              <section class="op-block">
+                <h2>Certifications</h2>
+                {certifications.map((cert) => (
+                  <div class="op-cert">
+                    <p class="op-cert-name">
+                      {cert.url ? (
+                        <a
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {cert.name}
+                        </a>
+                      ) : (
+                        cert.name
+                      )}
+                    </p>
+                    {(cert.issuer || cert.start) && (
+                      <p class="op-cert-meta">
+                        {cert.issuer}
+                        {cert.issuer && cert.start ? " · " : ""}
+                        {cert.start}
+                        {cert.end ? ` – ${cert.end}` : ""}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </section>
+            )
+          }
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

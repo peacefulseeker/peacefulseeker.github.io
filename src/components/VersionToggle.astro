@@ -1,0 +1,61 @@
+---
+interface Props {
+  href: string;
+  label: string;
+}
+
+const { href, label } = Astro.props;
+---
+
+<a class="version-toggle" href={href}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    aria-hidden="true"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+  </svg>
+  {label}
+</a>
+
+<style>
+  .version-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-family: inherit;
+    color: #9ca3af;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
+  }
+
+  .version-toggle svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .version-toggle:hover {
+    color: #2563eb;
+    border-color: #2563eb;
+  }
+
+  @media print {
+    .version-toggle {
+      display: none;
+    }
+  }
+</style>

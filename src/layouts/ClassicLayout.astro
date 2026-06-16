@@ -6,7 +6,9 @@ import EducationList from "../components/EducationList.astro";
 import Certifications from "../components/Certifications.astro";
 import type { ResumeData } from "../utils/resumeSchema";
 
-type Props = Omit<ResumeData, "template">;
+type Props = Omit<ResumeData, "template"> & {
+  otherVersion?: { href: string; label: string };
+};
 
 const props = Astro.props;
 ---
@@ -25,6 +27,7 @@ const props = Astro.props;
         name={props.name}
         role={props.role}
         contact={props.contact ?? []}
+        otherVersion={props.otherVersion}
       />
 
       <slot />

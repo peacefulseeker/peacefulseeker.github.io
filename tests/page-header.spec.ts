@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Page header from frontmatter", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/full");
   });
 
   // TC-03-01: Name and role render in h1/subtitle, header before body
@@ -19,7 +19,9 @@ test.describe("Page header from frontmatter", () => {
   test("TC-03-01: header element appears before the markdown body in the DOM", async ({
     page,
   }) => {
-    const headerBox = await page.locator("header.resume-header-bar").boundingBox();
+    const headerBox = await page
+      .locator("header.resume-header-bar")
+      .boundingBox();
     const firstBodyHeading = page.locator("main h2").first();
     const bodyBox = await firstBodyHeading.boundingBox();
 

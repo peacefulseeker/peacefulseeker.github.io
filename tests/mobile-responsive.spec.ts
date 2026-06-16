@@ -10,7 +10,7 @@ for (const vp of VIEWPORTS) {
     test.use({ viewport: { width: vp.width, height: vp.height } });
 
     test.beforeEach(async ({ page }) => {
-      await page.goto("/");
+      await page.goto("/full");
     });
 
     test("no horizontal scrollbar", async ({ page }) => {

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("PDF download via browser print", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/full");
   });
 
   test("Download PDF button is a visible semantic button", async ({ page }) => {
@@ -36,7 +36,7 @@ test.describe("PDF download via browser print", () => {
 
   test("links are underlined in print media", async ({ page }) => {
     await page.emulateMedia({ media: "print" });
-    const link = page.locator("main a").first();
+    const link = page.locator("main a:not(.version-toggle)").first();
     await expect(link).toHaveCSS("text-decoration-line", "underline");
   });
 
