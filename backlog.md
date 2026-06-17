@@ -11,5 +11,3 @@
 - **Favicon** — add a proper favicon to replace the default.
 
 ## TODO
-
-- **Trim integration-test devices** — pare the Playwright project/viewport matrix down to the essential set (drop redundant device profiles) to cut integration-test runtime in CI and locally.
