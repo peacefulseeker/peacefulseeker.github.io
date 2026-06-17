@@ -12,6 +12,4 @@
 
 ## TODO
 
-- **CI quality gate (pre-merge)** — block merging on a failing PR check: run `pnpm typecheck`, `pnpm test`, `pnpm test:integration`, and `pnpm format:check` on pull requests so regressions can't land on `main`.
-
 - **Trim integration-test devices** — pare the Playwright project/viewport matrix down to the essential set (drop redundant device profiles) to cut integration-test runtime in CI and locally.
