@@ -12,7 +12,7 @@ const { sidebarPosition } = resume.template;
 
 const base = import.meta.env.BASE_URL;
 const otherVersion = (await resumeVariantExists("full"))
-  ? { href: `${base}resume/full`, label: "Full version" }
+  ? { href: `${base}resume/full/`, label: "Full version" }
   : undefined;
 ---
 
