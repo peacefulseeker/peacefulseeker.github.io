@@ -1,5 +1,6 @@
 ---
 import "../styles/classic.css";
+import FaviconLinks from "../components/FaviconLinks.astro";
 import ResumeHeader from "../components/ResumeHeader.astro";
 import Timeline from "../components/Timeline.astro";
 import EducationList from "../components/EducationList.astro";
@@ -19,7 +20,7 @@ const props = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{props.name} — Resume</title>
     <meta name="description" content={`${props.name} — ${props.role}`} />
-    <link rel="icon" href="/favicon.ico" />
+    <FaviconLinks />
   </head>
   <body>
     <main>
