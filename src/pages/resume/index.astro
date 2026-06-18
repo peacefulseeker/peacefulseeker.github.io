@@ -1,0 +1,32 @@
+---
+import {
+  getResumeEntry,
+  resumeVariantExists,
+} from "../../utils/getResumeEntry";
+import OnepageLayout from "../../layouts/OnepageLayout.astro";
+
+// The one-page resume is the default resume view, served at /resume
+// (see ADR 0006). The full version lives at /resume/full.
+const resume = await getResumeEntry("onepage");
+const { sidebarPosition } = resume.template;
+
+const base = import.meta.env.BASE_URL;
+const otherVersion = (await resumeVariantExists("full"))
+  ? { href: `${base}resume/full`, label: "Full version" }
+  : undefined;
+---
+
+<OnepageLayout
+  name={resume.name}
+  role={resume.role}
+  profile={resume.profile}
+  skills={resume.skills}
+  languages={resume.languages}
+  experience={resume.experience}
+  education={resume.education}
+  certifications={resume.certifications}
+  sidebarPosition={sidebarPosition}
+  otherVersion={otherVersion}
+>
+  <resume.Content />
+</OnepageLayout>

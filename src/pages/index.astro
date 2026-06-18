@@ -1,28 +1,57 @@
 ---
-import { getResumeEntry, resumeVariantExists } from "../utils/getResumeEntry";
-import OnepageLayout from "../layouts/OnepageLayout.astro";
+import { getResumeEntry } from "../utils/getResumeEntry";
+import "../styles/landing.css";
 
-// The one-page resume is the default landing view (see ADR 0005).
+// Root is a minimal landing page (see ADR 0006). The resume itself lives
+// under /resume; name and role are pulled from the resume so this page stays
+// in sync with the single source of truth.
 const resume = await getResumeEntry("onepage");
-const { sidebarPosition } = resume.template;
 
 const base = import.meta.env.BASE_URL;
-const otherVersion = (await resumeVariantExists("full"))
-  ? { href: `${base}full`, label: "Full version" }
-  : undefined;
+const resumeHref = `${base}resume/`;
 ---
 
-<OnepageLayout
-  name={resume.name}
-  role={resume.role}
-  profile={resume.profile}
-  skills={resume.skills}
-  languages={resume.languages}
-  experience={resume.experience}
-  education={resume.education}
-  certifications={resume.certifications}
-  sidebarPosition={sidebarPosition}
-  otherVersion={otherVersion}
->
-  <resume.Content />
-</OnepageLayout>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{resume.name}</title>
+    <meta
+      name="description"
+      content={`${resume.name} — ${resume.role}. View my CV.`}
+    />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <main class="landing-board">
+      <h1 class="landing-name">{resume.name}</h1>
+      <p class="landing-role">{resume.role}</p>
+      <dl class="landing-grid">
+        <dt class="landing-label">status</dt>
+        <dd class="landing-val">
+          <span class="dot dot--pulse"></span>operational
+        </dd>
+
+        <dt class="landing-label">resume</dt>
+        <dd class="landing-val">
+          <span class="dot"></span>ready <a
+            class="landing-cta"
+            href={resumeHref}>View CV</a
+          >
+        </dd>
+
+        <dt class="landing-label">fuel</dt>
+        <dd class="landing-val">
+          <span class="dot"></span>tea (cappuccino on a good day)
+        </dd>
+
+        <dt class="landing-label">blog</dt>
+        <dd class="landing-val">
+          <span class="dot dot--amber dot--pulse"></span>deploying… <span
+            class="landing-muted">eta: someday</span
+          >
+        </dd>
+      </dl>
+    </main>
+  </body>
+</html>

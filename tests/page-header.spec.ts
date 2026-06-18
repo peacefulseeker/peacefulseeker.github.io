@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Page header from frontmatter", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/full");
+    await page.goto("/resume/full");
   });
 
   // TC-03-01: Name and role render in h1/subtitle, header before body

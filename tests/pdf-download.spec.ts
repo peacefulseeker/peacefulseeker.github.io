@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("PDF download via browser print", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/full");
+    await page.goto("/resume/full");
   });
 
   test("Download PDF button is a visible semantic button", async ({ page }) => {

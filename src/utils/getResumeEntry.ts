@@ -27,8 +27,8 @@ async function selectEntry(variant: Variant) {
  * rendered Content component.
  *
  * `variant` selects which file to render: "full" picks the classic/timeline
- * resume (the default landing is the one-pager, with /full serving this), and
- * "onepage" picks the trimmed one-page resume.
+ * resume (served at /resume/full), and "onepage" picks the trimmed one-page
+ * resume (served at /resume; see ADR 0006).
  *
  * Throws loudly when no matching file exists so the build fails with a clear
  * message rather than rendering a blank page.
