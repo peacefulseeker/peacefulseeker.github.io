@@ -11,3 +11,5 @@
 - **Favicon** — add a proper favicon to replace the default.
 
 ## TODO
+
+- **Shareable .yml resume** — create a shareable .yml resume so there's no content duplication between full and onepage template and the content can be maintained in one place. The .yml file would be parsed and rendered into both templates, with template-specific adjustments as needed (e.g. onepage may need more concise descriptions). This would eliminate the risk of content drift between the two versions and simplify maintenance. The .yml format is human-friendly and can be easily edited without needing to touch HTML/JSX.
