@@ -3,6 +3,7 @@
  * BaseLayout is not used by the built-in templates (classic, timeline
  * are each self-contained). Kept as a starting point for custom templates.
  */
+import FaviconLinks from "../components/FaviconLinks.astro";
 import ResumeHeader from "../components/ResumeHeader.astro";
 
 interface Props {
@@ -19,7 +20,7 @@ const { name, role, contact } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{name} — Resume</title>
-    <link rel="icon" href="/favicon.ico" />
+    <FaviconLinks />
   </head>
   <body>
     <main>

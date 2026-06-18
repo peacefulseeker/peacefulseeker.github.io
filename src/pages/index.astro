@@ -1,5 +1,6 @@
 ---
 import { getResumeEntry } from "../utils/getResumeEntry";
+import FaviconLinks from "../components/FaviconLinks.astro";
 import "../styles/landing.css";
 
 // Root is a minimal landing page (see ADR 0006). The resume itself lives
@@ -20,7 +21,7 @@ const resumeHref = `${base}resume/`;
       name="description"
       content={`${resume.name} — ${resume.role}. View my CV.`}
     />
-    <link rel="icon" href="/favicon.ico" />
+    <FaviconLinks />
   </head>
   <body>
     <main class="landing-board">
