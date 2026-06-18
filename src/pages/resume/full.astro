@@ -1,15 +1,18 @@
 ---
-import { getResumeEntry, resumeVariantExists } from "../utils/getResumeEntry";
-import { TEMPLATE_NAMES } from "../content.config";
-import type { TemplateName } from "../content.config";
-import ClassicLayout from "../layouts/ClassicLayout.astro";
-import TimelineLayout from "../layouts/TimelineLayout.astro";
+import {
+  getResumeEntry,
+  resumeVariantExists,
+} from "../../utils/getResumeEntry";
+import { TEMPLATE_NAMES } from "../../content.config";
+import type { TemplateName } from "../../content.config";
+import ClassicLayout from "../../layouts/ClassicLayout.astro";
+import TimelineLayout from "../../layouts/TimelineLayout.astro";
 
 const resume = await getResumeEntry("full");
 const { name: templateName, ...templateOptions } = resume.template;
 
 // The full route renders the classic/timeline templates; "onepage" is served
-// from the default route (see ADR 0005), so it is intentionally excluded here.
+// from /resume (see ADR 0006), so it is intentionally excluded here.
 type FullTemplate = Exclude<TemplateName, "onepage">;
 
 const layouts = {
@@ -33,7 +36,7 @@ const Layout = layouts[templateName];
 
 const base = import.meta.env.BASE_URL;
 const otherVersion = (await resumeVariantExists("onepage"))
-  ? { href: base, label: "One-page version" }
+  ? { href: `${base}resume/`, label: "One-page version" }
   : undefined;
 ---
 

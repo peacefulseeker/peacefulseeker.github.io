@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Template switching — active template renders all fields", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/full");
+    await page.goto("/resume/full");
   });
 
   test("renders name in h1", async ({ page }) => {

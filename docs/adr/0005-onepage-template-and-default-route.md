@@ -1,7 +1,12 @@
 # 0005. One-page template as the default route, full resume at `/full`
 
-**Status:** Accepted
+**Status:** Superseded in part by [ADR 0006](0006-landing-page-and-resume-namespace.md)
 **Date:** 2026-06-15
+
+> **Note (2026-06-17):** The _route placement_ in this ADR is superseded by ADR 0006:
+> the one-page resume now lives at `/resume` and the full resume at `/resume/full`,
+> with the root (`/`) serving a landing page. The two-content-file model, the
+> `OnepageLayout`, and the variant-aware `getResumeEntry` described below remain in force.
 
 ## Context
 

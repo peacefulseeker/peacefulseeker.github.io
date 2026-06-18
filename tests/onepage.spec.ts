@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("One-page template — default landing view at /", () => {
+test.describe("One-page template — default resume view at /resume", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/resume");
   });
 
   test("renders name and role in the header", async ({ page }) => {
@@ -35,7 +35,7 @@ test.describe("One-page template — default landing view at /", () => {
 
     const toggle = page.locator("a.version-toggle");
     await expect(toggle).toContainText("Full version");
-    await expect(toggle).toHaveAttribute("href", /\/full\/?$/);
+    await expect(toggle).toHaveAttribute("href", /\/resume\/full\/?$/);
   });
 
   test("toggle and PDF button are hidden in print", async ({ page }) => {
@@ -55,12 +55,12 @@ test.describe("One-page template — default landing view at /", () => {
 });
 
 test.describe("Cross-link — full view points back to the one-pager", () => {
-  test("the /full header links to the one-page default at /", async ({
+  test("the /resume/full header links to the one-page view at /resume", async ({
     page,
   }) => {
-    await page.goto("/full");
+    await page.goto("/resume/full");
     const toggle = page.locator("a.version-toggle");
     await expect(toggle).toContainText("One-page version");
-    await expect(toggle).toHaveAttribute("href", /\/$/);
+    await expect(toggle).toHaveAttribute("href", /\/resume\/?$/);
   });
 });
