@@ -20,11 +20,11 @@ import Certifications from "../components/Certifications.astro";
 interface Props {
   name: string;
   role: string;
+  experience: ExperienceEntry[];
   profile?: ProfileData;
   skills?: string[];
   languages?: string[];
   hobbies?: string[];
-  experience?: ExperienceEntry[];
   education?: EducationEntry[];
   certifications?: CertificationEntry[];
   sidebarPosition?: "left" | "right";
@@ -128,14 +128,10 @@ const links: LinkEntry[] = profile?.links ?? [];
           </section>
 
           <!-- Experience -->
-          {
-            experience && experience.length > 0 && (
-              <section class="section">
-                <h2>Experience</h2>
-                <Timeline experience={experience} />
-              </section>
-            )
-          }
+          <section class="section">
+            <h2>Experience</h2>
+            <Timeline experience={experience} />
+          </section>
 
           <!-- Education -->
           {

@@ -29,6 +29,8 @@ export const experienceSchema = z.object({
   start: z.string(),
   end: z.string(),
   highlights: z.array(z.string()),
+  onepage_include: z.boolean().default(true),
+  onepage_highlights_num: z.number().int().positive().optional(),
   tech: z.array(z.string()).optional(),
 });
 
@@ -58,10 +60,11 @@ export const resumeSchema = z
     template: templateConfigSchema,
     contact: z.array(z.object({ value: z.string() })).optional(),
     profile: profileSchema.optional(),
+    summary_short: z.string().optional(),
     skills: z.array(z.string()).optional(),
     languages: z.array(z.string()).optional(),
     hobbies: z.array(z.string()).optional(),
-    experience: z.array(experienceSchema).optional(),
+    experience: z.array(experienceSchema).min(1),
     education: z.array(educationSchema).optional(),
     certifications: z.array(certificationSchema).optional(),
   })

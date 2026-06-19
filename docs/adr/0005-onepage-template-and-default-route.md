@@ -1,12 +1,14 @@
 # 0005. One-page template as the default route, full resume at `/full`
 
-**Status:** Superseded in part by [ADR 0006](0006-landing-page-and-resume-namespace.md)
+**Status:** Superseded in part by [ADR 0006](0006-landing-page-and-resume-namespace.md); content model amended 2026-06-18
 **Date:** 2026-06-15
 
 > **Note (2026-06-17):** The _route placement_ in this ADR is superseded by ADR 0006:
 > the one-page resume now lives at `/resume` and the full resume at `/resume/full`,
-> with the root (`/`) serving a landing page. The two-content-file model, the
-> `OnepageLayout`, and the variant-aware `getResumeEntry` described below remain in force.
+> with the root (`/`) serving a landing page. The `OnepageLayout` and the
+> variant-aware `getResumeEntry` described below remain in force.
+
+> **Amendment (2026-06-18):** The _two-content-file model_ described in the Decision section has been replaced by a **single-file variant model**. The "Revisit if: the two content files drift painfully" condition was triggered — maintaining the same facts in two files proved error-prone. The "Per-template frontmatter trim controls" alternative (previously rejected) is now accepted, but reframed to avoid duplicating content: rather than a mechanical cap applied to arbitrary content, **highlights are authored most-impactful-first**, and each experience entry carries an optional `onepage_highlights_num: <n>` count plus an optional `onepage_include: false` flag (to drop an entry from the onepage view entirely). `getResumeEntry("onepage")` truncates each entry's highlights to the count and removes excluded entries before returning data; the layouts are unchanged. This keeps the content fully DRY — no condensed bullets are copy-pasted — while the ADR's original editorial objection ("which two highlights best represent a role is a judgement call") is satisfied by the author choosing the highlight _order_ and the per-entry count, not by an automated heuristic. The one genuinely non-truncatable field, the summary, keeps a separate hand-written `summary_short` string because the full two-paragraph summary cannot be mechanically shortened into the one-line variant. The `template.name` discriminator is no longer used to select between files; the full/onepage split is now a rendering concern handled in `getResumeEntry`.
 
 ## Context
 

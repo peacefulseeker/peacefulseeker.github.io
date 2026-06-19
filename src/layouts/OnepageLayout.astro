@@ -15,10 +15,11 @@ import ExperienceList from "../components/ExperienceList.astro";
 interface Props {
   name: string;
   role: string;
+  experience: ExperienceEntry[];
   profile?: ProfileData;
+  summary_short?: string;
   skills?: string[];
   languages?: string[];
-  experience?: ExperienceEntry[];
   education?: EducationEntry[];
   certifications?: CertificationEntry[];
   sidebarPosition?: "left" | "right";
@@ -29,6 +30,7 @@ const {
   name,
   role,
   profile,
+  summary_short,
   skills,
   languages,
   experience,
@@ -82,7 +84,7 @@ const links: LinkEntry[] = profile?.links ?? [];
       </header>
 
       <section class="op-summary" aria-label="Summary">
-        <slot />
+        {summary_short ? <p>{summary_short}</p> : <slot />}
       </section>
 
       <div
@@ -92,14 +94,10 @@ const links: LinkEntry[] = profile?.links ?? [];
         ]}
       >
         <main class="op-main">
-          {
-            experience && experience.length > 0 && (
-              <section class="op-section">
-                <h2>Experience</h2>
-                <ExperienceList experience={experience} />
-              </section>
-            )
-          }
+          <section class="op-section">
+            <h2>Experience</h2>
+            <ExperienceList experience={experience} />
+          </section>
         </main>
 
         <aside class="op-sidebar" aria-label="Skills and information">

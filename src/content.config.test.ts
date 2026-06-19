@@ -4,6 +4,16 @@ import { resumeSchema, TEMPLATE_NAMES } from "./utils/resumeSchema";
 const validBase = {
   name: "Jane Doe",
   role: "Software Engineer",
+  // experience is required (min 1); include one so the base parses cleanly.
+  experience: [
+    {
+      role: "Engineer",
+      company: "Acme",
+      start: "2020",
+      end: "Present",
+      highlights: ["Built things"],
+    },
+  ],
 };
 
 describe("TEMPLATE_NAMES", () => {
@@ -124,6 +134,24 @@ describe("resumeSchema — structured sections", () => {
       ],
     });
     expect(result.success).toBe(true);
+  });
+
+  test("rejects a resume with no experience field", () => {
+    const result = resumeSchema.safeParse({
+      name: "Jane Doe",
+      role: "Software Engineer",
+      template: { name: "timeline" },
+    });
+    expect(result.success).toBe(false);
+  });
+
+  test("rejects an empty experience array", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      template: { name: "timeline" },
+      experience: [],
+    });
+    expect(result.success).toBe(false);
   });
 
   test("accepts certifications with optional fields", () => {
