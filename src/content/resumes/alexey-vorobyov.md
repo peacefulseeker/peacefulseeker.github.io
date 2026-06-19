@@ -38,7 +38,7 @@ experience:
     location: "Remote"
     start: "October 2025"
     end: "Present"
-    onepage_highlights_num: 4
+    onepage_highlights_num: 3
     highlights:
       - "Built core services in a FastAPI payment-calculation platform that automates monthly capitation processing for value-based-care organizations, replacing a slow manual reconciliation workflow."
       - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing to the TypeScript/Fastify UI/backend monorepo."
