@@ -12,6 +12,11 @@ profile:
       url: https://www.linkedin.com/in/vorobyovalexey/
     - label: GitHub
       url: https://github.com/peacefulseeker
+summary_short: " \n
+    Senior software engineer with 7+ years building robust SaaS across monolithic and microservices architectures. \n
+    Full-stack depth in Python (FastAPI, Pydantic, SQLAlchemy) and TypeScript (React, Node.js), on AWS and/or Azure Cloud. \n
+    Seeking B2B opportunities to drive impactful, scalable work. \n
+"
 skills:
   - "Python, FastAPI, SQLAlchemy"
   - "JS/TS, React, Node.js"
@@ -33,11 +38,16 @@ experience:
     location: "Remote"
     start: "October 2025"
     end: "Present"
+    onepage_highlights_num: 3
     highlights:
-      - "Contributed to a FastAPI-based payment calculation service that automates monthly capitation payment processing for healthcare organizations, improving payment accuracy and reducing manual reconciliation time."
-      - "Collaborated with client engineers in migrating from legacy systems to modern service-based architecture, ensuring seamless transition and data integrity throughout the modernization process."
-      - "Contributed as a full-stack engineer, delivering end-to-end features from API development to client-facing views, including both internal admin interfaces and public-facing portals."
-      - "Designed and implemented RESTful API endpoints for generating detailed service statements and payment reports, enabling transparent financial tracking for healthcare providers."
+      - "Built core services in a FastAPI payment-calculation platform that automates monthly capitation processing for value-based-care organizations, replacing a slow manual reconciliation workflow."
+      - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing to the TypeScript/Fastify UI/backend monorepo."
+      - "Collaborated with client engineers to migrate from a legacy monolith to a service-oriented architecture, owning data-integrity and cutover work for the payments domain."
+      - "Built a data projection-sync system bridging the payment service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream analytics and reporting on payment data."
+      - "Designed a multi-step payment-calculation orchestrator with re-run support, turning ad-hoc payment processing into a repeatable, recoverable pipeline."
+      - "Migrated the payment service to async database operations and hardened connection pooling, materially increasing throughput on large monthly capitation runs."
+      - "Hardened production reliability by introducing database transaction guardrails, diagnosing infrastructure incidents, and resolving high-priority failures in financial report generation."
+      - "Strengthened security and PHI protection through database privilege separation and sanitization of logging output on rollback paths."
     tech:
       - Python
       - FastAPI
@@ -58,6 +68,7 @@ experience:
     location: "Latvia / Hybrid"
     start: "December 2024"
     end: "October 2025"
+    onepage_highlights_num: 2
     highlights:
       - "Developed a ChatGPT-like RAG application for enterprise customers, enabling AI-powered applications over proprietary data (knowledge bases, documents, databases) with focus on performance, security, and cost-efficiency."
       - "Developed a performant and scalable PDF parsing solution as an Azure durable function for locating page numbers for specific text chunks."
@@ -73,6 +84,7 @@ experience:
     location: "Latvia / Hybrid"
     start: "April 2024"
     end: "July 2024"
+    onepage_include: false
     highlights:
       - "Contributed to a project for merchant risk score estimation based on factors such as payments from high-risk countries and multi-currency cross-border payments."
       - "Identified and advocated for SQL query optimization early before feature release while processing large volumes of payment rows."
@@ -87,14 +99,15 @@ experience:
     location: "Latvia / Remote"
     start: "June 2020"
     end: "March 2024"
+    onepage_highlights_num: 4
     highlights:
-      - "Supported A/B tests on main traffic-receiving pages (prezi.com, /design, /product, /video) to identify layout and copy variants that improved business metrics."
       - "Developed and maintained payment and subscription flows, including transforming user subscription accounts based on license type."
       - "Improved fraud prevention logic in trial payment flows and extended it to upgrade/renewal flows, reducing fraudulent chargebacks."
-      - "Integrated Invisible reCAPTCHA on sign-up pages; an experiment showed a 17% increase in registrations compared to visible reCAPTCHA."
-      - "Shipped backend logic for downloading business invoices via authentication-less links in email campaigns."
       - "Implemented cookie consent for EU visitors via third-party integration on top-funnel pages."
       - "Introduced Facebook Conversions API tracking from the backend, improving conversion data accuracy in analytics dashboards."
+      - "Supported A/B tests on main traffic-receiving pages (prezi.com, /design, /product, /video) to identify layout and copy variants that improved business metrics."
+      - "Integrated Invisible reCAPTCHA on sign-up pages; an experiment showed a 17% increase in registrations compared to visible reCAPTCHA."
+      - "Shipped backend logic for downloading business invoices via authentication-less links in email campaigns."
       - "Maintained internal CMS and CRM; supported micro-services modernization (Python 2.7 upgrades, CI/CD migrations to GitHub Actions from Jenkins)."
     tech:
       - "Python / Django"
@@ -110,8 +123,8 @@ experience:
     end: "June 2020"
     highlights:
       - "Led development of the infogram.com homepage and /templates pages built with Next.js."
-      - "Led UI modernization of the Prezi Design editor, which became part of the Prezi product suite."
       - "Introduced an integrations panel in the Infogram editor, allowing users to connect to database sources such as MySQL and PostgreSQL."
+      - "Led UI modernization of the Prezi Design editor, which became part of the Prezi product suite."
       - "Migrated support.infogram.com to the Zendesk Help Center platform."
     tech:
       - React
@@ -122,6 +135,7 @@ experience:
     location: "Riga / Hamburg"
     start: "August 2016"
     end: "December 2017"
+    onepage_include: false
     highlights:
       - 'Developed and maintained pflegegrad-berechnen.de, a tool for calculating healthcare degrees for seniors in Germany — it reached the top SERP position for "pflegegrad berechnen".'
       - "Maintained sehner.international and pflegemarkt.com business websites."
@@ -168,4 +182,4 @@ certifications:
 
 A strategic senior software engineer with over 7 years of experience in software engineering, specializing in building and maintaining robust SaaS applications across both monolithic and microservices architectures. My technical expertise spans the full stack, with a proficiency in Python (FastAPI, Pydantic, SQLAlchemy), modern TypeScript/JavaScript ecosystems (React, Node.js/Fastify, TanStack Query), and AWS infrastructure. I have decent experience with PostgreSQL, Docker, microservices architectures, and monorepo development patterns. I also bring experience from working with Ruby, PHP, and Azure Cloud in earlier roles.
 
-Known for delivering resilient, customer-centric solutions within agile environments, I excel at translating complex business requirements into scalable technical implementations. I am seeking B2B opportunities where I can contribute to impactful projects, leverage my experience to drive innovation, collaborate with talented professionals, and mentor developing engineers while continuing to expand my own technical capabilities.
+Known for delivering resilient, customer-centric solutions within agile environments, I excel at translating complex business requirements into scalable technical implementations. I am seeking B2B opportunities where I can contribute to impactful and purposeful projects, leverage my experience to drive innovation, collaborate with talented professionals, and mentor young talent while continuing to expand my own technical capabilities.

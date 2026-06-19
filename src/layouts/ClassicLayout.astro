@@ -33,14 +33,10 @@ const props = Astro.props;
 
       <slot />
 
-      {
-        props.experience && props.experience.length > 0 && (
-          <section>
-            <h2>Experience</h2>
-            <Timeline experience={props.experience} />
-          </section>
-        )
-      }
+      <section>
+        <h2>Experience</h2>
+        <Timeline experience={props.experience} />
+      </section>
 
       {
         props.education && props.education.length > 0 && (

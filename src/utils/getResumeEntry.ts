@@ -1,61 +1,62 @@
 import { getCollection, render } from "astro:content";
 import type { ResumeData } from "../content.config";
+import { applyOnepageVariant } from "./onepageVariant";
 
 type Variant = "full" | "onepage";
 
 /**
- * A resume is the "onepage" variant when its template is the onepage layout.
- * Everything else (classic, timeline) is treated as the "full" variant. This
- * keeps the full/onepage split keyed off the rendering contract rather than a
- * filename convention.
+ * Returns the single resume entry, sorted by id for deterministic CI output.
+ *
+ * Single-author assumption: this repo hosts one person's resume. If a second
+ * .md file is ever added, this function will silently serve whichever sorts
+ * first alphabetically. Add a slug-based filter at that point.
  */
-const isOnepage = (entry: { data: ResumeData }) =>
-  entry.data.template.name === "onepage";
-
-async function selectEntry(variant: Variant) {
+async function selectEntry() {
   const entries = await getCollection("resumes");
-  const pool = entries.filter((e) =>
-    variant === "onepage" ? isOnepage(e) : !isOnepage(e),
-  );
-
-  // Sort by id so selection is deterministic across OS/CI filesystem ordering.
-  return pool.sort((a, b) => a.id.localeCompare(b.id))[0];
+  return entries.sort((a, b) => a.id.localeCompare(b.id))[0];
 }
 
 /**
  * Resolves the resume entry to display and returns its data together with the
  * rendered Content component.
  *
- * `variant` selects which file to render: "full" picks the classic/timeline
- * resume (served at /resume/full), and "onepage" picks the trimmed one-page
- * resume (served at /resume; see ADR 0006).
+ * `variant` selects which view to render: "full" returns all experience with
+ * every highlight; "onepage" drops entries marked onepage_include: false and
+ * truncates each remaining entry's highlights to onepage_highlights_num (served at
+ * /resume; see ADR 0006). Highlights are authored most-impactful-first so the
+ * truncation reads well without a separate condensed copy.
  *
- * Throws loudly when no matching file exists so the build fails with a clear
- * message rather than rendering a blank page.
+ * Throws loudly when no file exists so the build fails with a clear message
+ * rather than rendering a blank page.
  */
 export async function getResumeEntry(variant: Variant = "full") {
-  const entry = await selectEntry(variant);
+  const entry = await selectEntry();
 
   if (!entry) {
     throw new Error(
-      `No "${variant}" resume found in src/content/resumes/. ` +
-        (variant === "onepage"
-          ? "Add a .md file with `template.name: onepage` to build the default view at /."
-          : "Add a .md file with a classic or timeline template to build the site."),
+      "No resume found in src/content/resumes/. Add a .md file to build the site.",
     );
   }
 
   const { Content } = await render(entry);
-  const data: ResumeData = entry.data;
+  const data: ResumeData =
+    variant === "onepage" ? applyOnepageVariant(entry.data) : entry.data;
 
   return { Content, ...data };
 }
 
 /**
- * Whether a resume of the given variant exists. Used to decide whether to show
- * the cross-link toggle between the full and one-page views, so we never render
- * a link to a route that wasn't generated.
+ * Whether a resume variant exists. Used to decide whether to show the
+ * cross-link toggle between the full and one-page views.
+ *
+ * With a single-file content model both variants are always present together,
+ * so the `variant` argument is intentionally unused — the answer is the same
+ * for "full" and "onepage". The parameter is kept so call sites remain
+ * self-documenting ("does the full version exist?").
  */
-export async function resumeVariantExists(variant: Variant): Promise<boolean> {
-  return (await selectEntry(variant)) !== undefined;
+export async function resumeVariantExists(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _variant: Variant,
+): Promise<boolean> {
+  return (await selectEntry()) !== undefined;
 }
