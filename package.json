@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "test:integration": "playwright test"
+    "test:integration": "playwright test",
+    "onepage:fit": "playwright test onepage-fit"
   },
   "dependencies": {
     "astro": "^6.4.3"
