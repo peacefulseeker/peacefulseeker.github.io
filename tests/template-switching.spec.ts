@@ -34,4 +34,21 @@ test.describe("Template switching — active template renders all fields", () =>
     expect(bodyBox).not.toBeNull();
     expect(headerBox!.y).toBeLessThan(bodyBox!.y);
   });
+
+  // Regression guard: classic + timeline CSS both bundle onto /resume/full, so
+  // each template scopes its rules under a single body.tpl-<name> root class.
+  // If a template's styles ever leak back to a bare `body` selector, the two
+  // background rules collide and one clobbers the other (the original bug).
+  test("only the active template's body styles apply (no cross-template leak)", async ({
+    page,
+  }) => {
+    const className = await page.locator("body").getAttribute("class");
+    expect(className).toBe("tpl-classic");
+
+    // Classic's background is #f5f5f0; timeline's #f3f4f6 must not win.
+    const bg = await page
+      .locator("body")
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(bg).toBe("rgb(245, 245, 240)");
+  });
 });

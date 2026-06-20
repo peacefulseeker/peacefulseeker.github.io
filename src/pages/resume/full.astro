@@ -1,58 +1,39 @@
 ---
+import { getResumeEntry } from "../../utils/getResumeEntry";
 import {
-  getResumeEntry,
-  resumeVariantExists,
-} from "../../utils/getResumeEntry";
-import { TEMPLATE_NAMES } from "../../content.config";
-import type { TemplateName } from "../../content.config";
+  assertFullTemplate,
+  resolveOtherVersion,
+} from "../../utils/resumeView";
+import type { FullTemplate } from "../../utils/resumeSchema";
 import ClassicLayout from "../../layouts/ClassicLayout.astro";
 import TimelineLayout from "../../layouts/TimelineLayout.astro";
 
-const resume = await getResumeEntry("full");
-const { name: templateName, ...templateOptions } = resume.template;
-
-// The full route renders the classic/timeline templates; "onepage" is served
-// from /resume (see ADR 0006), so it is intentionally excluded here.
-type FullTemplate = Exclude<TemplateName, "onepage">;
-
-const layouts = {
+// Every full-route template maps to a layout. Typing the record as
+// Record<FullTemplate, …> makes adding a template to the schema a compile
+// error here until its layout is wired up. CSS no longer needs a dynamic
+// import to stay isolated — each template scopes its styles under a
+// body.tpl-<name> root class (see the tpl-* convention in docs/adr), so both
+// stylesheets can co-load on this page without colliding.
+const LAYOUTS: Record<
+  FullTemplate,
+  typeof ClassicLayout | typeof TimelineLayout
+> = {
   classic: ClassicLayout,
   timeline: TimelineLayout,
-} satisfies Record<FullTemplate, unknown>;
+};
 
-function isFullTemplate(t: TemplateName): t is FullTemplate {
-  return t in layouts;
-}
+const { Content, full_template, ...resumeData } = await getResumeEntry("full");
+const { name: templateName, ...templateOptions } = full_template;
 
-if (!isFullTemplate(templateName)) {
-  throw new Error(
-    `Unknown full-route template "${templateName}". Valid templates: ${TEMPLATE_NAMES.filter(
-      (t) => t !== "onepage",
-    ).join(", ")}`,
-  );
-}
+assertFullTemplate(templateName);
+const Layout = LAYOUTS[templateName];
 
-const Layout = layouts[templateName];
-
-const base = import.meta.env.BASE_URL;
-const otherVersion = (await resumeVariantExists("onepage"))
-  ? { href: `${base}resume/`, label: "One-page version" }
-  : undefined;
+const otherVersion = await resolveOtherVersion(
+  "onepage",
+  import.meta.env.BASE_URL,
+);
 ---
 
-<Layout
-  name={resume.name}
-  role={resume.role}
-  contact={resume.contact}
-  profile={resume.profile}
-  skills={resume.skills}
-  languages={resume.languages}
-  hobbies={resume.hobbies}
-  experience={resume.experience}
-  education={resume.education}
-  certifications={resume.certifications}
-  otherVersion={otherVersion}
-  {...templateOptions}
->
-  <resume.Content />
+<Layout {...resumeData} {...templateOptions} otherVersion={otherVersion}>
+  <Content />
 </Layout>

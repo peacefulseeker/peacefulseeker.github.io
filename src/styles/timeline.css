@@ -1,14 +1,7 @@
 @import "./base.css";
 
-body {
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+body.tpl-timeline {
+  font-family: var(--resume-font);
   font-size: 16px;
   line-height: 1.6;
   color: #111827;
@@ -89,7 +82,7 @@ body {
 
 /* ── Main content ── */
 .resume-main {
-  padding: 1.75rem 2rem;
+  padding: 1.25rem 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -154,20 +147,16 @@ body {
 /* ── Print ── */
 
 /*
- * Override base.css's @page { margin: 0 } so every printed page gets a
- * proper margin — not just the body element's top/bottom which only pads
- * the document start and end, not each page boundary after a break.
- * 14mm top/bottom gives breathing room; 12mm left/right keeps columns wide.
+ * @page margin is global (it cannot be scoped to a body class) and is owned by
+ * base.css at 15mm, shared with classic since both co-load on /resume/full.
+ * Timeline previously set 14mm/12mm here for wider columns; that override is
+ * dropped so the shared route has a single, predictable page box.
  */
-@page {
-  margin: 14mm 12mm;
-}
-
 @media print {
-  body {
+  body.tpl-timeline {
     background: #fff;
     font-size: 10pt;
-    /* Zero out the base.css body padding — @page margins handle all spacing now */
+    /* Zero out the screen body padding — @page margins handle all spacing now */
     padding: 0;
   }
 

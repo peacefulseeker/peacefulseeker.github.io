@@ -2,6 +2,7 @@ import { z } from "astro/zod";
 
 export const TEMPLATE_NAMES = ["classic", "timeline", "onepage"] as const;
 export type TemplateName = (typeof TEMPLATE_NAMES)[number];
+export type FullTemplate = Exclude<TemplateName, "onepage">;
 
 export const templateConfigSchema = z.object({
   name: z.enum(TEMPLATE_NAMES),
@@ -57,7 +58,7 @@ export const resumeSchema = z
   .object({
     name: z.string(),
     role: z.string(),
-    template: templateConfigSchema,
+    full_template: templateConfigSchema,
     contact: z.array(z.object({ value: z.string() })).optional(),
     profile: profileSchema.optional(),
     summary_short: z.string().optional(),
@@ -71,6 +72,19 @@ export const resumeSchema = z
   .strict();
 
 export type ResumeData = z.infer<typeof resumeSchema>;
+
+/**
+ * Props shared by every full-route layout (classic, timeline). Both layouts
+ * accept the same shape so `full.astro` can spread one object into a layout
+ * picked at runtime without the prop set diverging per template (see ADR on
+ * the tpl-* template-isolation convention). `sidebarPosition` comes from the
+ * `full_template` config; `otherVersion` is the cross-link to the one-pager.
+ */
+export type FullLayoutProps = Omit<ResumeData, "full_template"> & {
+  sidebarPosition?: TemplateConfig["sidebarPosition"];
+  otherVersion?: { href: string; label: string };
+};
+
 export type ProfileData = z.infer<typeof profileSchema>;
 export type LinkEntry = z.infer<typeof linkSchema>;
 export type ExperienceEntry = z.infer<typeof experienceSchema>;
