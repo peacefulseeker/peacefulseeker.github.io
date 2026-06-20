@@ -1,13 +1,7 @@
 ---
 import "../styles/timeline.css";
 import FaviconLinks from "../components/FaviconLinks.astro";
-import type {
-  ProfileData,
-  ExperienceEntry,
-  EducationEntry,
-  CertificationEntry,
-  LinkEntry,
-} from "../utils/resumeSchema";
+import type { FullLayoutProps, LinkEntry } from "../utils/resumeSchema";
 import PdfButton from "../components/PdfButton.astro";
 import VersionToggle from "../components/VersionToggle.astro";
 import ProfilePhoto from "../components/ProfilePhoto.astro";
@@ -17,19 +11,7 @@ import Timeline from "../components/Timeline.astro";
 import EducationList from "../components/EducationList.astro";
 import Certifications from "../components/Certifications.astro";
 
-interface Props {
-  name: string;
-  role: string;
-  experience: ExperienceEntry[];
-  profile?: ProfileData;
-  skills?: string[];
-  languages?: string[];
-  hobbies?: string[];
-  education?: EducationEntry[];
-  certifications?: CertificationEntry[];
-  sidebarPosition?: "left" | "right";
-  otherVersion?: { href: string; label: string };
-}
+type Props = FullLayoutProps;
 
 const {
   name,
@@ -56,7 +38,7 @@ const links: LinkEntry[] = profile?.links ?? [];
     <meta name="description" content={`${name} — ${role}`} />
     <FaviconLinks />
   </head>
-  <body>
+  <body class="tpl-timeline">
     <div class="resume-paper">
       <!-- Header -->
       <header class="resume-header">

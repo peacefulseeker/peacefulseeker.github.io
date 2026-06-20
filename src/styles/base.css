@@ -1,9 +1,30 @@
+/*
+ * base.css holds ONLY genuinely template-agnostic rules: the reset and the
+ * default printed page margin. Everything element- or layout-specific lives
+ * in a template stylesheet scoped under its `body.tpl-<name>` root class, so
+ * that templates whose CSS co-loads on a shared route (classic + timeline on
+ * /resume/full) cannot collide. The one rule that cannot be class-scoped is
+ * @page (it is page-box, not element scoped) — it is therefore global here,
+ * and a single route can only honour one value. onepage overrides it to 10mm
+ * for its one-page fit budget; classic and timeline share this 15mm default.
+ */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/*
+ * Single source of truth for the body font, shared by every template. Keeping
+ * one stack here means switching between /resume and /resume/full never swaps
+ * typeface — the two views read as the same document at different densities.
+ */
+:root {
+  --resume-font:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
 }
 
 /*
@@ -15,43 +36,4 @@
  */
 @page {
   margin: 15mm;
-}
-
-@media print {
-  body {
-    color: #000;
-    font-size: 11pt;
-    line-height: 1.4;
-    padding: 0;
-  }
-
-  main {
-    margin: 0;
-    padding: 0;
-    max-width: none;
-    box-shadow: none;
-  }
-
-  h2 {
-    margin: 1rem 0 0.5rem;
-  }
-
-  h3 {
-    margin: 0.75rem 0 0.1rem;
-  }
-
-  h2,
-  h3 {
-    break-after: avoid;
-  }
-
-  li {
-    break-inside: avoid;
-  }
-
-  /* main a bumps specificity above template's screen-mode `a` rule */
-  main a {
-    /* color: #000; */
-    text-decoration: underline;
-  }
 }
