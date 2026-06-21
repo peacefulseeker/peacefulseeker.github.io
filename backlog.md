@@ -18,26 +18,29 @@
 
 - introduce package namespaces to avoid loading imports relatively
 
-- **Harden & speed up the GitHub Actions workflows** — add dependency/browser caching and tighten security on `ci.yml` and `deploy.yml`. See the ticket below.
+- **Finish hardening the GitHub Actions workflows** — remaining least-privilege/security items on `ci.yml` and `deploy.yml`. (The `build`-job move into CI and the pnpm-store cache are **done** — see below.)
 
-  > **Problem area**
-  > Both workflows (`.github/workflows/ci.yml`, `deploy.yml`) are functional but leave performance and least-privilege on the table:
+  > **Done**
   >
-  > - **No pnpm store cache** — every run does a cold `pnpm install`; `jdx/mise-action` caches the toolchain but not the dependency store.
+  > - [x] `build` moved into `ci.yml` so it runs on every PR — the required `build` check always reports, unblocking content/config-only PRs that previously stalled on a skipped path-filtered deploy build.
+  > - [x] `deploy.yml` now triggers on `main` push (+ `workflow_dispatch`) only; PR trigger and `paths:` filters removed.
+  > - [x] pnpm store cached (keyed on `pnpm-lock.yaml`) across all jobs in both workflows.
+  >
+  > **Remaining problem area**
+  >
   > - **No Playwright browser cache** — `ci.yml` re-downloads Chromium on every run via `playwright install chromium --with-deps`.
-  > - **Over-broad permissions** — `deploy.yml` sets `pages: write` + `id-token: write` at workflow scope, so the `build` job (which runs untrusted PR code) inherits them needlessly.
+  > - **Over-broad permissions** — `deploy.yml` sets `pages: write` + `id-token: write` at workflow scope; the `build` job inherits them needlessly.
   > - **Unpinned third-party action** — `jdx/mise-action@v4` is a mutable tag, not a commit SHA.
   > - **Credentials persisted & no job timeouts** — checkout leaves `GITHUB_TOKEN` in `.git/config` though nothing pushes; jobs have no `timeout-minutes` (default 6h can silently burn Actions minutes on a hung run).
   >
   > **Acceptance criteria**
   >
-  > - [ ] pnpm store is cached (keyed on `pnpm-lock.yaml`) in both `ci.yml` and `deploy.yml`; warm runs skip re-download of dependencies.
   > - [ ] Playwright Chromium binary is cached in `ci.yml` (keyed on the Playwright version); only system deps re-run on a cache hit.
   > - [ ] `pages: write` and `id-token: write` are scoped to the `deploy` job only; workflow default stays `contents: read`.
   > - [ ] `jdx/mise-action` is pinned to a full commit SHA with a trailing version comment.
   > - [ ] `actions/checkout` uses `persist-credentials: false` in both workflows.
   > - [ ] Every job sets a sensible `timeout-minutes` (≈15 for `quality`/`build`, ≈5 for `deploy`).
-  > - [ ] All existing CI checks (`format:check`, `typecheck`, `test`, `test:integration`) and the Pages deploy still pass; the mise version pin and owner guard are preserved.
+  > - [ ] All existing checks (`format:check`, `typecheck`, `test`, `test:integration`, `build`) and the Pages deploy still pass; the mise version pin and owner guard are preserved.
 
 - **Consolidate the two contact models (and fix the classic-header gap)** — _folded into the "Unify one-page and full under a `theme` × `density` model" item under Planned._ The unified header reads `profile.links` + `profile.location`, fixing the missing-links bug on the classic/full header, and the legacy `contact[]` / `ResumeHeader` / `contactHref` path is deleted. See ADR 0004 (`ContactLinks` renders `profile.links[]`).
 

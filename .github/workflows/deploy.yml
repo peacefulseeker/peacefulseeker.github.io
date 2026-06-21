@@ -1,29 +1,10 @@
 name: Deploy to GitHub Pages
 
+# Deploy runs on main push only. PR build validation lives in ci.yml (the
+# required `build` check), so there is no PR trigger or paths filter here.
 on:
   push:
     branches: [main]
-    paths:
-      - "src/**"
-      - "public/**"
-      - "scripts/**"
-      - "astro.config.*"
-      - "package.json"
-      - "pnpm-lock.yaml"
-      - "tsconfig.json"
-      - "mise.toml"
-      - ".github/workflows/deploy.yml"
-  pull_request:
-    paths:
-      - "src/**"
-      - "public/**"
-      - "scripts/**"
-      - "astro.config.*"
-      - "package.json"
-      - "pnpm-lock.yaml"
-      - "tsconfig.json"
-      - "mise.toml"
-      - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
 permissions:
@@ -31,7 +12,7 @@ permissions:
   pages: write
   id-token: write
 
-# Serialize per-ref: main deploys never race each other, PR validations stay independent.
+# Serialize deploys: never race each other on main.
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: false
@@ -46,6 +27,13 @@ jobs:
           # Pin mise: installing "latest" intermittently 404s when mise's
           # VERSION endpoint advertises a release before its binaries publish.
           version: 2026.6.11
+      - name: Resolve pnpm store path
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v5
@@ -54,8 +42,8 @@ jobs:
 
   deploy:
     needs: build
-    # Only the default branch deploys; PR runs stop after build validation.
-    # Owner check guards against unexpected deploys if a collaborator is ever added.
+    # Main-only (workflow_dispatch can fire from any branch); owner check guards
+    # against unexpected deploys if a collaborator is ever added.
     if: github.ref == 'refs/heads/main' && github.repository_owner == 'peacefulseeker'
     runs-on: ubuntu-latest
     environment:

@@ -20,9 +20,36 @@ jobs:
       - uses: jdx/mise-action@v4
         with:
           version: 2026.6.11
+      - name: Resolve pnpm store path
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
       - run: pnpm install --frozen-lockfile
       - run: pnpm format:check
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm playwright install chromium --with-deps
       - run: pnpm test:integration
+
+  # Build validation on every PR: the `build` check is required by the branch
+  # ruleset, so it must always report. Deploy (main push only) builds its own
+  # artifact separately — see deploy.yml.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v4
+        with:
+          version: 2026.6.11
+      - name: Resolve pnpm store path
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
