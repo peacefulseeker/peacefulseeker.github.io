@@ -1,0 +1,22 @@
+name: Setup toolchain and install deps
+description: Provision the mise toolchain, restore the pnpm store cache, and install dependencies with a frozen lockfile.
+
+runs:
+  using: composite
+  steps:
+    - uses: jdx/mise-action@v4
+      with:
+        # Pin mise: installing "latest" intermittently 404s when mise's
+        # VERSION endpoint advertises a release before its binaries publish.
+        version: 2026.6.11
+    - name: Resolve pnpm store path
+      shell: bash
+      run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+    - uses: actions/cache@v4
+      with:
+        path: ${{ env.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: ${{ runner.os }}-pnpm-
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
