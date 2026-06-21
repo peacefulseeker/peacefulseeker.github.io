@@ -5,7 +5,6 @@
 - **Template switching via `?template=` query param** — allow switching between `classic` and `timeline` (and the planned one-pager) on the fly without rebuilding. Static multi-page approach: pre-render `/` (classic) and `/timeline`, client-side script reads the param and redirects/rewrites the URL so `/?template=timeline` and `/?template=classic` work as canonical share links. A button could complement the query param.
 
 - **Unify one-page and full under a `theme` × `density` model (folds in the contact-model consolidation)** — the one-pager (`/resume`) and the full view (`/resume/full`) currently render different layouts (`OnepageLayout` vs `ClassicLayout`/`TimelineLayout`), so the toggle is a brand/style jump rather than a density change. Replace the single `template` axis (`classic`/`timeline`/`onepage`) with **two orthogonal axes**:
-
   - **`theme`** (`classic` | `timeline`) — chosen in frontmatter; the visual identity (dotted rail, accent tick-bars, profile photo, heading style). `onepage` stops being a template.
   - **`density`** (`onepage` | `full`) — chosen by route; content volume (already handled by `getResumeEntry`'s `onepage_include`/`onepage_highlights_num` trim) **plus** spacing/font-size/line-height (new, via CSS custom properties).
 
