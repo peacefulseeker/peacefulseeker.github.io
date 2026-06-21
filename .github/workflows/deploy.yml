@@ -2,6 +2,7 @@ name: Deploy to GitHub Pages
 
 # Deploy runs on main push only. PR build validation lives in ci.yml (the
 # required `build` check), so there is no PR trigger or paths filter here.
+# Both build jobs share the ./.github/actions/setup composite action.
 on:
   push:
     branches: [main]
@@ -22,19 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: jdx/mise-action@v4
-        with:
-          # Pin mise: installing "latest" intermittently 404s when mise's
-          # VERSION endpoint advertises a release before its binaries publish.
-          version: 2026.6.11
-      - name: Resolve pnpm store path
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
-      - uses: actions/cache@v4
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v5
         with:
