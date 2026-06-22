@@ -1,12 +1,14 @@
 ---
+import "../../styles/page-onepage.css";
 import { getResumeEntry } from "../../utils/getResumeEntry";
 import { resolveOtherVersion } from "../../utils/resumeView";
-import OnepageLayout from "../../layouts/OnepageLayout.astro";
+import ResumeLayout from "../../layouts/ResumeLayout.astro";
 
-// The one-page resume is the default resume view, served at /resume
-// (see ADR 0006). The full version lives at /resume/full.
-const resume = await getResumeEntry("onepage");
-const { sidebarPosition } = resume.full_template;
+// The one-page resume is the default resume view, served at /resume (ADR 0006).
+// It renders the same ResumeLayout as /resume/full, only at onepage density
+// (ADR 0008): getResumeEntry("onepage") trims the content and the layout shows
+// the compact spacing budget.
+const { Content, theme, ...resumeData } = await getResumeEntry("onepage");
 
 const otherVersion = await resolveOtherVersion(
   "full",
@@ -14,18 +16,12 @@ const otherVersion = await resolveOtherVersion(
 );
 ---
 
-<OnepageLayout
-  name={resume.name}
-  role={resume.role}
-  profile={resume.profile}
-  summary_short={resume.summary_short}
-  skills={resume.skills}
-  languages={resume.languages}
-  experience={resume.experience}
-  education={resume.education}
-  certifications={resume.certifications}
-  sidebarPosition={sidebarPosition}
+<ResumeLayout
+  {...resumeData}
+  theme={theme.name}
+  density="onepage"
+  sidebarPosition={theme.sidebarPosition}
   otherVersion={otherVersion}
 >
-  <resume.Content />
-</OnepageLayout>
+  <Content />
+</ResumeLayout>

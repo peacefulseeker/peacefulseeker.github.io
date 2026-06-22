@@ -1,7 +1,14 @@
 # 0005. One-page template as the default route, full resume at `/full`
 
-**Status:** Superseded in part by [ADR 0006](0006-landing-page-and-resume-namespace.md); content model amended 2026-06-18
+**Status:** Superseded in part by [ADR 0006](0006-landing-page-and-resume-namespace.md) (route) and [ADR 0008](0008-theme-and-density-model.md) (the one-pager is now a _density_, not a template/layout); content model amended 2026-06-18
 **Date:** 2026-06-15
+
+> **Note (2026-06-22):** [ADR 0008](0008-theme-and-density-model.md) makes
+> "onepage" a **density** of a theme, not a template. `OnepageLayout` is gone;
+> `/resume` now renders the shared `ResumeLayout` at `density="onepage"`. What
+> still stands from this ADR: the variant-aware `getResumeEntry` and its
+> `onepage_include` / `onepage_highlights_num` / `summary_short` content-trim
+> controls, and the `pnpm onepage:fit` single-page gate.
 
 > **Note (2026-06-17):** The _route placement_ in this ADR is superseded by ADR 0006:
 > the one-page resume now lives at `/resume` and the full resume at `/resume/full`,

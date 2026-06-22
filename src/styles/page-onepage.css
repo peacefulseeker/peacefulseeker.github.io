@@ -1,0 +1,11 @@
+/*
+ * @page margin for the one-page density route (/resume). Tighter than full
+ * (10mm vs 15mm) so the content-budgeted one-pager fits a single printed page.
+ * @page cannot be scoped to a body class, so it lives in a per-route file that
+ * only /resume imports — keeping exactly one @page rule in that module graph
+ * (see ADR 0008 and the note in base.css). If this changes, update
+ * PAGE_MARGIN_MM in tests/onepage-fit.spec.ts to match.
+ */
+@page {
+  margin: 10mm;
+}

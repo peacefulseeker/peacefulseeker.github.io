@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Template switching — active template renders all fields", () => {
+test.describe("Theme × density — active view renders all fields", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/resume/full");
   });
@@ -10,8 +10,8 @@ test.describe("Template switching — active template renders all fields", () =>
     await expect(h1).toContainText("Alexey Vorobyov");
   });
 
-  test("renders role in subtitle", async ({ page }) => {
-    const role = page.locator("header .subtitle");
+  test("renders role in the header", async ({ page }) => {
+    const role = page.locator("header .resume-role");
     await expect(role).toContainText("Senior Software Engineer");
   });
 
@@ -25,9 +25,7 @@ test.describe("Template switching — active template renders all fields", () =>
   });
 
   test("body content appears after header", async ({ page }) => {
-    const headerBox = await page
-      .locator("header.resume-header-bar")
-      .boundingBox();
+    const headerBox = await page.locator("header.resume-header").boundingBox();
     const bodyBox = await page.locator("main h2").first().boundingBox();
 
     expect(headerBox).not.toBeNull();
@@ -35,20 +33,19 @@ test.describe("Template switching — active template renders all fields", () =>
     expect(headerBox!.y).toBeLessThan(bodyBox!.y);
   });
 
-  // Regression guard: classic + timeline CSS both bundle onto /resume/full, so
-  // each template scopes its rules under a single body.tpl-<name> root class.
-  // If a template's styles ever leak back to a bare `body` selector, the two
-  // background rules collide and one clobbers the other (the original bug).
-  test("only the active template's body styles apply (no cross-template leak)", async ({
+  // The full route carries both axis classes: the theme (from frontmatter) and
+  // the density (from the route). One stylesheet keys its rules off these, so
+  // the theme's background token resolves predictably (ADR 0008).
+  test("body carries the theme + density classes and the theme background", async ({
     page,
   }) => {
     const className = await page.locator("body").getAttribute("class");
-    expect(className).toBe("tpl-classic");
+    expect(className).toBe("theme-timeline density-full");
 
-    // Classic's background is #f5f5f0; timeline's #f3f4f6 must not win.
+    // Timeline theme background is #f3f4f6.
     const bg = await page
       .locator("body")
       .evaluate((el) => getComputedStyle(el).backgroundColor);
-    expect(bg).toBe("rgb(245, 245, 240)");
+    expect(bg).toBe("rgb(243, 244, 246)");
   });
 });

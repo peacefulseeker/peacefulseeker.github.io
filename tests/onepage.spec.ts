@@ -6,8 +6,10 @@ test.describe("One-page template — default resume view at /resume", () => {
   });
 
   test("renders name and role in the header", async ({ page }) => {
-    await expect(page.locator("h1.op-name")).toContainText("Alexey Vorobyov");
-    await expect(page.locator(".op-role")).toContainText(
+    await expect(page.locator("h1.resume-name")).toContainText(
+      "Alexey Vorobyov",
+    );
+    await expect(page.locator(".resume-role")).toContainText(
       "Senior Software Engineer",
     );
   });

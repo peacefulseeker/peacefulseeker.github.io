@@ -10,7 +10,7 @@ function makeResume(experience: unknown[]): ResumeData {
   return resumeSchema.parse({
     name: "Jane Doe",
     role: "Engineer",
-    full_template: { name: "classic" },
+    theme: { name: "classic" },
     experience,
   });
 }

@@ -1,7 +1,16 @@
 # 0007. Template CSS isolation via a `body.tpl-<name>` root class
 
-**Status:** Accepted
+**Status:** Superseded by [ADR 0008](0008-theme-and-density-model.md)
 **Date:** 2026-06-20
+
+> **Note (2026-06-22):** [ADR 0008](0008-theme-and-density-model.md) collapses the
+> three template stylesheets into one `resume.css`, so there is no longer a
+> co-load collision to isolate against: the `body.tpl-<name>` scheme is replaced
+> by `body.theme-<name>` / `body.density-<density>` classes within a single
+> stylesheet. **The core lesson stands and is still honoured:** bare element
+> selectors collide, so template rules must be class-scoped; and `@page` cannot
+> be class-scoped, so it lives in per-route files (`page-onepage.css` /
+> `page-full.css`) — one `@page` per module graph.
 
 ## Context
 

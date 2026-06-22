@@ -9,7 +9,7 @@ import { test, expect } from "@playwright/test";
 
 // A4 content box at 96dpi (CSS defines 96px = 1in = 25.4mm exactly, so this is
 // not an approximation), inside the 10mm @page margin declared in
-// src/styles/onepage.css (@page { margin: 10mm }). These constants drive (a) the
+// src/styles/page-onepage.css (@page { margin: 10mm }). These constants drive (a) the
 // PDF margin, (b) the viewport width we measure at, so the DOM wraps exactly like
 // the printed page, and (c) the advisory fill-% gauge. If that @page margin
 // changes, update PAGE_MARGIN_MM to match.
@@ -48,7 +48,7 @@ test.describe("One-page fill gauge", () => {
 
     // A4 paper (Chromium would otherwise default to US Letter, which is shorter
     // and would falsely fail fitting content). Margin mirrors the @page rule in
-    // onepage.css so the PDF matches the browser print-dialog flow (ADR 0003).
+    // page-onepage.css so the PDF matches the browser print-dialog flow (ADR 0003).
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,

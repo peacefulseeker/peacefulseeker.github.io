@@ -34,10 +34,13 @@ test.describe("PDF download via browser print", () => {
     await expect(btn).toBeHidden();
   });
 
-  test("links are underlined in print media", async ({ page }) => {
+  test("links stay blue and un-underlined in print media", async ({ page }) => {
     await page.emulateMedia({ media: "print" });
-    const link = page.locator("main a:not(.version-toggle)").first();
-    await expect(link).toHaveCSS("text-decoration-line", "underline");
+    // Links keep their on-screen treatment in print (blue, no text underline)
+    // rather than switching to ink-black underlined text.
+    const link = page.locator(".header-contact a").first();
+    await expect(link).toHaveCSS("color", "rgb(37, 99, 235)");
+    await expect(link).toHaveCSS("text-decoration-line", "none");
   });
 
   test("list items have break-inside avoid in print media", async ({
