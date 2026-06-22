@@ -658,12 +658,6 @@ body.theme-timeline .xp-item::before {
     padding: 0.5rem 0;
   }
 
-  /* Smaller photo in the one-page print to bank fit margin (screen keeps 5.5rem). */
-  body.density-onepage .resume-header .profile-photo img {
-    width: 4.5rem;
-    height: 4.5rem;
-  }
-
   body.density-full {
     font-size: 10.5pt;
   }
