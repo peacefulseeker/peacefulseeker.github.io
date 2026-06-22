@@ -1,7 +1,18 @@
 # 0004. Structured content model and component-based multi-template architecture
 
-**Status:** Accepted
+**Status:** Accepted; the template architecture (§3) and several components (§2) are superseded by [ADR 0008](0008-theme-and-density-model.md)
 **Date:** 2026-06-13
+
+> **Note (2026-06-22):** [ADR 0008](0008-theme-and-density-model.md) replaces the
+> single "template" axis with orthogonal `theme` × `density` axes rendered by one
+> `ResumeLayout` + one `resume.css`. The **structured frontmatter model (§1)
+> stands** and is now the _single_ contact model: the legacy `contact[]` field
+> (and `ResumeHeader`/`contactHref`) is removed, so `profile.links[]` +
+> `profile.location` is the only contact source. Of the components in §2,
+> `ProfilePhoto` and `PdfButton` remain; `ExperienceList` (not `Timeline`) renders
+> experience with the rail as a CSS decoration; `Timeline`, `EducationList`,
+> `Certifications`, `SidebarCard` and `ContactLinks` were folded into
+> `ResumeLayout` + `resume.css`.
 
 ## Context
 

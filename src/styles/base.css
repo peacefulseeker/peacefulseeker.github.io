@@ -1,12 +1,15 @@
 /*
  * base.css holds ONLY genuinely template-agnostic rules: the reset and the
- * default printed page margin. Everything element- or layout-specific lives
- * in a template stylesheet scoped under its `body.tpl-<name>` root class, so
- * that templates whose CSS co-loads on a shared route (classic + timeline on
- * /resume/full) cannot collide. The one rule that cannot be class-scoped is
- * @page (it is page-box, not element scoped) — it is therefore global here,
- * and a single route can only honour one value. onepage overrides it to 10mm
- * for its one-page fit budget; classic and timeline share this 15mm default.
+ * shared body font. The resume itself is a single stylesheet (resume.css)
+ * scoped under `body.theme-<name>` / `body.density-<density>` classes (ADR
+ * 0008), so nothing here is template-specific.
+ *
+ * `@page` is the one rule that cannot be class-scoped (it targets the page box,
+ * not an element), and the two densities need different margins (onepage 10mm
+ * for its fit budget, full 15mm). Because a single route can only honour one
+ * @page, the margin lives in a per-route file (page-onepage.css / page-full.css)
+ * imported by each page — never here — so each route's module graph carries
+ * exactly one @page rule.
  */
 *,
 *::before,
@@ -25,15 +28,4 @@
   --resume-font:
     system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     sans-serif;
-}
-
-/*
- * 15mm page margins apply on every printed page (including after breaks).
- * This replaces the old @page { margin: 0 } + body { padding } trick, which
- * only padded the document start/end and left content flush with the edge
- * on pages 2+. Trade-off: the browser may render its URL/date text inside
- * the margin area; users can disable that in the print dialog if needed.
- */
-@page {
-  margin: 15mm;
 }

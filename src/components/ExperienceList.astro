@@ -8,6 +8,11 @@ interface Props {
 const { experience } = Astro.props;
 ---
 
+{
+  /* Markup only — all `.xp-*` styling (incl. the timeline rail decoration and
+   per-density sizing) lives in src/styles/resume.css so the one stylesheet
+   owns the visual identity along both axes (ADR 0008). */
+}
 <div class="xp-list">
   {
     experience.map((job) => (
@@ -33,65 +38,3 @@ const { experience } = Astro.props;
     ))
   }
 </div>
-
-<style>
-  .xp-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-
-  .xp-item {
-    break-inside: avoid;
-  }
-
-  .xp-head {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.05rem;
-  }
-
-  .xp-role {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #111827;
-    margin: 0;
-  }
-
-  .xp-meta {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #2563eb;
-  }
-
-  .xp-highlights {
-    list-style: disc;
-    padding-left: 1.05rem;
-    margin: 0.2rem 0 0;
-  }
-
-  .xp-highlights li {
-    font-size: 0.8rem;
-    color: #374151;
-    line-height: 1.45;
-    margin-bottom: 0.15rem;
-  }
-
-  .xp-tech {
-    font-size: 0.72rem;
-    color: #6b7280;
-    margin: 0.25rem 0 0;
-  }
-
-  @media print {
-    .xp-list {
-      gap: 0.5rem;
-    }
-
-    .xp-highlights li {
-      font-size: 0.78rem;
-      line-height: 1.35;
-    }
-  }
-</style>

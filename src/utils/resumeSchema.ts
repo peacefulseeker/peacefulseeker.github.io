@@ -1,15 +1,25 @@
 import { z } from "astro/zod";
 
-export const TEMPLATE_NAMES = ["classic", "timeline", "onepage"] as const;
-export type TemplateName = (typeof TEMPLATE_NAMES)[number];
-export type FullTemplate = Exclude<TemplateName, "onepage">;
+/**
+ * A resume is rendered along two orthogonal axes (see ADR 0008):
+ * - `theme`   — the visual identity, chosen in frontmatter (classic | timeline).
+ * - `density` — the content/spacing budget, chosen by route: `/resume` renders
+ *   the onepage density, `/resume/full` the full density. Same layout, same
+ *   markup; density only changes how much content shows and how generous the
+ *   spacing is.
+ */
+export const THEME_NAMES = ["classic", "timeline"] as const;
+export type ThemeName = (typeof THEME_NAMES)[number];
 
-export const templateConfigSchema = z.object({
-  name: z.enum(TEMPLATE_NAMES),
+export const DENSITIES = ["onepage", "full"] as const;
+export type Density = (typeof DENSITIES)[number];
+
+export const themeConfigSchema = z.object({
+  name: z.enum(THEME_NAMES),
   sidebarPosition: z.enum(["left", "right"]).optional(),
 });
 
-export type TemplateConfig = z.infer<typeof templateConfigSchema>;
+export type ThemeConfig = z.infer<typeof themeConfigSchema>;
 
 const linkSchema = z.object({
   label: z.string(),
@@ -58,8 +68,7 @@ export const resumeSchema = z
   .object({
     name: z.string(),
     role: z.string(),
-    full_template: templateConfigSchema,
-    contact: z.array(z.object({ value: z.string() })).optional(),
+    theme: themeConfigSchema,
     profile: profileSchema.optional(),
     summary_short: z.string().optional(),
     skills: z.array(z.string()).optional(),
@@ -74,14 +83,16 @@ export const resumeSchema = z
 export type ResumeData = z.infer<typeof resumeSchema>;
 
 /**
- * Props shared by every full-route layout (classic, timeline). Both layouts
- * accept the same shape so `full.astro` can spread one object into a layout
- * picked at runtime without the prop set diverging per template (see ADR on
- * the tpl-* template-isolation convention). `sidebarPosition` comes from the
- * `full_template` config; `otherVersion` is the cross-link to the one-pager.
+ * Props for the single `ResumeLayout`, shared by both routes. The layout is
+ * driven by `theme` (CSS identity) + `density` (content/spacing budget); the
+ * `theme` config object is unpacked into those two scalars by the page so the
+ * layout never re-reads frontmatter. `otherVersion` is the cross-link to the
+ * other density (the toggle).
  */
-export type FullLayoutProps = Omit<ResumeData, "full_template"> & {
-  sidebarPosition?: TemplateConfig["sidebarPosition"];
+export type ResumeLayoutProps = Omit<ResumeData, "theme"> & {
+  theme: ThemeName;
+  density: Density;
+  sidebarPosition?: ThemeConfig["sidebarPosition"];
   otherVersion?: { href: string; label: string };
 };
 

@@ -1,0 +1,213 @@
+---
+import "../styles/resume.css";
+import FaviconLinks from "../components/FaviconLinks.astro";
+import PdfButton from "../components/PdfButton.astro";
+import VersionToggle from "../components/VersionToggle.astro";
+import ProfilePhoto from "../components/ProfilePhoto.astro";
+import ExperienceList from "../components/ExperienceList.astro";
+import type { ResumeLayoutProps, LinkEntry } from "../utils/resumeSchema";
+
+/*
+ * The single resume layout (ADR 0008). Both routes render it: /resume passes
+ * density="onepage", /resume/full passes density="full". `theme` and `density`
+ * become body classes that resume.css keys its rules off; nothing structural
+ * branches on the theme. The two density-driven content choices live here:
+ *   - the summary source (short string on onepage, full markdown <slot> on full)
+ *   - hobbies + the heaviest cert/education detail show only at full density,
+ *     to defend the one-page fit budget.
+ */
+type Props = ResumeLayoutProps;
+
+const {
+  name,
+  role,
+  profile,
+  summary_short,
+  skills,
+  languages,
+  hobbies,
+  experience,
+  education,
+  certifications,
+  theme,
+  density,
+  sidebarPosition = "right",
+  otherVersion,
+} = Astro.props;
+
+const links: LinkEntry[] = profile?.links ?? [];
+const isFull = density === "full";
+const useShortSummary = density === "onepage" && Boolean(summary_short);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{name} — Resume</title>
+    <meta name="description" content={`${name} — ${role}`} />
+    <FaviconLinks />
+  </head>
+  <body class:list={[`theme-${theme}`, `density-${density}`]}>
+    <div class="resume">
+      <div class="resume-controls" role="toolbar" aria-label="Resume actions">
+        {
+          otherVersion && (
+            <VersionToggle
+              href={otherVersion.href}
+              label={otherVersion.label}
+            />
+          )
+        }
+        <PdfButton />
+      </div>
+      <header class="resume-header">
+        <div class="header-identity">
+          <h1 class="resume-name">{name}</h1>
+          <p class="resume-role">{role}</p>
+          {
+            (profile?.location || links.length > 0) && (
+              <div class="header-contact">
+                {profile?.location && (
+                  <span class="contact-location">{profile.location}</span>
+                )}
+                {links.map((link) => (
+                  <Fragment>
+                    <br />
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {link.label}
+                    </a>
+                  </Fragment>
+                ))}
+              </div>
+            )
+          }
+        </div>
+        <div class="header-aside">
+          {profile?.photo && <ProfilePhoto src={profile.photo} name={name} />}
+        </div>
+      </header>
+
+      <section class="resume-summary" aria-label="Summary">
+        {useShortSummary ? <p>{summary_short}</p> : <slot />}
+      </section>
+
+      <div
+        class:list={[
+          "resume-body",
+          { "sidebar-right": sidebarPosition === "right" },
+        ]}
+      >
+        <main class="resume-main">
+          <section class="section">
+            <h2>Experience</h2>
+            <ExperienceList experience={experience} />
+          </section>
+        </main>
+
+        <aside class="resume-sidebar" aria-label="Skills and information">
+          {
+            skills && skills.length > 0 && (
+              <section class="block">
+                <h2>Technologies</h2>
+                <ul class="block-list">
+                  {skills.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+          {
+            languages && languages.length > 0 && (
+              <section class="block">
+                <h2>Languages</h2>
+                <p class="block-inline">{languages.join(" · ")}</p>
+              </section>
+            )
+          }
+          {
+            isFull && hobbies && hobbies.length > 0 && (
+              <section class="block">
+                <h2>Hobbies</h2>
+                <p class="block-inline">{hobbies.join(" · ")}</p>
+              </section>
+            )
+          }
+          {
+            education && education.length > 0 && (
+              <section class="block">
+                <h2>Education</h2>
+                {education.map((edu) => (
+                  <div class="edu">
+                    <p class="edu-title">
+                      {edu.degree} — {edu.institution}
+                    </p>
+                    <p class="edu-meta">
+                      {edu.location ? `${edu.location} · ` : ""}
+                      {edu.start} – {edu.end}
+                    </p>
+                    {isFull && edu.note && edu.url && (
+                      <p class="edu-note">
+                        {edu.note}:{" "}
+                        <a
+                          href={edu.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          link
+                        </a>
+                      </p>
+                    )}
+                    {isFull && edu.note && !edu.url && (
+                      <p class="edu-note">{edu.note}</p>
+                    )}
+                  </div>
+                ))}
+              </section>
+            )
+          }
+          {
+            certifications && certifications.length > 0 && (
+              <section class="block">
+                <h2>Certifications</h2>
+                {certifications.map((cert) => (
+                  <div class="cert">
+                    <p class="cert-title">
+                      {cert.url ? (
+                        <a
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {cert.name}
+                        </a>
+                      ) : (
+                        cert.name
+                      )}
+                    </p>
+                    {(cert.issuer || cert.start) && (
+                      <p class="cert-meta">
+                        {cert.issuer}
+                        {cert.issuer && cert.start ? " · " : ""}
+                        {cert.start}
+                        {cert.end ? ` – ${cert.end}` : ""}
+                      </p>
+                    )}
+                    {isFull && cert.credentialId && (
+                      <p class="cert-id">ID: {cert.credentialId}</p>
+                    )}
+                  </div>
+                ))}
+              </section>
+            )
+          }
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

@@ -7,8 +7,7 @@ vi.mock("./getResumeEntry", () => ({
   resumeVariantExists: (...args: unknown[]) => resumeVariantExists(...args),
 }));
 
-const { resolveOtherVersion, assertFullTemplate } =
-  await import("./resumeView");
+const { resolveOtherVersion } = await import("./resumeView");
 
 beforeEach(() => {
   resumeVariantExists.mockReset();
@@ -45,16 +44,5 @@ describe("resolveOtherVersion", () => {
     resumeVariantExists.mockResolvedValue(false);
 
     expect(await resolveOtherVersion("onepage", "/")).toBeUndefined();
-  });
-});
-
-describe("assertFullTemplate", () => {
-  test("passes for classic and timeline", () => {
-    expect(() => assertFullTemplate("classic")).not.toThrow();
-    expect(() => assertFullTemplate("timeline")).not.toThrow();
-  });
-
-  test("throws for onepage, naming the valid templates", () => {
-    expect(() => assertFullTemplate("onepage")).toThrow(/classic, timeline/);
   });
 });

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { resumeSchema, TEMPLATE_NAMES } from "./utils/resumeSchema";
+import { resumeSchema, THEME_NAMES } from "./utils/resumeSchema";
 
 const validBase = {
   name: "Jane Doe",
@@ -16,17 +16,17 @@ const validBase = {
   ],
 };
 
-describe("TEMPLATE_NAMES", () => {
-  test("contains classic, timeline and onepage", () => {
-    expect(TEMPLATE_NAMES).toEqual(["classic", "timeline", "onepage"]);
+describe("THEME_NAMES", () => {
+  test("contains classic and timeline (onepage is a density, not a theme)", () => {
+    expect(THEME_NAMES).toEqual(["classic", "timeline"]);
   });
 });
 
-describe("resumeSchema — template field", () => {
+describe("resumeSchema — theme field", () => {
   test('accepts { name: "classic" }', () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "classic" },
+      theme: { name: "classic" },
     });
     expect(result.success).toBe(true);
   });
@@ -34,31 +34,31 @@ describe("resumeSchema — template field", () => {
   test('accepts { name: "timeline", sidebarPosition: "right" }', () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline", sidebarPosition: "right" },
+      theme: { name: "timeline", sidebarPosition: "right" },
     });
     expect(result.success).toBe(true);
   });
 
-  test('accepts { name: "onepage" }', () => {
+  test('rejects "onepage" as a theme (it is a density now)', () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "onepage" },
-    });
-    expect(result.success).toBe(true);
-  });
-
-  test("rejects bare string template (old format)", () => {
-    const result = resumeSchema.safeParse({
-      ...validBase,
-      template: "classic",
+      theme: { name: "onepage" },
     });
     expect(result.success).toBe(false);
   });
 
-  test("rejects unknown template name", () => {
+  test("rejects the old full_template key (renamed to theme)", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "bogus" },
+      full_template: { name: "classic" },
+    });
+    expect(result.success).toBe(false);
+  });
+
+  test("rejects unknown theme name", () => {
+    const result = resumeSchema.safeParse({
+      ...validBase,
+      theme: { name: "bogus" },
     });
     expect(result.success).toBe(false);
   });
@@ -66,28 +66,20 @@ describe("resumeSchema — template field", () => {
   test("rejects invalid sidebarPosition value", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline", sidebarPosition: "center" },
+      theme: { name: "timeline", sidebarPosition: "center" },
     });
     expect(result.success).toBe(false);
   });
 });
 
-describe("resumeSchema — contact field", () => {
-  test("contact is optional", () => {
+describe("resumeSchema — contact model", () => {
+  test("rejects the removed legacy contact[] field (single model: profile.links)", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "classic" },
-    });
-    expect(result.success).toBe(true);
-  });
-
-  test("accepts contact array when provided", () => {
-    const result = resumeSchema.safeParse({
-      ...validBase,
-      full_template: { name: "classic" },
+      theme: { name: "classic" },
       contact: [{ value: "jane@example.com" }],
     });
-    expect(result.success).toBe(true);
+    expect(result.success).toBe(false);
   });
 });
 
@@ -95,7 +87,7 @@ describe("resumeSchema — profile field", () => {
   test("accepts profile with links", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
       profile: {
         photo: "/profile.jpg",
         location: "Remote",
@@ -108,7 +100,7 @@ describe("resumeSchema — profile field", () => {
   test("rejects profile link with invalid URL", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
       profile: {
         links: [{ label: "LinkedIn", url: "not-a-url" }],
       },
@@ -121,7 +113,7 @@ describe("resumeSchema — structured sections", () => {
   test("accepts experience array", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
       experience: [
         {
           role: "Engineer",
@@ -140,7 +132,7 @@ describe("resumeSchema — structured sections", () => {
     const result = resumeSchema.safeParse({
       name: "Jane Doe",
       role: "Software Engineer",
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
     });
     expect(result.success).toBe(false);
   });
@@ -148,7 +140,7 @@ describe("resumeSchema — structured sections", () => {
   test("rejects an empty experience array", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
       experience: [],
     });
     expect(result.success).toBe(false);
@@ -157,7 +149,7 @@ describe("resumeSchema — structured sections", () => {
   test("accepts certifications with optional fields", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
       certifications: [
         {
           name: "AWS CCP",
@@ -175,7 +167,7 @@ describe("resumeSchema — structured sections", () => {
   test("rejects certification with invalid URL", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
       certifications: [{ name: "AWS CCP", url: "not-a-url" }],
     });
     expect(result.success).toBe(false);
@@ -184,7 +176,7 @@ describe("resumeSchema — structured sections", () => {
   test("accepts skills, languages, hobbies arrays", () => {
     const result = resumeSchema.safeParse({
       ...validBase,
-      full_template: { name: "timeline" },
+      theme: { name: "timeline" },
       skills: ["Python", "TypeScript"],
       languages: ["English (C1)"],
       hobbies: ["Hiking"],

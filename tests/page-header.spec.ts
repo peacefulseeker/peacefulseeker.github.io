@@ -12,16 +12,14 @@ test.describe("Page header from frontmatter", () => {
     const h1 = page.locator("h1.resume-name");
     await expect(h1).toContainText("Alexey Vorobyov");
 
-    const role = page.locator("header .subtitle");
+    const role = page.locator("header .resume-role");
     await expect(role).toContainText("Senior Software Engineer");
   });
 
   test("TC-03-01: header element appears before the markdown body in the DOM", async ({
     page,
   }) => {
-    const headerBox = await page
-      .locator("header.resume-header-bar")
-      .boundingBox();
+    const headerBox = await page.locator("header.resume-header").boundingBox();
     const firstBodyHeading = page.locator("main h2").first();
     const bodyBox = await firstBodyHeading.boundingBox();
 
@@ -46,10 +44,10 @@ test.describe("Page header from frontmatter", () => {
     await expect(matches).toHaveCount(1);
   });
 
-  test('TC-03-06: "Senior Software Engineer" appears in header subtitle', async ({
+  test('TC-03-06: "Senior Software Engineer" appears in the header role', async ({
     page,
   }) => {
-    const headerRole = page.locator("header .subtitle");
+    const headerRole = page.locator("header .resume-role");
     await expect(headerRole).toContainText("Senior Software Engineer");
     await expect(headerRole).toHaveCount(1);
   });
