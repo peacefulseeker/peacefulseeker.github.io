@@ -1,6 +1,4 @@
 import { resumeVariantExists } from "./getResumeEntry";
-import { TEMPLATE_NAMES } from "./resumeSchema";
-import type { FullTemplate, TemplateName } from "./resumeSchema";
 
 type Variant = "full" | "onepage";
 
@@ -32,20 +30,4 @@ export async function resolveOtherVersion(
     href: `${base}${VARIANT_PATH[variant]}`,
     label: VARIANT_LABEL[variant],
   };
-}
-
-/**
- * Narrows a template name to a full-route template, throwing loudly otherwise
- * so the build fails with a clear message instead of rendering a blank page.
- * "onepage" is served from /resume (ADR 0006), never the full route.
- */
-export function assertFullTemplate(
-  name: TemplateName,
-): asserts name is FullTemplate {
-  if (name === "onepage") {
-    const valid = TEMPLATE_NAMES.filter((t) => t !== "onepage").join(", ");
-    throw new Error(
-      `Unknown full-route template "${name}". Valid templates: ${valid}`,
-    );
-  }
 }

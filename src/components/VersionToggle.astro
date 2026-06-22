@@ -10,6 +10,7 @@ const { href, label } = Astro.props;
 <a
   class="version-toggle"
   href={href}
+  title={`Switch to ${label.toLowerCase()}`}
   aria-label={`Switch to ${label.toLowerCase()}`}
 >
   <svg
@@ -25,44 +26,5 @@ const { href, label } = Astro.props;
       stroke-linejoin="round"
       d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
   </svg>
-  {label}
+  <span class="btn-label">{label}</span>
 </a>
-
-<style>
-  .version-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.75rem;
-    font-family: inherit;
-    /* Pin line-height so the button height is independent of the surrounding
-       template's body line-height — keeps it level with the PDF button. */
-    line-height: 2;
-    color: #6b7280;
-    background: transparent;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 0.35rem 0.75rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition:
-      color 0.15s,
-      border-color 0.15s;
-  }
-
-  .version-toggle svg {
-    width: 0.875rem;
-    height: 0.875rem;
-  }
-
-  .version-toggle:hover {
-    color: #2563eb;
-    border-color: #2563eb;
-  }
-
-  @media print {
-    .version-toggle {
-      display: none;
-    }
-  }
-</style>

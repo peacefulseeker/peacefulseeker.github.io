@@ -24,7 +24,9 @@ test.describe("Landing page — root status board at /", () => {
 
   test("CTA navigates to the one-page resume", async ({ page }) => {
     await page.locator("a.landing-cta").click();
-    await expect(page.locator("h1.op-name")).toContainText("Alexey Vorobyov");
+    await expect(page.locator("h1.resume-name")).toContainText(
+      "Alexey Vorobyov",
+    );
   });
 
   test("shows status rows with a unified dot indicator", async ({ page }) => {

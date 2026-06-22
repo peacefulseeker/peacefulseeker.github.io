@@ -1,0 +1,11 @@
+/*
+ * @page margin for the full density route (/resume/full). 15mm all round,
+ * applied on every printed page including after breaks. @page cannot be scoped
+ * to a body class, so it lives in a per-route file that only /resume/full
+ * imports (see ADR 0008 and the note in base.css). Trade-off: the browser may
+ * render its URL/date text inside the margin area; users can disable that in
+ * the print dialog if needed.
+ */
+@page {
+  margin: 15mm;
+}

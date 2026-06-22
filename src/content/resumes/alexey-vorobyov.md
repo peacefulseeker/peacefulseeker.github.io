@@ -1,8 +1,8 @@
 ---
 name: Alexey Vorobyov
 role: Senior Software Engineer
-full_template:
-  name: classic
+theme:
+  name: timeline
   sidebarPosition: right
 profile:
   photo: /profile.jpg

@@ -1,0 +1,670 @@
+@import "./base.css";
+
+/*
+ * Single resume stylesheet (ADR 0008). One layout (ResumeLayout) renders both
+ * the /resume (onepage) and /resume/full (full) routes; this file styles it
+ * along two orthogonal axes:
+ *
+ *   theme   (body.theme-classic | body.theme-timeline)
+ *     — the visual identity: timeline adds the dotted experience rail, accent
+ *       tick-bar headings, profile photo and a tinted sidebar; classic strips
+ *       all of that to a plain, single-column document.
+ *
+ *   density (body.density-onepage | body.density-full)
+ *     — the spacing/typographic budget, expressed entirely as CSS custom
+ *       properties (--r-*). The full view is the same layout with larger type
+ *       and more generous gaps; the onepage view is content-budgeted to fit a
+ *       single printed page.
+ *
+ * Rules are class-scoped, so the two densities and themes can never collide.
+ * @page (which cannot be class-scoped) lives in page-onepage.css / page-full.css.
+ */
+
+/* ── Density tokens ─────────────────────────────────────────────────────── */
+
+body.density-onepage {
+  --r-paper-maxw: 960px;
+  --r-paper-pad: 2.5rem 2.75rem;
+  --r-font: 14px;
+  --r-line: 1.4;
+  --r-name-size: 1.85rem;
+  --r-role-size: 1rem;
+  --r-summary-size: 0.85rem;
+  --r-summary-line: 1.55;
+  --r-body-gap: 1rem;
+  --r-col-gap: 2rem;
+  --r-sidebar-w: 220px;
+  --r-block-gap: 1.1rem;
+  --r-heading-size: 0.72rem;
+  --r-text-size: 0.8rem;
+  --r-meta-size: 0.74rem;
+  --r-xp-gap: 0.7rem;
+  --r-xp-role-size: 0.92rem;
+  --r-xp-meta-size: 0.75rem;
+  --r-xp-bullet-size: 0.8rem;
+  --r-xp-bullet-line: 1.45;
+  --r-xp-item-gap: 0.7rem;
+}
+
+body.density-full {
+  /* Paper width + padding are identical across densities so the header (and the
+     version toggle in it) never shifts when toggling onepage ↔ full. The "more
+     generous" full feel comes from type scale, line-height and gaps, not box
+     geometry. */
+  --r-paper-maxw: 960px;
+  --r-paper-pad: 2.5rem 2.75rem;
+  --r-font: 16px;
+  --r-line: 1.6;
+  --r-name-size: 2.15rem;
+  --r-role-size: 1.15rem;
+  --r-summary-size: 0.95rem;
+  --r-summary-line: 1.7;
+  --r-body-gap: 1.75rem;
+  --r-col-gap: 2.75rem;
+  --r-sidebar-w: 250px;
+  --r-block-gap: 1.6rem;
+  --r-heading-size: 0.8rem;
+  --r-text-size: 0.9rem;
+  --r-meta-size: 0.8rem;
+  --r-xp-gap: 1.5rem;
+  --r-xp-role-size: 1.05rem;
+  --r-xp-meta-size: 0.82rem;
+  --r-xp-bullet-size: 0.92rem;
+  --r-xp-bullet-line: 1.6;
+  --r-xp-item-gap: 1.5rem;
+}
+
+/* ── Theme tokens ───────────────────────────────────────────────────────── */
+
+body.theme-timeline {
+  --r-accent: #2563eb;
+  --r-name-color: #2563eb;
+  --r-bg: #f3f4f6;
+}
+
+body.theme-classic {
+  --r-accent: #1a1a1a;
+  --r-name-color: #1a1a1a;
+  --r-bg: #f5f5f0;
+}
+
+/* Shared palette */
+body[class*="theme-"] {
+  --r-text: #111827;
+  --r-text-soft: #374151;
+  --r-muted: #6b7280;
+  --r-border: #e5e7eb;
+}
+
+/* ── Page shell ─────────────────────────────────────────────────────────── */
+
+body.theme-classic,
+body.theme-timeline {
+  font-family: var(--resume-font);
+  font-size: var(--r-font);
+  line-height: var(--r-line);
+  color: var(--r-text);
+  background: var(--r-bg);
+  /* Horizontal padding keeps the paper's box-shadow off the viewport edge. */
+  padding: 0 1.5rem;
+}
+
+.resume {
+  max-width: var(--r-paper-maxw);
+  margin: 2rem auto;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: var(--r-paper-pad);
+  /* Anchors the controls stack to the paper's top-right corner. */
+  position: relative;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.resume-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 2px solid var(--r-border);
+}
+
+.header-identity {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.resume-name {
+  font-size: var(--r-name-size);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--r-name-color);
+  margin: 0;
+}
+
+.resume-role {
+  font-size: var(--r-role-size);
+  color: var(--r-muted);
+  margin: 0.1rem 0 0;
+}
+
+/* Contact sits under the name/role as one horizontal line: location · links. */
+.header-contact {
+  margin-top: 0.5rem;
+  font-size: var(--r-meta-size);
+  line-height: 1.2rem;
+}
+
+.header-contact .contact-location {
+  color: var(--r-muted);
+}
+
+.header-contact a {
+  color: var(--r-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-contact a:hover {
+  text-decoration: underline;
+}
+
+/* Right side: actions on top, profile photo below (both right-aligned). */
+.header-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Controls are a vertical stack of icon buttons attached to the paper's
+   top-right corner — they sit in the right padding strip, so they clear the
+   inset header content (including the photo). The stack is anchored to the
+   paper, so it stays put across the onepage ↔ full toggle (the paper geometry
+   is identical across densities). The top button's top-right corner matches the
+   paper's 8px radius so the stack reads as part of the sheet. Icon-only: the
+   text label is visually hidden and surfaced via the native title tooltip.
+   Screen-only — hidden in print. */
+.resume-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.resume-controls > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  color: var(--r-muted);
+  background: #fff;
+  border: 1px solid var(--r-border);
+  border-radius: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    color 0.15s,
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+/* Collapse the shared edge between stacked buttons into a single border. */
+.resume-controls > * + * {
+  border-top: none;
+  border-right: none;
+}
+
+/* TODO: dynamically add border-radius based on controls placement(top-right/left, bottom-left/right) */
+/* Top button continues the paper's rounded top-right corner. */
+.resume-controls > :first-child {
+  border-top-right-radius: 8px;
+  border-right: none;
+  border-top: none;
+}
+
+/* .resume-controls > :last-child {
+  border-bottom-right-radius: 8px;
+} */
+
+.resume-controls > *:hover {
+  color: #fff;
+  background: var(--r-accent);
+  border-color: var(--r-accent);
+}
+
+.resume-controls svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* Icon-only on screen; the label stays in the DOM for assistive tech (and the
+   "contains PDF" contract) but is visually clipped. */
+.resume-controls .btn-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Profile photo: a timeline-theme element. Classic hides it (plain/strict). */
+.resume-header .profile-photo {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+}
+
+body.theme-classic .resume-header .profile-photo {
+  display: none;
+}
+
+.resume-header .profile-photo img {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-width: 2px;
+}
+
+/* ── Summary ────────────────────────────────────────────────────────────── */
+
+.resume-summary {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--r-border);
+}
+
+.resume-summary p {
+  font-size: var(--r-summary-size);
+  color: var(--r-text-soft);
+  line-height: var(--r-summary-line);
+  margin: 0 0 0.5rem;
+}
+
+.resume-summary p:last-child {
+  margin-bottom: 0;
+}
+
+/* The full view's markdown summary ships its own "## Summary" heading; the
+   onepage view uses the headless `summary_short` string. The heading (when
+   present) is styled like any section heading below. */
+
+/* ── Body grid ──────────────────────────────────────────────────────────── */
+
+.resume-body {
+  display: grid;
+  grid-template-columns: var(--r-sidebar-w) minmax(0, 1fr);
+  gap: var(--r-col-gap);
+  padding-top: var(--r-body-gap);
+}
+
+.resume-body.sidebar-right {
+  grid-template-columns: minmax(0, 1fr) var(--r-sidebar-w);
+}
+
+.resume-body.sidebar-right .resume-main {
+  order: 1;
+}
+
+.resume-body.sidebar-right .resume-sidebar {
+  order: 2;
+}
+
+.resume-body:not(.sidebar-right) .resume-main {
+  order: 2;
+}
+
+.resume-body:not(.sidebar-right) .resume-sidebar {
+  order: 1;
+}
+
+/* Classic theme is a single, plain column: the sidebar sections stack below
+   experience full-width, with no tint and no rule. */
+body.theme-classic .resume-body,
+body.theme-classic .resume-body.sidebar-right {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body.theme-classic .resume-main,
+body.theme-classic .resume-sidebar {
+  order: initial;
+}
+
+/* ── Section headings ───────────────────────────────────────────────────── */
+
+.section h2,
+.block h2,
+.resume-summary h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--r-heading-size);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--r-text-soft);
+  margin: 0 0 0.6rem;
+}
+
+/* Timeline: accent tick-bar before each heading. */
+body.theme-timeline .section h2::before,
+body.theme-timeline .block h2::before,
+body.theme-timeline .resume-summary h2::before {
+  content: "";
+  width: 0.22rem;
+  height: 0.9rem;
+  background: var(--r-accent);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* Classic: plain underlined headings, no tick-bar. */
+body.theme-classic .section h2,
+body.theme-classic .block h2,
+body.theme-classic .resume-summary h2 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+/* ── Main column ────────────────────────────────────────────────────────── */
+
+.resume-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-body-gap);
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────────────── */
+
+.resume-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-block-gap);
+}
+
+.block-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.block-list li {
+  font-size: var(--r-text-size);
+  color: var(--r-text-soft);
+  line-height: 1.4;
+  padding: 0.08rem 0;
+}
+
+.block-inline {
+  font-size: var(--r-text-size);
+  color: var(--r-text-soft);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.edu + .edu,
+.cert + .cert {
+  margin-top: 0.6rem;
+}
+
+.edu-title,
+.cert-title {
+  font-size: var(--r-text-size);
+  font-weight: 600;
+  color: var(--r-text);
+  margin: 0;
+}
+
+.cert-title a {
+  color: var(--r-text);
+  text-decoration: none;
+  border-bottom: 1px solid #bfdbfe;
+}
+
+.cert-title a:hover {
+  color: var(--r-accent);
+  border-color: var(--r-accent);
+}
+
+.edu-meta,
+.cert-meta {
+  font-size: var(--r-meta-size);
+  color: var(--r-muted);
+  margin: 0.05rem 0 0;
+}
+
+.edu-note {
+  font-size: var(--r-meta-size);
+  color: var(--r-muted);
+  margin: 0.1rem 0 0;
+}
+
+.edu-note a {
+  color: var(--r-accent);
+  text-decoration: none;
+}
+
+.edu-note a:hover {
+  text-decoration: underline;
+}
+
+.cert-id {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  font-family: "Courier New", Courier, monospace;
+  margin: 0.05rem 0 0;
+}
+
+/* ── Experience (shared markup; rail is a timeline-only CSS decoration) ──── */
+
+.xp-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--r-xp-item-gap);
+}
+
+.xp-item {
+  break-inside: avoid;
+}
+
+.xp-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+}
+
+.xp-role {
+  font-size: var(--r-xp-role-size);
+  font-weight: 700;
+  color: var(--r-text);
+  margin: 0;
+}
+
+.xp-meta {
+  font-size: var(--r-xp-meta-size);
+  font-weight: 600;
+  color: var(--r-accent);
+}
+
+.xp-highlights {
+  list-style: disc;
+  padding-left: 1.05rem;
+  margin: 0.2rem 0 0;
+}
+
+.xp-highlights li {
+  font-size: var(--r-xp-bullet-size);
+  color: var(--r-text-soft);
+  line-height: var(--r-xp-bullet-line);
+  margin-bottom: 0.15rem;
+}
+
+.xp-tech {
+  font-size: var(--r-meta-size);
+  color: var(--r-muted);
+  margin: 0.25rem 0 0;
+}
+
+/* Timeline rail: a vertical line down the experience list with a dot per item.
+   Pure CSS so the markup stays theme-agnostic. */
+body.theme-timeline .xp-list {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+body.theme-timeline .xp-list::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: linear-gradient(to bottom, #2563eb, #93c5fd, #e5e7eb);
+}
+
+body.theme-timeline .xp-item {
+  position: relative;
+}
+
+body.theme-timeline .xp-item::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.3rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #2563eb;
+}
+
+/* ── Mobile reflow ──────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  body.theme-classic,
+  body.theme-timeline {
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .resume {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .resume-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    .profile-photo {
+      margin-right: 0;
+    }
+  }
+
+  .header-aside,
+  .header-contact {
+    align-items: flex-start;
+  }
+
+  .resume-body,
+  .resume-body.sidebar-right {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .resume-body .resume-main,
+  .resume-body .resume-sidebar {
+    order: initial;
+  }
+}
+
+/* ── Print ──────────────────────────────────────────────────────────────── */
+
+@media print {
+  body.theme-classic,
+  body.theme-timeline {
+    background: #fff;
+    padding: 0;
+    /* Render all colours/backgrounds; the user can pick B&W in the OS dialog. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide the whole floating controls cluster — the buttons self-hide, but the
+     pill background/shadow would otherwise print as an empty bubble. */
+  .resume-controls {
+    display: none;
+  }
+
+  .resume {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  /* Links keep their on-screen treatment in print — blue, and the cert links
+     keep their bottom border rather than switching to a text underline.
+     print-color-adjust:exact (above) makes the blue render on paper. */
+
+  .xp-item,
+  .resume li {
+    break-inside: avoid;
+  }
+
+  .section h2,
+  .block h2,
+  .resume-summary h2 {
+    break-after: avoid;
+  }
+}
+
+/* Onepage density prints tighter to defend the single-page budget: the print
+   tokens shrink type, line-height and gaps below the screen values. */
+@media print {
+  body.density-onepage {
+    font-size: 9.5pt;
+    --r-summary-size: 0.8rem;
+    --r-summary-line: 1.38;
+    --r-col-gap: 1.4rem;
+    --r-body-gap: 0.55rem;
+    --r-block-gap: 0.55rem;
+    --r-xp-item-gap: 0.4rem;
+    --r-xp-bullet-size: 0.76rem;
+    --r-xp-bullet-line: 1.28;
+  }
+
+  body.density-onepage .resume-name {
+    font-size: 1.6rem;
+  }
+
+  body.density-onepage .resume-header {
+    padding-bottom: 0.5rem;
+  }
+
+  body.density-onepage .resume-summary {
+    padding: 0.5rem 0;
+  }
+
+  /* Smaller photo in the one-page print to bank fit margin (screen keeps 5.5rem). */
+  body.density-onepage .resume-header .profile-photo img {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  body.density-full {
+    font-size: 10.5pt;
+  }
+}

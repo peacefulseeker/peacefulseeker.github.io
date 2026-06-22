@@ -1,32 +1,14 @@
 ---
+import "../../styles/page-full.css";
 import { getResumeEntry } from "../../utils/getResumeEntry";
-import {
-  assertFullTemplate,
-  resolveOtherVersion,
-} from "../../utils/resumeView";
-import type { FullTemplate } from "../../utils/resumeSchema";
-import ClassicLayout from "../../layouts/ClassicLayout.astro";
-import TimelineLayout from "../../layouts/TimelineLayout.astro";
+import { resolveOtherVersion } from "../../utils/resumeView";
+import ResumeLayout from "../../layouts/ResumeLayout.astro";
 
-// Every full-route template maps to a layout. Typing the record as
-// Record<FullTemplate, …> makes adding a template to the schema a compile
-// error here until its layout is wired up. CSS no longer needs a dynamic
-// import to stay isolated — each template scopes its styles under a
-// body.tpl-<name> root class (see the tpl-* convention in docs/adr), so both
-// stylesheets can co-load on this page without colliding.
-const LAYOUTS: Record<
-  FullTemplate,
-  typeof ClassicLayout | typeof TimelineLayout
-> = {
-  classic: ClassicLayout,
-  timeline: TimelineLayout,
-};
-
-const { Content, full_template, ...resumeData } = await getResumeEntry("full");
-const { name: templateName, ...templateOptions } = full_template;
-
-assertFullTemplate(templateName);
-const Layout = LAYOUTS[templateName];
+// The full resume, served at /resume/full (ADR 0006). Same ResumeLayout and
+// same theme as /resume, only at full density (ADR 0008): all experience and
+// highlights, generous spacing. The toggle reads as "same document, more
+// detail" rather than a different template.
+const { Content, theme, ...resumeData } = await getResumeEntry("full");
 
 const otherVersion = await resolveOtherVersion(
   "onepage",
@@ -34,6 +16,12 @@ const otherVersion = await resolveOtherVersion(
 );
 ---
 
-<Layout {...resumeData} {...templateOptions} otherVersion={otherVersion}>
+<ResumeLayout
+  {...resumeData}
+  theme={theme.name}
+  density="full"
+  sidebarPosition={theme.sidebarPosition}
+  otherVersion={otherVersion}
+>
   <Content />
-</Layout>
+</ResumeLayout>
