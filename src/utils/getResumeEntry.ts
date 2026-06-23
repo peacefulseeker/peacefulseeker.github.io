@@ -1,6 +1,7 @@
 import { getCollection, render } from "astro:content";
 
 import type { ResumeData } from "@content";
+import { filterHidden } from "@utils/filterHidden";
 import { applyOnepageVariant } from "@utils/onepageVariant";
 
 type Variant = "full" | "onepage";
@@ -40,8 +41,9 @@ export async function getResumeEntry(variant: Variant = "full") {
   }
 
   const { Content } = await render(entry);
-  const data: ResumeData =
-    variant === "onepage" ? applyOnepageVariant(entry.data) : entry.data;
+  const data: ResumeData = filterHidden(
+    variant === "onepage" ? applyOnepageVariant(entry.data) : entry.data,
+  );
 
   return { Content, ...data };
 }

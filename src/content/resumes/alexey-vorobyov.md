@@ -162,20 +162,22 @@ certifications:
     start: "May 2025"
     url: "https://learn.microsoft.com/api/credentials/share/en-gb/alebyov/19158BE66DF6497F?sharingId=AFEDF744F9C79C11"
   - name: "Various Tech Courses"
-    issuer: "Udemy"
-    start: "2015"
-    end: "present"
-    url: "https://www.udemy.com/user/alexeyvorobyov/"
-  - name: "Various Tech Courses"
     issuer: "Coursera"
     start: "2015"
     end: "present"
     url: "https://www.coursera.org/user/24d401e1022bf7551a05a07cefa7c4ed"
+  - name: "Various Tech Courses"
+    issuer: "Udemy"
+    start: "2015"
+    end: "present"
+    url: "https://www.udemy.com/user/alexeyvorobyov/"
+    hidden: true
   - name: "Python Skills"
     issuer: "PyBites"
     start: "January 2021"
     end: "November 2021"
     url: "https://codechalleng.es/profiles/peacefulseeker"
+    hidden: true
 ---
 
 ## Summary

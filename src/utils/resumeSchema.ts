@@ -40,6 +40,7 @@ export const experienceSchema = z.object({
   start: z.string(),
   end: z.string(),
   highlights: z.array(z.string()),
+  hidden: z.boolean().default(false),
   onepage_include: z.boolean().default(true),
   onepage_highlights_num: z.number().int().positive().optional(),
   tech: z.array(z.string()).optional(),
@@ -53,6 +54,7 @@ export const educationSchema = z.object({
   end: z.string(),
   note: z.string().optional(),
   url: z.url().optional(),
+  hidden: z.boolean().default(false),
 });
 
 export const certificationSchema = z.object({
@@ -62,6 +64,7 @@ export const certificationSchema = z.object({
   end: z.string().optional(),
   credentialId: z.string().optional(),
   url: z.url().optional(),
+  hidden: z.boolean().default(false),
 });
 
 export const resumeSchema = z
