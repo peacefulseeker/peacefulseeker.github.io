@@ -12,6 +12,8 @@ const { href, label } = Astro.props;
   href={href}
   title={`Switch to ${label.toLowerCase()}`}
   aria-label={`Switch to ${label.toLowerCase()}`}
+  data-umami-event="version-toggle"
+  data-umami-event-to={label}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"

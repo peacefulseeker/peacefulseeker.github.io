@@ -3,9 +3,9 @@ dist/
 .astro/
 .DS_Store
 .env
-.env.local
 
 # Local-only, machine-specific config (not version controlled)
+.env.local
 mise.local.toml
 CLAUDE.local.md
 .vscode/*
@@ -14,5 +14,4 @@ CLAUDE.local.md
 test-results/
 playwright-report/
 .playwright-mcp
-
 .claude/settings.local.json
