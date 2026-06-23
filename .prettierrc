@@ -1,5 +1,14 @@
 {
-  "plugins": ["prettier-plugin-astro"],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-astro"],
+  "importOrder": [
+    "<BUILTIN_MODULES>",
+    "",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^@(components|layouts|utils|styles|content)(/.*)?$",
+    "",
+    "^[./]"
+  ],
   "overrides": [
     {
       "files": "*.astro",

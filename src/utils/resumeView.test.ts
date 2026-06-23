@@ -1,13 +1,13 @@
-import { describe, test, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 // resolveOtherVersion calls resumeVariantExists, which reaches into
 // astro:content. Mock that boundary so these stay pure unit tests.
 const resumeVariantExists = vi.fn();
-vi.mock("./getResumeEntry", () => ({
+vi.mock("@utils/getResumeEntry", () => ({
   resumeVariantExists: (...args: unknown[]) => resumeVariantExists(...args),
 }));
 
-const { resolveOtherVersion } = await import("./resumeView");
+const { resolveOtherVersion } = await import("@utils/resumeView");
 
 beforeEach(() => {
   resumeVariantExists.mockReset();

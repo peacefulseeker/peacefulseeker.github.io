@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("PDF download via browser print", () => {
   test.beforeEach(async ({ page }) => {

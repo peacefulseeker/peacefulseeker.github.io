@@ -1,6 +1,7 @@
 import { getCollection, render } from "astro:content";
-import type { ResumeData } from "../content.config";
-import { applyOnepageVariant } from "./onepageVariant";
+
+import type { ResumeData } from "@content";
+import { applyOnepageVariant } from "@utils/onepageVariant";
 
 type Variant = "full" | "onepage";
 
@@ -54,9 +55,6 @@ export async function getResumeEntry(variant: Variant = "full") {
  * for "full" and "onepage". The parameter is kept so call sites remain
  * self-documenting ("does the full version exist?").
  */
-export async function resumeVariantExists(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _variant: Variant,
-): Promise<boolean> {
+export async function resumeVariantExists(_variant: Variant): Promise<boolean> {
   return (await selectEntry()) !== undefined;
 }

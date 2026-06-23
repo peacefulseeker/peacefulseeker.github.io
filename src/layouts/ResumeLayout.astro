@@ -1,11 +1,12 @@
 ---
-import "../styles/resume.css";
-import FaviconLinks from "../components/FaviconLinks.astro";
-import PdfButton from "../components/PdfButton.astro";
-import VersionToggle from "../components/VersionToggle.astro";
-import ProfilePhoto from "../components/ProfilePhoto.astro";
-import ExperienceList from "../components/ExperienceList.astro";
-import type { ResumeLayoutProps, LinkEntry } from "../utils/resumeSchema";
+import "@styles/resume.css";
+
+import ExperienceList from "@components/ExperienceList.astro";
+import FaviconLinks from "@components/FaviconLinks.astro";
+import PdfButton from "@components/PdfButton.astro";
+import ProfilePhoto from "@components/ProfilePhoto.astro";
+import VersionToggle from "@components/VersionToggle.astro";
+import type { LinkEntry, ResumeLayoutProps } from "@utils/resumeSchema";
 
 /*
  * The single resume layout (ADR 0008). Both routes render it: /resume passes

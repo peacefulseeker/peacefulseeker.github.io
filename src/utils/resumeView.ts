@@ -1,4 +1,4 @@
-import { resumeVariantExists } from "./getResumeEntry";
+import { resumeVariantExists } from "@utils/getResumeEntry";
 
 type Variant = "full" | "onepage";
 
