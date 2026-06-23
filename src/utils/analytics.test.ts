@@ -23,7 +23,7 @@ describe("analyticsEnabled", () => {
   });
 
   test("returns true in production builds when flag is not set", () => {
-    vi.stubEnv("PROD", "true");
+    vi.stubEnv("PROD", true);
     expect(analyticsEnabled()).toBe(true);
   });
 });
