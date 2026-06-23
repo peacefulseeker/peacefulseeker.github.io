@@ -77,6 +77,6 @@ Key technical decisions are recorded as ADRs in [`docs/adr/`](docs/adr/):
 - [ADR 0005 — One-page template + default route (route placement superseded by 0006)](docs/adr/0005-onepage-template-and-default-route.md)
 - [ADR 0006 — Landing page + `/resume` namespace](docs/adr/0006-landing-page-and-resume-namespace.md)
 
-## Backlog
+## Roadmap
 
-Planned work is tracked in [backlog.md](backlog.md).
+Planned and shipped work is tracked on the [Resume roadmap project board](https://github.com/users/peacefulseeker/projects/5).

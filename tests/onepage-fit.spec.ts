@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-// One-page fill gauge / CI gate (backlog "One-page fill gauge").
+// One-page fill gauge / CI gate
 //
 // Renders the one-pager to A4 under print CSS via Chromium's own paginator
 // (page.pdf) and fails if the content spills past a single page. This is the
