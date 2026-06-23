@@ -9,7 +9,7 @@ A personal resume site — Alexey Vorobyov's resume rendered from markdown via A
 - **Runtime toolchain:** Node + pnpm versions pinned in `mise.toml`, managed via [mise](https://mise.jdx.dev)
 - **Framework:** Astro (static output, content collections) + TypeScript strict mode
 - **Formatting:** Prettier with prettier-plugin-astro (`pnpm format` / `pnpm format:check`)
-- **Type checking:** `astro check` via `@astrojs/check` (no eslint at this scale)
+- **Type checking:** `astro check` via `@astrojs/check`
 - **CSS:** No framework — plain CSS; print styles handled at the template level
 - **Deployment:** GitHub Actions → GitHub Pages (`peacefulseeker.github.io`)
 
@@ -60,3 +60,4 @@ docs/
 - **One template = one layout** in `src/layouts/`; switching templates is a one-line frontmatter change (see ADR 0001).
 - **Print CSS is first-class** — every template must ship `@media print` styles alongside screen styles (see ADR 0003).
 - **File placement follows the layout above strictly** — CSS goes in `src/styles/`, never co-located with pages or components.
+- **Import via path aliases, not relative paths** — use `@components/*`, `@layouts/*`, `@utils/*`, `@styles/*`, and `@content` (the content collection config) instead of `../`/`../../`. Aliases are declared once in `tsconfig.json` `paths`; Astro/Vite read them natively, and Vitest picks them up via the `vite-tsconfig-paths` plugin in `vitest.config.ts` — so the alias map has a single source of truth.

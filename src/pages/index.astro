@@ -1,7 +1,8 @@
 ---
-import { getResumeEntry } from "../utils/getResumeEntry";
-import FaviconLinks from "../components/FaviconLinks.astro";
-import "../styles/landing.css";
+import "@styles/landing.css";
+
+import FaviconLinks from "@components/FaviconLinks.astro";
+import { getResumeEntry } from "@utils/getResumeEntry";
 
 // Root is a minimal landing page (see ADR 0006). The resume itself lives
 // under /resume; name and role are pulled from the resume so this page stays

@@ -1,8 +1,9 @@
 ---
-import "../../styles/page-full.css";
-import { getResumeEntry } from "../../utils/getResumeEntry";
-import { resolveOtherVersion } from "../../utils/resumeView";
-import ResumeLayout from "../../layouts/ResumeLayout.astro";
+import "@styles/page-full.css";
+
+import ResumeLayout from "@layouts/ResumeLayout.astro";
+import { getResumeEntry } from "@utils/getResumeEntry";
+import { resolveOtherVersion } from "@utils/resumeView";
 
 // The full resume, served at /resume/full (ADR 0006). Same ResumeLayout and
 // same theme as /resume, only at full density (ADR 0008): all experience and

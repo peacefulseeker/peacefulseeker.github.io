@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Page header from frontmatter", () => {
   test.beforeEach(async ({ page }) => {

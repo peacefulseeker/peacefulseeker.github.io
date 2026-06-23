@@ -1,6 +1,7 @@
-import { describe, test, expect } from "vitest";
-import { applyOnepageVariant } from "./onepageVariant";
-import { resumeSchema, type ResumeData } from "./resumeSchema";
+import { describe, expect, test } from "vitest";
+
+import { applyOnepageVariant } from "@utils/onepageVariant";
+import { resumeSchema, type ResumeData } from "@utils/resumeSchema";
 
 /**
  * Builds a fully-parsed ResumeData so schema defaults (notably

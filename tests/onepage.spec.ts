@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("One-page template — default resume view at /resume", () => {
   test.beforeEach(async ({ page }) => {

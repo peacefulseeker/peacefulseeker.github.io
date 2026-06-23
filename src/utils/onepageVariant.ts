@@ -1,4 +1,4 @@
-import type { ResumeData } from "./resumeSchema";
+import type { ResumeData } from "@utils/resumeSchema";
 
 /**
  * Adapts full-resume data for the one-page view.

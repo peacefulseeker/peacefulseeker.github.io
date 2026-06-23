@@ -1,8 +1,9 @@
 ---
-import "../../styles/page-onepage.css";
-import { getResumeEntry } from "../../utils/getResumeEntry";
-import { resolveOtherVersion } from "../../utils/resumeView";
-import ResumeLayout from "../../layouts/ResumeLayout.astro";
+import "@styles/page-onepage.css";
+
+import ResumeLayout from "@layouts/ResumeLayout.astro";
+import { getResumeEntry } from "@utils/getResumeEntry";
+import { resolveOtherVersion } from "@utils/resumeView";
 
 // The one-page resume is the default resume view, served at /resume (ADR 0006).
 // It renders the same ResumeLayout as /resume/full, only at onepage density

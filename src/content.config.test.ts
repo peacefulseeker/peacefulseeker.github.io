@@ -1,5 +1,6 @@
-import { describe, test, expect } from "vitest";
-import { resumeSchema, THEME_NAMES } from "./utils/resumeSchema";
+import { describe, expect, test } from "vitest";
+
+import { resumeSchema, THEME_NAMES } from "@utils/resumeSchema";
 
 const validBase = {
   name: "Jane Doe",
