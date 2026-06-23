@@ -1,6 +1,7 @@
 ---
 import "@styles/landing.css";
 
+import AnalyticsScript from "@components/AnalyticsScript.astro";
 import FaviconLinks from "@components/FaviconLinks.astro";
 import { getResumeEntry } from "@utils/getResumeEntry";
 
@@ -23,6 +24,7 @@ const resumeHref = `${base}resume/`;
       content={`${resume.name} — ${resume.role}. View my CV.`}
     />
     <FaviconLinks />
+    <AnalyticsScript />
   </head>
   <body>
     <main class="landing-board">

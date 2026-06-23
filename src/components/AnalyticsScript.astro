@@ -1,0 +1,22 @@
+---
+import {
+  analyticsEnabled,
+  UMAMI_SRC,
+  UMAMI_WEBSITE_ID,
+} from "@utils/analytics";
+
+// Injects the Umami tracker into <head>. The site has no single shared layout,
+// so this component is rendered in both index.astro and ResumeLayout.astro.
+// `is:inline` keeps Astro from bundling/hoisting the third-party script.
+---
+
+{
+  analyticsEnabled() && (
+    <script
+      is:inline
+      defer
+      src={UMAMI_SRC}
+      data-website-id={UMAMI_WEBSITE_ID}
+    />
+  )
+}

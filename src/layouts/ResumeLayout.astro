@@ -1,6 +1,7 @@
 ---
 import "@styles/resume.css";
 
+import AnalyticsScript from "@components/AnalyticsScript.astro";
 import ExperienceList from "@components/ExperienceList.astro";
 import FaviconLinks from "@components/FaviconLinks.astro";
 import PdfButton from "@components/PdfButton.astro";
@@ -48,6 +49,7 @@ const useShortSummary = density === "onepage" && Boolean(summary_short);
     <title>{name} — Resume</title>
     <meta name="description" content={`${name} — ${role}`} />
     <FaviconLinks />
+    <AnalyticsScript />
   </head>
   <body class:list={[`theme-${theme}`, `density-${density}`]}>
     <div class="resume">
@@ -79,6 +81,8 @@ const useShortSummary = density === "onepage" && Boolean(summary_short);
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-umami-event="outbound-link"
+                      data-umami-event-label={link.label}
                     >
                       {link.label}
                     </a>
@@ -159,6 +163,8 @@ const useShortSummary = density === "onepage" && Boolean(summary_short);
                           href={edu.url}
                           target="_blank"
                           rel="noopener noreferrer"
+                          data-umami-event="outbound-link"
+                          data-umami-event-label="education"
                         >
                           link
                         </a>
@@ -184,6 +190,8 @@ const useShortSummary = density === "onepage" && Boolean(summary_short);
                           href={cert.url}
                           target="_blank"
                           rel="noopener noreferrer"
+                          data-umami-event="outbound-link"
+                          data-umami-event-label={cert.name}
                         >
                           {cert.name}
                         </a>

@@ -38,6 +38,7 @@ docs/
 - ADR 0005 — One-page template + default route (route placement superseded by 0006): [docs/adr/0005-onepage-template-and-default-route.md](docs/adr/0005-onepage-template-and-default-route.md)
 - ADR 0006 — Landing page + `/resume` namespace: [docs/adr/0006-landing-page-and-resume-namespace.md](docs/adr/0006-landing-page-and-resume-namespace.md)
 - ADR 0007 — Template CSS isolation (`body.tpl-<name>` root class): [docs/adr/0007-template-css-isolation.md](docs/adr/0007-template-css-isolation.md)
+- ADR 0009 — Cookieless analytics via Umami (`PUBLIC_UMAMI_ENABLED` flag, event taxonomy): [docs/adr/0009-analytics.md](docs/adr/0009-analytics.md)
 
 ## Commands
 
