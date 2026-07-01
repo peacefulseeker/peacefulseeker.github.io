@@ -1,23 +1,34 @@
 name: Deploy to GitHub Pages
 
-# Deploy runs on main push only. PR build validation lives in ci.yml (the
-# required `build` check), so there is no PR trigger or paths filter here.
-# Both build jobs share the ./.github/actions/setup composite action.
+# Deploy is gated on CI. It triggers via workflow_run after the CI workflow
+# finishes on main, and only proceeds when that run succeeded — so quality
+# (format/typecheck/test/integration) must pass before we build and deploy.
+# workflow_dispatch allows a manual redeploy of the current main.
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
-# Serialize deploys: never race each other on main.
+# Serialize deploys: never race each other on main, and never cancel an
+# in-progress deploy (unlike CI, which cancels superseded runs).
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages
   cancel-in-progress: false
 
 jobs:
   build:
+    # Gate: main-only + owner guard + CI succeeded. workflow_dispatch carries no
+    # workflow_run payload, so it is allowed through the conclusion check.
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.repository_owner == 'peacefulseeker' &&
+      (github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -32,9 +43,6 @@ jobs:
 
   deploy:
     needs: build
-    # Main-only (workflow_dispatch can fire from any branch); owner check guards
-    # against unexpected deploys if a collaborator is ever added.
-    if: github.ref == 'refs/heads/main' && github.repository_owner == 'peacefulseeker'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
