@@ -10,8 +10,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Serialize deploys: never race each other on main.
 concurrency:
@@ -21,8 +19,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/setup
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v5
@@ -35,6 +36,10 @@ jobs:
     # against unexpected deploys if a collaborator is ever added.
     if: github.ref == 'refs/heads/main' && github.repository_owner == 'peacefulseeker'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
