@@ -6,9 +6,12 @@
  * along two orthogonal axes:
  *
  *   theme   (body.theme-classic | body.theme-timeline)
- *     — the visual identity: timeline adds the dotted experience rail, accent
- *       tick-bar headings, profile photo and a tinted sidebar; classic strips
- *       all of that to a plain, single-column document.
+ *     — the visual identity. Both share the same two-column body grid (and
+ *       honour sidebarPosition); the difference is what classic drops: no
+ *       profile photo, no timeline rail, no accent tick-bars, near-black accent
+ *       instead of blue. Sharing the grid also lets classic fit a single page
+ *       at onepage density — single-column it overflowed to two (ADR 0008
+ *       amendment, ADR 0010).
  *
  *   density (body.density-onepage | body.density-full)
  *     — the spacing/typographic budget, expressed entirely as CSS custom
@@ -323,18 +326,6 @@ body.theme-classic .resume-header .profile-photo {
 
 .resume-body:not(.sidebar-right) .resume-sidebar {
   order: 1;
-}
-
-/* Classic theme is a single, plain column: the sidebar sections stack below
-   experience full-width, with no tint and no rule. */
-body.theme-classic .resume-body,
-body.theme-classic .resume-body.sidebar-right {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-body.theme-classic .resume-main,
-body.theme-classic .resume-sidebar {
-  order: initial;
 }
 
 /* ── Section headings ───────────────────────────────────────────────────── */

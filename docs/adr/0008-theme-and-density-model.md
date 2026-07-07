@@ -4,6 +4,17 @@
 **Date:** 2026-06-22
 **Supersedes:** the single "template" axis introduced in [ADR 0004](0004-structured-content-model-and-component-templates.md) and the per-template CSS isolation of [ADR 0007](0007-template-css-isolation.md); amends [ADR 0005](0005-onepage-template-and-default-route.md)
 
+> **Amendment (2026-07-07, ADR 0010):** `classic` is **no longer single-column.**
+> It now shares the two-column body grid with `timeline` (and honours
+> `sidebarPosition`), so its structure is identical across full and onepage
+> densities. This was required so `classic` fits a single page at onepage density
+> — as a single column its sidebar stacked full-width below experience and
+> overflowed to two pages (126%), defeating the one-page PDF once `?template=`
+> made any theme printable at `/resume`. `classic`'s minimal identity now comes
+> purely from what it drops (no profile photo, no timeline rail, no accent
+> tick-bars, near-black accent instead of blue), not from a different column
+> structure. The description below of `classic` as "single column" is superseded.
+
 ## Context
 
 The site rendered three "templates" (`classic`, `timeline`, `onepage`) as a

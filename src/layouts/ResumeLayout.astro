@@ -6,6 +6,7 @@ import ExperienceList from "@components/ExperienceList.astro";
 import FaviconLinks from "@components/FaviconLinks.astro";
 import PdfButton from "@components/PdfButton.astro";
 import ProfilePhoto from "@components/ProfilePhoto.astro";
+import ThemeSwitch from "@components/ThemeSwitch.astro";
 import VersionToggle from "@components/VersionToggle.astro";
 import type { LinkEntry, ResumeLayoutProps } from "@utils/resumeSchema";
 
@@ -52,6 +53,7 @@ const useShortSummary = density === "onepage" && Boolean(summary_short);
     <AnalyticsScript />
   </head>
   <body class:list={[`theme-${theme}`, `density-${density}`]}>
+    <ThemeSwitch />
     <div class="resume">
       <div class="resume-controls" role="toolbar" aria-label="Resume actions">
         {
