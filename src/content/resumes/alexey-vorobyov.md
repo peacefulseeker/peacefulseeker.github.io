@@ -2,7 +2,7 @@
 name: Alexey Vorobyov
 role: Senior Software Engineer
 theme:
-  name: timeline
+  name: classic
   sidebarPosition: right
 profile:
   photo: /profile.jpg
@@ -33,21 +33,22 @@ hobbies:
   - "Landscape photography"
   - "Reading books"
 experience:
-  - role: "Senior Software Engineer (B2B)"
-    company: "Healthtech Startup"
+  - role: "Senior Software Engineer (B2B contract)"
+    company: "Product Team @ HealthTech Startup"
     location: "Remote"
     start: "October 2025"
     end: "Present"
-    onepage_highlights_num: 3
+    onepage_highlights_num: 5
     highlights:
-      - "Built core services in a FastAPI payment-calculation platform that automates monthly capitation processing for value-based-care organizations, replacing a slow manual reconciliation workflow."
-      - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing to the TypeScript/Fastify UI/backend monorepo."
-      - "Collaborated with client engineers to migrate from a legacy monolith to a service-oriented architecture, owning data-integrity and cutover work for the payments domain."
-      - "Built a data projection-sync system bridging the payment service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream analytics and reporting on payment data."
-      - "Designed a multi-step payment-calculation orchestrator with re-run support, turning ad-hoc payment processing into a repeatable, recoverable pipeline."
-      - "Migrated the payment service to async database operations and hardened connection pooling, materially increasing throughput on large monthly capitation runs."
-      - "Hardened production reliability by introducing database transaction guardrails, diagnosing infrastructure incidents, and resolving high-priority failures in financial report generation."
-      - "Strengthened security and PHI protection through database privilege separation and sanitization of logging output on rollback paths."
+      - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing across the TypeScript/Fastify full-stack monorepo."
+      - "Built a data projection-sync system bridging the payments service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream monthly payment calculations."
+      - "Decoupled CPU- and memory-intensive calculation logic into dedicated ECS Fargate tasks, isolating heavy compute from live API traffic to improve resource utilization and independent scalability of each workload."
+      - "Integrated Claude Code into daily engineering workflow — spanning planning, documentation, implementation, and testing — and iterated on review guidance and code-quality standards."
+      - "Partnered with client engineers to ship a new payments API service to production, cutting payment-calculation processing time from days to a few hours and reducing operational overhead."
+      - "Built the skeleton and observability layer of a multi-step payment-calculation orchestrator — step sequencing, per-step transaction ownership, OTEL tracing, structured logging, and re-run recovery — turning ad-hoc processing into a repeatable, recoverable pipeline that teammates extended with additional calculation steps."
+      - "Introduced a unified coverage report spanning unit and integration tests, establishing and consistently maintaining 80%+ code coverage."
+      - "Migrated the payments service to fully async I/O across PostgreSQL operations, S3 interactions, and other I/O-bound tasks, improving throughput under concurrent load."
+      - "Strengthened security and PII/PHI protection through log-output sanitization, least-privilege database roles, and tightened S3 bucket access policies."
     tech:
       - Python
       - FastAPI
@@ -99,7 +100,7 @@ experience:
     location: "Latvia / Remote"
     start: "June 2020"
     end: "March 2024"
-    onepage_highlights_num: 4
+    onepage_highlights_num: 2
     highlights:
       - "Developed and maintained payment and subscription flows, including transforming user subscription accounts based on license type."
       - "Improved fraud prevention logic in trial payment flows and extended it to upgrade/renewal flows, reducing fraudulent chargebacks."
@@ -121,6 +122,7 @@ experience:
     location: "Riga"
     start: "2018"
     end: "June 2020"
+    onepage_highlights_num: 2
     highlights:
       - "Led development of the infogram.com homepage and /templates pages built with Next.js."
       - "Introduced an integrations panel in the Infogram editor, allowing users to connect to database sources such as MySQL and PostgreSQL."
