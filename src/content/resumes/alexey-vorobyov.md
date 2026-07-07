@@ -40,15 +40,15 @@ experience:
     end: "Present"
     onepage_highlights_num: 3
     highlights:
-      - "Decoupled CPU & MEM heavy calculation logic to its dedicated ECS Fargate tasks, which allowed for better resource utilization and scalability for main API traffic and calculation workloads."
-      - "Built a data projection-sync system bridging the payment service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream monthly payments calculation ."
-      - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing to the TypeScript/Fastify UI/backend monorepo."
-      - "Collaborated with client engineers to place a new payments API service into production, cutting of operational & processing overhead of payments calculations from often days to couple of hours."
-      - "Designed a multi-step payment-calculation orchestrator with re-run support, turning ad-hoc payment processing into a repeatable, recoverable pipeline."
-      - "Actively leveraged Claude Code in daily work from planning, writingdocumentation to implementation and tests, as well as iterating on project review guidance and code quality."
-      - "Introduced shared coverage report between integration and unit tests, reaching and constantly maintaining at least 80% coverage."
-      - "Migrated the payment service to async I/O, including PostgreSQL database operations, s3 interactions, and other I/O-bound tasks."
-      - "Strengthened security and PII/PHI protection through sanitization of logging output, database user privileges, and S3 bucket access policies."
+      - "Decoupled CPU- and memory-intensive calculation logic into dedicated ECS Fargate tasks, isolating heavy compute from live API traffic to improve resource utilization and independent scalability of each workload."
+      - "Built a data projection-sync system bridging the payments service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream monthly payment calculations."
+      - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing across the TypeScript/Fastify full-stack monorepo."
+      - "Partnered with client engineers to ship a new payments API service to production, cutting payment-calculation processing time from days to a few hours and reducing operational overhead."
+      - "Designed a multi-step payment-calculation orchestrator with re-run support, transforming ad-hoc payment processing into a repeatable, recoverable pipeline."
+      - "Integrated Claude Code into daily engineering workflow — spanning planning, documentation, implementation, and testing — and iterated on review guidance and code-quality standards."
+      - "Introduced a unified coverage report spanning unit and integration tests, establishing and consistently maintaining 80%+ code coverage."
+      - "Migrated the payments service to fully async I/O across PostgreSQL operations, S3 interactions, and other I/O-bound tasks, improving throughput under concurrent load."
+      - "Strengthened security and PII/PHI protection through log-output sanitization, least-privilege database roles, and tightened S3 bucket access policies."
     tech:
       - Python
       - FastAPI
