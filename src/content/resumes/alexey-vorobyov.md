@@ -2,7 +2,7 @@
 name: Alexey Vorobyov
 role: Senior Software Engineer
 theme:
-  name: timeline
+  name: classic
   sidebarPosition: right
 profile:
   photo: /profile.jpg
@@ -100,7 +100,7 @@ experience:
     location: "Latvia / Remote"
     start: "June 2020"
     end: "March 2024"
-    onepage_highlights_num: 3
+    onepage_highlights_num: 2
     highlights:
       - "Developed and maintained payment and subscription flows, including transforming user subscription accounts based on license type."
       - "Improved fraud prevention logic in trial payment flows and extended it to upgrade/renewal flows, reducing fraudulent chargebacks."
