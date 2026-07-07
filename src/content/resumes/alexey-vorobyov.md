@@ -38,14 +38,14 @@ experience:
     location: "Remote"
     start: "October 2025"
     end: "Present"
-    onepage_highlights_num: 3
+    onepage_highlights_num: 4
     highlights:
-      - "Decoupled CPU- and memory-intensive calculation logic into dedicated ECS Fargate tasks, isolating heavy compute from live API traffic to improve resource utilization and independent scalability of each workload."
-      - "Built a data projection-sync system bridging the payments service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream monthly payment calculations."
       - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing across the TypeScript/Fastify full-stack monorepo."
-      - "Partnered with client engineers to ship a new payments API service to production, cutting payment-calculation processing time from days to a few hours and reducing operational overhead."
-      - "Designed a multi-step payment-calculation orchestrator with re-run support, transforming ad-hoc payment processing into a repeatable, recoverable pipeline."
+      - "Built a data projection-sync system bridging the payments service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream monthly payment calculations."
+      - "Decoupled CPU- and memory-intensive calculation logic into dedicated ECS Fargate tasks, isolating heavy compute from live API traffic to improve resource utilization and independent scalability of each workload."
       - "Integrated Claude Code into daily engineering workflow — spanning planning, documentation, implementation, and testing — and iterated on review guidance and code-quality standards."
+      - "Partnered with client engineers to ship a new payments API service to production, cutting payment-calculation processing time from days to a few hours and reducing operational overhead."
+      - "Built the skeleton and observability layer of a multi-step payment-calculation orchestrator — step sequencing, per-step transaction ownership, OTEL tracing, structured logging, and re-run recovery — turning ad-hoc processing into a repeatable, recoverable pipeline that teammates extended with additional calculation steps."
       - "Introduced a unified coverage report spanning unit and integration tests, establishing and consistently maintaining 80%+ code coverage."
       - "Migrated the payments service to fully async I/O across PostgreSQL operations, S3 interactions, and other I/O-bound tasks, improving throughput under concurrent load."
       - "Strengthened security and PII/PHI protection through log-output sanitization, least-privilege database roles, and tightened S3 bucket access policies."
@@ -100,7 +100,7 @@ experience:
     location: "Latvia / Remote"
     start: "June 2020"
     end: "March 2024"
-    onepage_highlights_num: 4
+    onepage_highlights_num: 3
     highlights:
       - "Developed and maintained payment and subscription flows, including transforming user subscription accounts based on license type."
       - "Improved fraud prevention logic in trial payment flows and extended it to upgrade/renewal flows, reducing fraudulent chargebacks."
