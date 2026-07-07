@@ -325,17 +325,12 @@ body.theme-classic .resume-header .profile-photo {
   order: 1;
 }
 
-/* Classic theme is a single, plain column: the sidebar sections stack below
-   experience full-width, with no tint and no rule. */
-body.theme-classic .resume-body,
-body.theme-classic .resume-body.sidebar-right {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-body.theme-classic .resume-main,
-body.theme-classic .resume-sidebar {
-  order: initial;
-}
+/* Classic shares the two-column body grid with timeline (and honours
+   sidebarPosition the same way). Its minimal identity comes from what it drops,
+   not from a different structure: no profile photo, no timeline rail, no accent
+   tick-bars, near-black accent instead of blue. Sharing the grid lets the
+   onepage density fit a single page — a single-column classic overflowed to two
+   (ADR 0008 amendment, ADR 0010). */
 
 /* ── Section headings ───────────────────────────────────────────────────── */
 

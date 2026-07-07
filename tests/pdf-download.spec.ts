@@ -34,12 +34,21 @@ test.describe("PDF download via browser print", () => {
     await expect(btn).toBeHidden();
   });
 
-  test("links stay blue and un-underlined in print media", async ({ page }) => {
-    await page.emulateMedia({ media: "print" });
-    // Links keep their on-screen treatment in print (blue, no text underline)
-    // rather than switching to ink-black underlined text.
+  test("links keep their on-screen treatment (colour, no underline) in print media", async ({
+    page,
+  }) => {
+    // Theme-agnostic invariant: links render the same accent colour in print as
+    // on screen (not ink-black) and stay un-underlined — regardless of which
+    // theme is active. ?template= can make any theme active (ADR 0010), and each
+    // theme has its own accent, so we compare screen↔print rather than hardcode
+    // a single colour.
     const link = page.locator(".header-contact a").first();
-    await expect(link).toHaveCSS("color", "rgb(37, 99, 235)");
+    const screenColor = await link.evaluate(
+      (el) => getComputedStyle(el).color,
+    );
+
+    await page.emulateMedia({ media: "print" });
+    await expect(link).toHaveCSS("color", screenColor);
     await expect(link).toHaveCSS("text-decoration-line", "none");
   });
 

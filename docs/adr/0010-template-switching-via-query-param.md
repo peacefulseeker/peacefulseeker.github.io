@@ -2,6 +2,7 @@
 
 **Status:** Accepted
 **Date:** 2026-07-07
+**Amends:** [ADR 0008](0008-theme-and-density-model.md) — `classic` becomes two-column so it fits one page at onepage density
 
 ## Context
 
@@ -33,6 +34,31 @@ the known theme names, and replaces `body.theme-*` before first paint.**
 - No extra static pages, no redirects, no new components.
 
 This iteration is URL-only. A toggle button UI is deferred to a future iteration.
+
+### Every theme must fit one page at onepage density
+
+Because `?template=` lets a visitor view **and print** `/resume` under any theme,
+each theme must fit a single page at onepage density — otherwise the one-page PDF
+loses its purpose for that theme. Two consequences follow:
+
+- **`classic` became two-column** (this ADR amends ADR 0008). As a single column
+  its sidebar stacked full-width and the one-pager overflowed to two pages (126%).
+  Sharing the two-column grid with `timeline` brings it back to a single page
+  (100%). `classic` keeps its minimal identity by what it drops (no photo, no
+  rail, no tick-bars, near-black accent), not by a different column structure.
+- **The onepage-fit CI gate iterates over every theme.** `tests/onepage-fit.spec.ts`
+  loops `THEME_NAMES`, rendering `/resume?template=<theme>` and asserting a single
+  A4 page each. Since deploy is gated on CI success, a theme that overflows blocks
+  the deploy. This is the automated single-page assertion of ADR 0005, now
+  per-theme.
+
+### Styling tests are theme-agnostic
+
+Tests that assert visual output (background colour, link colour, body classes)
+must not hardcode a single theme's values, since `?template=` and the frontmatter
+default can each make any theme the active one. They either parametrize over
+`THEME_NAMES` with a per-theme expectation map, or assert an invariant (e.g.
+"print link colour equals its on-screen colour") rather than a literal value.
 
 ## Alternatives considered
 
