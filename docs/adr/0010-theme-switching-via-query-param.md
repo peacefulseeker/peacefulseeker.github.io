@@ -1,4 +1,4 @@
-# 0010. Template switching via `?template=` query param
+# 0010. Theme switching via `?theme=` query param
 
 **Status:** Accepted
 **Date:** 2026-07-07
@@ -8,15 +8,15 @@
 
 Users wanted a way to view the resume under a different visual theme (`classic` vs `timeline`)
 without the site owner rebuilding and redeploying. The ask was for shareable URLs like
-`/resume?template=classic` so a specific look can be linked directly.
+`/resume?theme=classic` so a specific look can be linked directly.
 
 A static site cannot serve different HTML per query param, so two approaches were on the table:
 
 1. **Static multi-page** — pre-render `/resume/classic/`, `/resume/timeline/`, etc., and use a
-   redirect script on `/resume` to forward `?template=…` to the right pre-rendered page.
+   redirect script on `/resume` to forward `?theme=…` to the right pre-rendered page.
 
 2. **Client-side class swap** — serve the same HTML on every URL, and let a small inline script
-   swap the `body.theme-*` class when it sees `?template=`.
+   swap the `body.theme-*` class when it sees `?theme=`.
 
 Approach 2 is viable only because of ADR 0008's key design decision: themes are purely CSS
 (`body.theme-classic` vs `body.theme-timeline`), with identical markup across both themes.
@@ -24,20 +24,24 @@ Swapping the class is the entirety of a theme change.
 
 ## Decision
 
-**A synchronous inline script at the top of `<body>` reads `?template=`, validates it against
+**A synchronous inline script at the top of `<body>` reads `?theme=`, validates it against
 the known theme names, and replaces `body.theme-*` before first paint.**
 
 - The script is the first element inside `<body>`, so it runs before the browser paints any
   content — no Flash of Unstyled Content (FOUC).
-- `?template=` URLs are the canonical share links; the URL never changes.
+- `?theme=` URLs are the canonical share links; the URL never changes.
 - Invalid or absent values are silently ignored; the frontmatter default theme applies.
 - No extra static pages, no redirects, no new components.
+
+The param is named `?theme=` to match the `theme` axis of ADR 0008 (`body.theme-*`,
+`THEME_NAMES`, the frontmatter `theme:` field). Issue #14 framed it as "template switching,"
+but the codebase has no template axis — `theme` is the accurate name.
 
 This iteration is URL-only. A toggle button UI is deferred to a future iteration.
 
 ### Every theme must fit one page at onepage density
 
-Because `?template=` lets a visitor view **and print** `/resume` under any theme,
+Because `?theme=` lets a visitor view **and print** `/resume` under any theme,
 each theme must fit a single page at onepage density — otherwise the one-page PDF
 loses its purpose for that theme. Two consequences follow:
 
@@ -47,7 +51,7 @@ loses its purpose for that theme. Two consequences follow:
   (100%). `classic` keeps its minimal identity by what it drops (no photo, no
   rail, no tick-bars, near-black accent), not by a different column structure.
 - **The onepage-fit CI gate iterates over every theme.** `tests/onepage-fit.spec.ts`
-  loops `THEME_NAMES`, rendering `/resume?template=<theme>` and asserting a single
+  loops `THEME_NAMES`, rendering `/resume?theme=<theme>` and asserting a single
   A4 page each. Since deploy is gated on CI success, a theme that overflows blocks
   the deploy. This is the automated single-page assertion of ADR 0005, now
   per-theme.
@@ -55,7 +59,7 @@ loses its purpose for that theme. Two consequences follow:
 ### Styling tests are theme-agnostic
 
 Tests that assert visual output (background colour, link colour, body classes)
-must not hardcode a single theme's values, since `?template=` and the frontmatter
+must not hardcode a single theme's values, since `?theme=` and the frontmatter
 default can each make any theme the active one. They either parametrize over
 `THEME_NAMES` with a per-theme expectation map, or assert an invariant (e.g.
 "print link colour equals its on-screen colour") rather than a literal value.
@@ -74,15 +78,15 @@ the theme tokens. Rejected: more indirection than directly swapping the class, a
 ## Consequences
 
 - **Positive:** Single-file content model is preserved. No routing changes. The entire feature
-  is one 8-line inline script. Shareable theme URLs work out of the box.
+  is one small inline component (`ThemeSwitch.astro`). Shareable theme URLs work out of the box.
 - **Negative:** JavaScript must be enabled for the override to apply; without JS, the
   frontmatter theme renders (acceptable — the page is still fully functional).
 - **Neutral:** Adding a third theme does not require touching this script beyond adding its
-  name to the `THEMES` array (the CSS already uses `body.theme-*` selectors).
+  name to `THEME_NAMES` (the script reads that array and the CSS already uses `body.theme-*`).
 
 ## Revisit if
 
-- A toggle button UI is wanted — add a `TemplateToggle` component to `.resume-controls`
+- A toggle button UI is wanted — add a `ThemeToggle` component to `.resume-controls`
   and extend the inline script to update its `href` on `DOMContentLoaded`.
 - A theme requires structurally different markup — at that point the class-swap approach
   breaks down and a static multi-page approach becomes necessary.

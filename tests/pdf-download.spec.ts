@@ -39,7 +39,7 @@ test.describe("PDF download via browser print", () => {
   }) => {
     // Theme-agnostic invariant: links render the same accent colour in print as
     // on screen (not ink-black) and stay un-underlined — regardless of which
-    // theme is active. ?template= can make any theme active (ADR 0010), and each
+    // theme is active. ?theme= can make any theme active (ADR 0010), and each
     // theme has its own accent, so we compare screen↔print rather than hardcode
     // a single colour.
     const link = page.locator(".header-contact a").first();

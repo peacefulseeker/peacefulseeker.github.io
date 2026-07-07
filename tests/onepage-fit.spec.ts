@@ -9,7 +9,7 @@ import { THEME_NAMES } from "@utils/resumeSchema";
 // "automated single-page assertion" anticipated by ADR 0005. Run on demand
 // with `pnpm onepage:fit`; it also runs as part of `pnpm test:integration`.
 //
-// Every theme must fit at onepage density, since ?template= lets a visitor view
+// Every theme must fit at onepage density, since ?theme= lets a visitor view
 // (and print) the one-pager under any theme (ADR 0010). A theme that overflows
 // defeats the one-page PDF purpose, so the gate iterates over all THEME_NAMES —
 // not just the frontmatter default.
@@ -53,7 +53,7 @@ test.describe("One-page fill gauge", () => {
         width: A4_CONTENT_WIDTH_PX,
         height: A4_CONTENT_HEIGHT_PX,
       });
-      await page.goto(`/resume?template=${theme}`);
+      await page.goto(`/resume?theme=${theme}`);
       await page.emulateMedia({ media: "print" });
 
       // A4 paper (Chromium would otherwise default to US Letter, which is shorter
