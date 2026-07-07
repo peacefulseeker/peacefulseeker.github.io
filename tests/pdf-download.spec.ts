@@ -43,9 +43,7 @@ test.describe("PDF download via browser print", () => {
     // theme has its own accent, so we compare screen↔print rather than hardcode
     // a single colour.
     const link = page.locator(".header-contact a").first();
-    const screenColor = await link.evaluate(
-      (el) => getComputedStyle(el).color,
-    );
+    const screenColor = await link.evaluate((el) => getComputedStyle(el).color);
 
     await page.emulateMedia({ media: "print" });
     await expect(link).toHaveCSS("color", screenColor);
