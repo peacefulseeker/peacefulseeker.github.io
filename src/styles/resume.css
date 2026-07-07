@@ -328,9 +328,6 @@ body.theme-classic .resume-header .profile-photo {
   order: 1;
 }
 
-/* Classic intentionally has no theme-specific body-grid rule: it inherits the
-   shared two-column grid above (see the file header for why). */
-
 /* ── Section headings ───────────────────────────────────────────────────── */
 
 .section h2,
