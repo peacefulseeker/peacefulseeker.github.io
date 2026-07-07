@@ -9,7 +9,7 @@
 > `sidebarPosition`), so its structure is identical across full and onepage
 > densities. This was required so `classic` fits a single page at onepage density
 > — as a single column its sidebar stacked full-width below experience and
-> overflowed to two pages (126%), defeating the one-page PDF once `?template=`
+> overflowed to two pages (126%), defeating the one-page PDF once `?theme=`
 > made any theme printable at `/resume`. `classic`'s minimal identity now comes
 > purely from what it drops (no profile photo, no timeline rail, no accent
 > tick-bars, near-black accent instead of blue), not from a different column

@@ -4,26 +4,26 @@ import { THEME_NAMES } from "@utils/resumeSchema";
 
 <!--
   Inline script — must be the first child of <body> so the theme class is
-  swapped before first paint (FOUC-free). Also preserves ?template= in the
+  swapped before first paint (FOUC-free). Also preserves ?theme= in the
   density-toggle href so the theme survives a onepage ↔ full transition.
 -->
 <script is:inline define:vars={{ THEME_NAMES }}>
   (function () {
     var p = new URLSearchParams(location.search);
-    var tpl = p.get("template");
-    if (!tpl || !THEME_NAMES.includes(tpl)) return;
+    var theme = p.get("theme");
+    if (!theme || !THEME_NAMES.includes(theme)) return;
 
     document.body.className = document.body.className.replace(
       /\btheme-\w+\b/,
-      "theme-" + tpl,
+      "theme-" + theme,
     );
 
     document.addEventListener("DOMContentLoaded", function () {
       var vt = document.querySelector(".version-toggle");
       if (!vt) return;
       var href = vt.getAttribute("href") || "";
-      if (href && !href.includes("template=")) {
-        vt.setAttribute("href", href + "?template=" + tpl);
+      if (href && !href.includes("theme=")) {
+        vt.setAttribute("href", href + "?theme=" + theme);
       }
     });
   })();
