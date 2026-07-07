@@ -49,3 +49,45 @@ test.describe("Theme × density — active view renders all fields", () => {
     expect(bg).toBe("rgb(243, 244, 246)");
   });
 });
+
+test.describe("?template= query param switching", () => {
+  test("?template=classic on /resume/full overrides to theme-classic", async ({
+    page,
+  }) => {
+    await page.goto("/resume/full?template=classic");
+    const className = await page.locator("body").getAttribute("class");
+    expect(className).toBe("theme-classic density-full");
+  });
+
+  test("?template=timeline on /resume/full is a no-op (already timeline)", async ({
+    page,
+  }) => {
+    await page.goto("/resume/full?template=timeline");
+    const className = await page.locator("body").getAttribute("class");
+    expect(className).toBe("theme-timeline density-full");
+  });
+
+  test("?template=invalid on /resume/full leaves class unchanged", async ({
+    page,
+  }) => {
+    await page.goto("/resume/full?template=invalid");
+    const className = await page.locator("body").getAttribute("class");
+    expect(className).toBe("theme-timeline density-full");
+  });
+
+  test("?template=classic on /resume sets theme-classic at onepage density", async ({
+    page,
+  }) => {
+    await page.goto("/resume?template=classic");
+    const className = await page.locator("body").getAttribute("class");
+    expect(className).toBe("theme-classic density-onepage");
+  });
+
+  test("density toggle preserves ?template= in its href", async ({ page }) => {
+    await page.goto("/resume/full?template=classic");
+    const toggleHref = await page
+      .locator(".version-toggle")
+      .getAttribute("href");
+    expect(toggleHref).toContain("template=classic");
+  });
+});
