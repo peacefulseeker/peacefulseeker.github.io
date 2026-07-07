@@ -38,7 +38,7 @@ experience:
     location: "Remote"
     start: "October 2025"
     end: "Present"
-    onepage_highlights_num: 4
+    onepage_highlights_num: 5
     highlights:
       - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing across the TypeScript/Fastify full-stack monorepo."
       - "Built a data projection-sync system bridging the payments service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream monthly payment calculations."
@@ -122,6 +122,7 @@ experience:
     location: "Riga"
     start: "2018"
     end: "June 2020"
+    onepage_highlights_num: 2
     highlights:
       - "Led development of the infogram.com homepage and /templates pages built with Next.js."
       - "Introduced an integrations panel in the Infogram editor, allowing users to connect to database sources such as MySQL and PostgreSQL."
