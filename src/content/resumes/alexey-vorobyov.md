@@ -33,21 +33,22 @@ hobbies:
   - "Landscape photography"
   - "Reading books"
 experience:
-  - role: "Senior Software Engineer (B2B)"
-    company: "Healthtech Startup"
+  - role: "Senior Software Engineer (B2B contract)"
+    company: "Product Team @ HealthTech Startup"
     location: "Remote"
     start: "October 2025"
     end: "Present"
     onepage_highlights_num: 3
     highlights:
-      - "Built core services in a FastAPI payment-calculation platform that automates monthly capitation processing for value-based-care organizations, replacing a slow manual reconciliation workflow."
+      - "Decoupled CPU & MEM heavy calculation logic to its dedicated ECS Fargate tasks, which allowed for better resource utilization and scalability for main API traffic and calculation workloads."
+      - "Built a data projection-sync system bridging the payment service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream monthly payments calculation ."
       - "Specialized in backend engineering — FastAPI services, PostgreSQL, ETL pipelines, and AWS infrastructure — while also contributing to the TypeScript/Fastify UI/backend monorepo."
-      - "Collaborated with client engineers to migrate from a legacy monolith to a service-oriented architecture, owning data-integrity and cutover work for the payments domain."
-      - "Built a data projection-sync system bridging the payment service with the company-wide data lake, establishing a reusable ingestion pattern that unlocked downstream analytics and reporting on payment data."
+      - "Collaborated with client engineers to place a new payments API service into production, cutting of operational & processing overhead of payments calculations from often days to couple of hours."
       - "Designed a multi-step payment-calculation orchestrator with re-run support, turning ad-hoc payment processing into a repeatable, recoverable pipeline."
-      - "Migrated the payment service to async database operations and hardened connection pooling, materially increasing throughput on large monthly capitation runs."
-      - "Hardened production reliability by introducing database transaction guardrails, diagnosing infrastructure incidents, and resolving high-priority failures in financial report generation."
-      - "Strengthened security and PHI protection through database privilege separation and sanitization of logging output on rollback paths."
+      - "Actively leveraged Claude Code in daily work from planning, writingdocumentation to implementation and tests, as well as iterating on project review guidance and code quality."
+      - "Introduced shared coverage report between integration and unit tests, reaching and constantly maintaining at least 80% coverage."
+      - "Migrated the payment service to async I/O, including PostgreSQL database operations, s3 interactions, and other I/O-bound tasks."
+      - "Strengthened security and PII/PHI protection through sanitization of logging output, database user privileges, and S3 bucket access policies."
     tech:
       - Python
       - FastAPI
